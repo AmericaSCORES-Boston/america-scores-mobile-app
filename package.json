@@ -4,7 +4,8 @@
   "description": "The mobile app for the America SCORES data collection app.",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "eslint": "gulp eslint"
   },
   "repository": {
     "type": "git",
@@ -20,10 +21,15 @@
     "preset": "jest-react-native"
   },
   "devDependencies": {
+    "babel-eslint": "^7.1.0",
     "babel-jest": "16.0.0",
     "babel-preset-react-native": "1.9.0",
+    "eslint-plugin-react": "^6.5.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
     "jest": "16.0.2",
     "jest-react-native": "16.0.0",
-    "react-test-renderer": "15.3.2"
+    "react-test-renderer": "15.3.2",
+    "yargs": "^6.3.0"
   }
 }
