@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+    - '6'
+script:
+    - npm run eslint -- --failTaskOnError
+before_script:
+    - npm install
+#after_success:
+    #- ./travis-auto-merge.sh
