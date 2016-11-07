@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/CS4500-AmericaSCORES/america-scores-mobile-app.svg?branch=master)](https://travis-ci.org/CS4500-AmericaSCORES/america-scores-mobile-app)
+
 # America SCORES Mobile App
 
 The iOS and Android apps for America SCORES
