@@ -24,7 +24,7 @@
  * ********************************************
  *  -- Start Collection (pass in current roster, filter students who don't have a height or weight entered)
  *  -- End Collection
- *      
+ *
  * -- Async:
  *   -- Save Student:
  *      -- Request to save student
@@ -48,7 +48,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import BMICollectionStudentDetail from '../config/bmi-collection/BMICollectionStudentDetail.react';
 import NextStudentButton from '../config/bmi-collection/NextStudentButton.react';
-import StopCollectionButton from '../config/bmi-collection/StopCollectionButton.react'
+import StopCollectionButton from '../config/bmi-collection/StopCollectionButton.react';
 import * as MockStudents from '../config/bmi-collection/data/MockStudents.js';
 
 /**
@@ -56,21 +56,21 @@ import * as MockStudents from '../config/bmi-collection/data/MockStudents.js';
  *   COMPONENT TESTS
  * *************************************************
  */
-test('it renders the student1 detail view correctly', () => {
+it('renders the student1 detail view correctly', () => {
     const tree = renderer.create(
         <BMICollectionStudentDetail student={MockStudents.student1}></BMICollectionStudentDetail>
 ).toJSON();
 expect(tree).toMatchSnapshot();
 });
 
-test('it renders "Save" button correctly', () => {
+it('renders "Save" button correctly', () => {
     const tree = renderer.create(
         <NextStudentButton></NextStudentButton>
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });
 
-test('it renders "Stop" button correctly', () => {
+it('renders "Stop" button correctly', () => {
     const tree = renderer.create(
         <StopCollectionButton></StopCollectionButton>
     ).toJSON();
@@ -83,7 +83,7 @@ test('it renders "Stop" button correctly', () => {
  *   ACTION CREATOR TESTS
  * *************************************************
  */
-import * as actions from '../config/bmi-collection/BMICollectionActions'
+import * as actions from '../config/bmi-collection/BMICollectionActions';
 
 it('creates a "START_BMI_COLLECTION" action', () => {
     expect(actions.startBMICollection(MockStudents.students)).toMatchSnapshot();
@@ -122,7 +122,7 @@ it('returns the same state on an unhandled action', () => {
 
 it('starts BMI collection with a filtered list', () => {
     const action = actions.startBMICollection(MockStudents.students);
-    expect(reducer(action).toMatchSnapshot();
+    expect(reducer(action)).toMatchSnapshot();
 });
 
 it('starts BMI collection', () => {
