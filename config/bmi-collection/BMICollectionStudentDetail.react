@@ -1,0 +1,22 @@
+import React from 'react';
+
+export default class StudentDetail extends React.Component {
+
+    constructor() {
+        super();
+    }
+
+    render() {
+        return (
+            <div
+                className="student-detail">
+                <span>{this.props.student.id}</span>
+                <span>{this.props.student.name}</span>
+                <span>{this.props.student.dob}</span>
+                <span>{this.props.student.height}</span>
+                <span>{this.props.student.weight}</span>
+            </div>
+        );
+    }
+
+}

@@ -1,0 +1,15 @@
+import React from 'react';
+
+export default class NextStudentButton extends React.Component {
+
+    constructor() {
+        super();
+    }
+
+    render() {
+        return (
+            <button className="next-student">Save</button>
+        );
+    }
+
+}
