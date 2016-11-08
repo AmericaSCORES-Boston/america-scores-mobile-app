@@ -17,7 +17,7 @@ function PacerStudent(student, numFailed) {
 const PacerPage = (props) => {
     const { students } = props;
 
-    failStudent = function(studNum) { students[studNum].failTest()}
+    this.failStudent = function(studNum) { students[studNum].failTest()}
 };
 
 PacerPage.proptypes = {

@@ -4,8 +4,8 @@ import renderer from 'react-test-renderer';
 import PacerPage from '../config/PacerPage.js';
 const person = require('../config/person.js');
 var Joe = new person("Joe", "Swanson", 10281996);
-var Dave = new person("Mary", "Lamb", 8261990);
-var boys = new roster("Boys team 1", [Joe, Mary]);
+var Dave = new person("Dave", "Lamb", 8261990);
+var boys = new roster("Boys team 1", [Joe, Dave]);
 
 it('renders a Pacer using Snapshots', () => {
     expect(renderer.create(
