@@ -3,6 +3,7 @@ import renderer from 'react-test-renderer';
 
 import PacerPage from '../config/PacerPage.js';
 const person = require('../config/person.js');
+const roster = require('../config/roster.js');
 var Joe = new person("Joe", "Swanson", 10281996);
 var Dave = new person("Dave", "Lamb", 8261990);
 var boys = new roster("Boys team 1", [Joe, Dave]);
