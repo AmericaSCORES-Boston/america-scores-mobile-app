@@ -1,4 +1,4 @@
-import * as actions from 'BMICollectionActions';
+const actions = require('./BMICollectionActions');
 
 export const initialState = {
     currentStudent: "",
@@ -6,7 +6,7 @@ export const initialState = {
 };
 
 // A Mocked implementation of the BMICollectionReducer.
-export default function BMICollectionReducer(state = initialState, action) {
+export function BMICollectionReducer(state = initialState, action) {
     switch (action.type) {
         case actions.START_BMI_COLLECTION:
             return state;

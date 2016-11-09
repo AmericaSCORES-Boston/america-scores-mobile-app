@@ -1,6 +1,6 @@
-import React from 'react';
+const React = require('react');
 
-export default class StudentDetail extends React.Component {
+module.exports = class BMICollectionStudentDetail extends React.Component {
 
     constructor() {
         super();
@@ -9,7 +9,7 @@ export default class StudentDetail extends React.Component {
     render() {
         return (
             <div
-                className="student-detail">
+                className="bmi-collection-student-detail">
                 <span>{this.props.student.id}</span>
                 <span>{this.props.student.name}</span>
                 <span>{this.props.student.dob}</span>
@@ -18,5 +18,4 @@ export default class StudentDetail extends React.Component {
             </div>
         );
     }
-
-}
+};

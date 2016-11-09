@@ -1,6 +1,6 @@
-import React from 'react';
+const React = require('react');
 
-export default class NextStudentButton extends React.Component {
+module.exports = class NextStudentButton extends React.Component {
 
     constructor() {
         super();
@@ -12,4 +12,4 @@ export default class NextStudentButton extends React.Component {
         );
     }
 
-}
+};

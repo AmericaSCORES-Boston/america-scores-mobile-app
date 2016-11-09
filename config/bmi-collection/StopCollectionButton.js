@@ -1,6 +1,6 @@
-import React from 'react';
+const React = require('react');
 
-export default class StopCollectionButton extends React.Component {
+module.exports = class StopCollectionButton extends React.Component {
 
     constructor() {
         super();
@@ -12,4 +12,4 @@ export default class StopCollectionButton extends React.Component {
         );
     }
 
-}
+};
