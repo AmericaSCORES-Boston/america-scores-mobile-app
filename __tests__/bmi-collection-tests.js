@@ -46,9 +46,9 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
-import BMICollectionStudentDetail from '../config/bmi-collection/BMICollectionStudentDetail.react';
-import NextStudentButton from '../config/bmi-collection/NextStudentButton.react';
-import StopCollectionButton from '../config/bmi-collection/StopCollectionButton.react';
+import BMICollectionStudentDetail from '../config/bmi-collection/BMICollectionStudentDetail.js';
+import NextStudentButton from '../config/bmi-collection/NextStudentButton.js';
+import StopCollectionButton from '../config/bmi-collection/StopCollectionButton.js';
 import * as MockStudents from '../config/bmi-collection/data/MockStudents.js';
 
 /**
@@ -114,30 +114,30 @@ it('creates a "SAVE_STUDENT_FAILURE" action', () => {
  *   REDUCER TESTS
  * *************************************************
  */
-import * as reducer from '../config/bmi-collection/BMICollectionReducer';
+import {BMICollectionReducer as reducer} from '../config/bmi-collection/BMICollectionReducer';
 
 it('returns the same state on an unhandled action', () => {
-    expect(reducer({type: '_NULL'})).toMatchSnapshot();
+    expect(reducer(undefined, {type: '_NULL'})).toMatchSnapshot();
 });
 
 it('starts BMI collection with a filtered list', () => {
     const action = actions.startBMICollection(MockStudents.students);
-    expect(reducer(action)).toMatchSnapshot();
+    expect(reducer(undefined, action)).toMatchSnapshot();
 });
 
 it('starts BMI collection', () => {
     const action = actions.startBMICollection(MockStudents.studentsWithoutHeightAndWeight);
-    expect(reducer(action)).toMatchSnapshot();
+    expect(reducer(undefined, action)).toMatchSnapshot();
 });
 
 it('does not start BMI collection because there are no students created for this program', () => {
     const action = actions.startBMICollection([]);
-    expect(reducer(action)).toMatchSnapshot();
+    expect(reducer(undefined, action)).toMatchSnapshot();
 });
 
 it('does not start BMI collection because height and weight data has already been collected for all students', () => {
     const action = actions.startBMICollection(MockStudents.studentsWithHeightAndWeight);
-    expect(reducer(action)).toMatchSnapshot();
+    expect(reducer(undefined, action)).toMatchSnapshot();
 });
 
 it('makes a request to save the data entered for a student', () => {
@@ -146,7 +146,7 @@ it('makes a request to save the data entered for a student', () => {
 });
 
 it('saves the student data successfully', () => {
-    const action = actions.onSaveStudentFailure(MockStudents.student1);
+    const action = actions.onSaveStudentSuccess(MockStudents.student1);
     expect(reducer(MockStudents.studentsWithoutHeightAndWeight, action)).toMatchSnapshot();
 });
 
