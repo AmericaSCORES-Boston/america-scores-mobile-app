@@ -14,4 +14,4 @@ export const sites = [
     id: 3,
     rosters: ['roster 4', 'roster 5'],
   },
-]; 
+];
