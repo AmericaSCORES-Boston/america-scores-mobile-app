@@ -1,4 +1,3 @@
-import { connect } from 'react-redux'
 import React from 'react';
 import { ListView, StyleSheet } from 'react-native';
 import StudentRow from '../components/StudentRow';
