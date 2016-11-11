@@ -18,6 +18,8 @@ const PacerPage = (props) => {
     const { students } = props;
 
     this.failStudent = function(studNum) { students[studNum].failTest()}
+
+    return (<View/>);
 };
 
 PacerPage.proptypes = {
