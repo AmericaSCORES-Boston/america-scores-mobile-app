@@ -1,4 +1,5 @@
-import React, { AppRegistry } from 'react-native';
-import App from './src/app'
+import React from 'react';
+import { AppRegistry } from 'react-native';
+import App from './src/app';
 
-// AppRegistry.registerComponent('AmericaSCORES', () => AmericaSCORES);
+AppRegistry.registerComponent('AmericaSCORES', () => App);

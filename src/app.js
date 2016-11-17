@@ -1,31 +1,53 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
+import reducers from './reducers/index';
 import { Scene, Router } from 'react-native-router-flux';
-import configureStore from './store/configureStore';
-import Sites from './containers/Sites';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
 
-const store = configureStore();
+import SitesContainer from './containers/Sites';
+import { sagas } from './sagas/index';
 
-class AmericaSCORES extends Component {
-  render() {
-    return (
-      <Provider store={store}>
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
+  reducers,
+  applyMiddleware(sagaMiddleware)
+);
+
+sagaMiddleware.run(sagas);
+
+const App = () => {
+  return (
+    <Provider store={store}>
         <Router hideNavBar name="root">
           <Scene
-            key="list"
-            component={Sites}
-            title="List"
+            key="login"
+            component={SitesContainer}
+            title="Login"
+          />
+          <Scene
+            key="createAccount"
+            component={SitesContainer}
+            title="Create Account"
+          />
+          <Scene
+            key="sites"
+            component={SitesContainer}
+            title="Sites"
+          />
+          <Scene
+            key="programs"
+            component={SitesContainer}
+            title="Programs"
+          />
+          <Scene
+            key="students"
+            component={SitesContainer}
+            title="Students"
           />
         </Router>
       </Provider>
     );
-  }
-}
+};
 
-AppRegistry.registerComponent('AmericaSCORES', () => AmericaSCORES);
+export default App;

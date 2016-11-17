@@ -1,72 +1,69 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { View, ListView, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import {
-  ListView,
-  StyleSheet,
-  Text,
-} from 'react-native';
+import * as actions from '../actions';
 
-import SiteRow from '../components/SiteRow';
-import fetchSites from '../actions/fetchSites';
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id});
+class SitesContainer extends Component {
+  state = {
+    dataSource: new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1 !== row2,
+    }),
+  };
 
-class Sites extends React.Component {
-  constructor(props) {
-    super(props);
-    props.onLoad();
-    this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
-    this.state = {
-      dataSource: this.ds.cloneWithRows(props.sites),
-    };
+  componentDidMount() {
+    this.props.fetchSites();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillMount() {
     this.setState({
-      dataSource: this.ds.cloneWithRows(nextProps.sites)
-    });
+      dataSource: this.state.dataSource.cloneWithRows(['row 1', 'row 2']),
+    });    
   }
 
   render() {
+    const {
+      siteData,
+    } = this.props;
+
     return (
-      <ListView
-        style={styles.container}
-        dataSource={this.state.dataSource}
-        renderRow={(data) => <SiteRow { ...data } />}
-      />
+      <View style={styles.container}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => <Text>{rowData}</Text>}
+        />
+      </View>
     );
   }
 }
 
-// Sites.propTypes = {
-//   sites: React.PropTypes.array.isRequired,
-//   selected: React.PropTypes.number,
-//   selectSite: React.PropTypes.func,
-// };
+SitesContainer.propTypes = {
+  fetchSites: PropTypes.func.isRequired,
+  siteData: PropTypes.object.isRequired,
+};
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    sites: ownProps.filter === state.visibilityFilter
-  }
-}
+SitesContainer.defaultProps = {
+  siteData: {},
+};
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onLoad: () => {
-      dispatch(fetchSites())
-    }
-  }
-}
-
-export const styles = StyleSheet.create({
-  list: {
-    paddingVertical: 40, // (48 - 8 of item padding)
-  }
+const mapStateToProps = (state) => ({
+  siteData: state.sitesState,
 });
 
-const SitesContainer = connect(
+const mapDispatchToProps = (dispatch) => ({
+  fetchSites: () => {
+    dispatch(actions.fetchSites());
+  },
+});
+
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Sites)
-
-export default SitesContainer;
+)(SitesContainer);
