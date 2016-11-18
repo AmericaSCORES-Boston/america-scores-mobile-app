@@ -1,12 +1,14 @@
 import React from 'react';
-import { createStore, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import { Provider } from 'react-redux';
-import reducers from './reducers/index';
 import { Scene, Router } from 'react-native-router-flux';
 
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
+
+import { sagas } from './sagas';
+import reducers from './reducers';
+
 import SitesContainer from './containers/Sites';
-import { sagas } from './sagas/index';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(

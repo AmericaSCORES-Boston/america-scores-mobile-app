@@ -1,7 +1,7 @@
 import {
   SITE_FETCH_REQUESTED,
   SITE_FETCH_SUCCEDED,
-  SITE_FETCH_FAILED,
+  SITE_FETCH_FAILED
 } from '../actions/site';
 
 export default function sitesState(state = {}, action) {

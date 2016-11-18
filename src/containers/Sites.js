@@ -3,14 +3,6 @@ import { View, ListView, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../actions/site';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
-
 class SitesContainer extends Component {
   state = {
     dataSource: new ListView.DataSource({
@@ -34,7 +26,7 @@ class SitesContainer extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={(rowData) => <Text>{rowData}</Text>}
