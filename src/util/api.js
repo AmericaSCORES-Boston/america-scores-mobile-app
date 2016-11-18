@@ -6,7 +6,7 @@ const Api = {
         return result.movies;
       })
       .catch(error => error);
-  },
+  }
 };
 
 export default Api;

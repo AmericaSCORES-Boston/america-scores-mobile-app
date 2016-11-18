@@ -1,5 +1,5 @@
 export {
   fetchSites,
   fetchSitesSuccess,
-  fetchSitesFailure,
+  fetchSitesFailure
 } from './site';
