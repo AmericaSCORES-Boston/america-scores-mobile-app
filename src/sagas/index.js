@@ -1,6 +1,6 @@
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
-import * as actions from '../actions';
+import * as actions from '../actions/site';
 import Api from '../util/api';
 
 export function * fetchSites() {
@@ -13,5 +13,5 @@ export function * fetchSites() {
 }
 
 export function * sagas() {
-  yield* takeEvery('SITE_FETCH_REQUESTED', fetchSites);
+  yield* takeEvery(actions.SITE_FETCH_REQUESTED, fetchSites);
 }
