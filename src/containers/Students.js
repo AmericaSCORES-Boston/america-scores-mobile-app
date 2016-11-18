@@ -44,10 +44,10 @@ class StudentsContainer extends Component {
 
           <Footer>
               <FooterTab>
-                  <Button>
+                  <Button onPress={()=>Actions.pacer()}>
                       Pacer Test
                   </Button>
-                  <Button>
+                  <Button onPress={()=>Actions.bmi()}>
                       BMI Collection
                   </Button>
               </FooterTab>

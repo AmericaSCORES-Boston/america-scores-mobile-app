@@ -13,6 +13,8 @@ import LoginContainer from './containers/Login';
 import CreateAccountContainer from './containers/CreateAccount';
 import ProgramsContainer from './containers/Programs';
 import StudentsContainer from './containers/Students';
+import PacerContainer from './containers/Pacer';
+import BMIContainer from './containers/BMI';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -53,7 +55,7 @@ const App = () => {
           <Scene
             key="programs"
             component={ProgramsContainer}
-            title="Programs"
+            title="SiteName"
             backTitle="Sites"
             rightTitle="Add"
             onRight={() => alert('Add Program')}
@@ -61,10 +63,28 @@ const App = () => {
           <Scene
             key="students"
             component={StudentsContainer}
-            title="Students"
+            title="ProgramName"
             backTitle="Programs"
             rightTitle="Add"
             onRight={() => alert('Add Student')}
+          />
+          <Scene
+            key="pacer"
+            component={PacerContainer}
+            title="Pacer Test"
+            backTitle="Cancel"
+            hideBackImage="true"
+            rightTitle="Start"
+            onRight={() => alert('Start Pacer')}
+            direction="vertical"
+          />
+          <Scene
+            key="bmi"
+            component={BMIContainer}
+            title="BMI Collection"
+            backTitle="Cancel"
+            hideBackImage="true"
+            direction="vertical"
           />
         </Router>
       </Provider>
