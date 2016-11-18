@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { View, ListView, Text, StyleSheet } from 'react-native';
-import { Container, Content, List, ListItem } from 'native-base';
+import { Container, Content, List, ListItem, Footer, FooterTab, Button, Badge } from 'native-base';
 
 import { connect } from 'react-redux';
 import * as actions from '../actions/site';
 
 import styles from '../styles';
 
-class SitesContainer extends Component {
+class StudentsContainer extends Component {
   state = {
     dataSource: new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2
@@ -20,7 +20,7 @@ class SitesContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const sites = nextProps.siteData.sites;
+    const sites = nextProps.studentData.sites;
     if (sites) {
       const siteNames = this.getSiteNames(sites);
       this.setState({
@@ -35,12 +35,25 @@ class SitesContainer extends Component {
           <Content>
               <List dataArray={this.state.dataSource}
                   renderRow={(rowData) =>
-                    <ListItem button onPress={()=>Actions.programs({title: rowData})}>
+                    <ListItem>
                         <Text>{rowData}</Text>
                     </ListItem>
                   }>
               </List>
           </Content>
+
+          <Footer>
+              <FooterTab>
+                  <Button>
+                      Pacer Test
+                  </Button>
+                  <Button>
+                      BMI Collection
+                  </Button>
+              </FooterTab>
+          </Footer>
+
+
       </Container>
     );
   }
@@ -57,17 +70,17 @@ class SitesContainer extends Component {
   }
 }
 
-SitesContainer.propTypes = {
+StudentsContainer.propTypes = {
   fetchSites: PropTypes.func.isRequired,
-  siteData: PropTypes.object.isRequired
+  studentData: PropTypes.object.isRequired
 };
 
-SitesContainer.defaultProps = {
-  siteData: {}
+StudentsContainer.defaultProps = {
+  studentData: {}
 };
 
 const mapStateToProps = (state) => ({
-  siteData: state.sitesState
+  studentData: state.sitesState
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -79,4 +92,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SitesContainer);
+)(StudentsContainer);

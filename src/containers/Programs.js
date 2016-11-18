@@ -8,7 +8,7 @@ import * as actions from '../actions/site';
 
 import styles from '../styles';
 
-class SitesContainer extends Component {
+class ProgramsContainer extends Component {
   state = {
     dataSource: new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2
@@ -20,7 +20,7 @@ class SitesContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const sites = nextProps.siteData.sites;
+    const sites = nextProps.programData.sites;
     if (sites) {
       const siteNames = this.getSiteNames(sites);
       this.setState({
@@ -35,7 +35,7 @@ class SitesContainer extends Component {
           <Content>
               <List dataArray={this.state.dataSource}
                   renderRow={(rowData) =>
-                    <ListItem button onPress={()=>Actions.programs({title: rowData})}>
+                    <ListItem button onPress={()=>Actions.students({title: rowData})}>
                         <Text>{rowData}</Text>
                     </ListItem>
                   }>
@@ -57,17 +57,17 @@ class SitesContainer extends Component {
   }
 }
 
-SitesContainer.propTypes = {
+ProgramsContainer.propTypes = {
   fetchSites: PropTypes.func.isRequired,
-  siteData: PropTypes.object.isRequired
+  programData: PropTypes.object.isRequired
 };
 
-SitesContainer.defaultProps = {
-  siteData: {}
+ProgramsContainer.defaultProps = {
+  programData: {}
 };
 
 const mapStateToProps = (state) => ({
-  siteData: state.sitesState
+  programData: state.sitesState
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -79,4 +79,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SitesContainer);
+)(ProgramsContainer);
