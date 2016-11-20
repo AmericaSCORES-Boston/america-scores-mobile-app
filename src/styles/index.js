@@ -2,7 +2,10 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 75,
+    marginTop: 65,
+  },
+  grayBg: {
+    backgroundColor: "#EEEEF3"
   },
   textCenter: {
     alignSelf: 'center'

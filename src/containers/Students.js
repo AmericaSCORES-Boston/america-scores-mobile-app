@@ -1,77 +1,48 @@
 import React, { Component, PropTypes } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { View, ListView, Text, StyleSheet } from 'react-native';
-import { Container, Content, List, ListItem, Footer, FooterTab, Button, Badge } from 'native-base';
+import { Container, Content, List, ListItem } from 'native-base';
 
 import { connect } from 'react-redux';
-import * as actions from '../actions/site';
+import * as actions from '../actions/student';
 
 import styles from '../styles';
 
 class StudentsContainer extends Component {
-  state = {
-    dataSource: new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1 !== row2
-    })
-  };
-
-  componentDidMount() {
-    this.props.fetchSites();
+  constructor(props) {
+    super(props);
+    this.props.fetchStudents();
+    this.state = {
+      dataSource: []
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const sites = nextProps.studentData.sites;
-    if (sites) {
-      const siteNames = this.getSiteNames(sites);
-      this.setState({
-        dataSource: siteNames
-      });
-    }
+    this.setState({
+      dataSource: nextProps.studentData.students
+    });
   }
 
   render() {
     return (
       <Container style={styles.container}>
           <Content>
-              <List dataArray={this.state.dataSource}
-                  renderRow={(rowData) =>
-                    <ListItem>
-                        <Text>{rowData}</Text>
-                    </ListItem>
-                  }>
-              </List>
+            <List
+              dataArray={this.state.dataSource}
+              renderRow={(rowData) => 
+                <ListItem button onPress={()=>Actions.programs({title: rowData.site_name, site_id: rowData.site_id})}>
+                  <Text>{rowData.first_name + ' ' + rowData.last_name}</Text>
+                </ListItem>
+              }
+            />
           </Content>
-
-          <Footer>
-              <FooterTab>
-                  <Button onPress={()=>Actions.pacer()}>
-                      Pacer Test
-                  </Button>
-                  <Button onPress={()=>Actions.bmi()}>
-                      BMI Collection
-                  </Button>
-              </FooterTab>
-          </Footer>
-
-
       </Container>
     );
-  }
-
-  // Return a list of names, one for each site.
-  getSiteNames(sites) {
-    var siteNames = [];
-    for (var key in sites) {
-      if (sites.hasOwnProperty(key)) {
-        siteNames.push(sites[key].title);
-      }
-    }
-    return siteNames;
   }
 }
 
 StudentsContainer.propTypes = {
-  fetchSites: PropTypes.func.isRequired,
+  fetchStudents: PropTypes.func.isRequired,
   studentData: PropTypes.object.isRequired
 };
 
@@ -80,12 +51,12 @@ StudentsContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
-  studentData: state.sitesState
+  studentData: state.studentsState
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchSites: () => {
-    dispatch(actions.fetchSites());
+  fetchStudents: (program_id) => {
+    dispatch(actions.fetchStudents(program_id));
   }
 });
 

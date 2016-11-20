@@ -9,51 +9,35 @@ import * as actions from '../actions/site';
 import styles from '../styles';
 
 class SitesContainer extends Component {
-  state = {
-    dataSource: new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1 !== row2
-    })
-  };
-
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     this.props.fetchSites();
+    this.state = {
+      dataSource: []
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const sites = nextProps.siteData.sites;
-    if (sites) {
-      const siteNames = this.getSiteNames(sites);
-      this.setState({
-        dataSource: siteNames
-      });
-    }
+    this.setState({
+      dataSource: nextProps.siteData.sites
+    });
   }
 
   render() {
     return (
       <Container style={styles.container}>
           <Content>
-              <List dataArray={this.state.dataSource}
-                  renderRow={(rowData) =>
-                    <ListItem button onPress={()=>Actions.programs({title: rowData})}>
-                        <Text>{rowData}</Text>
-                    </ListItem>
-                  }>
-              </List>
+            <List
+              dataArray={this.state.dataSource}
+              renderRow={(rowData) => 
+                <ListItem button onPress={()=>Actions.programs({title: rowData.site_name, site_id: rowData.site_id})}>
+                  <Text>{rowData.site_name}</Text>
+                </ListItem>
+              }
+            />
           </Content>
       </Container>
     );
-  }
-
-  // Return a list of names, one for each site.
-  getSiteNames(sites) {
-    var siteNames = [];
-    for (var key in sites) {
-      if (sites.hasOwnProperty(key)) {
-        siteNames.push(sites[key].title);
-      }
-    }
-    return siteNames;
   }
 }
 

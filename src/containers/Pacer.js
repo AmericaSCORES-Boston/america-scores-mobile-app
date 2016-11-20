@@ -22,7 +22,7 @@ class PacerContainer extends Component {
 
   render() {
     return (
-      <Container style={styles.container}>
+      <Container style={[styles.container, styles.grayBg]}>
         <Content>
           <Text>Pacer Test will happen here</Text>
         </Content>
