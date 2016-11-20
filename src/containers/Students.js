@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { View, ListView, Text, StyleSheet } from 'react-native';
-import { Container, Content, List, ListItem } from 'native-base';
+import { Container, Content, List, ListItem, Footer, FooterTab, Button } from 'native-base';
 
 import { connect } from 'react-redux';
 import * as actions from '../actions/student';
@@ -36,6 +36,16 @@ class StudentsContainer extends Component {
               }
             />
           </Content>
+          <Footer>
+            <FooterTab>
+              <Button onPress={()=>Actions.pacer()}>
+                Pacer Test
+              </Button>
+              <Button onPress={()=>Actions.bmi()}>
+                BMI Collection
+              </Button>
+            </FooterTab>
+          </Footer>
       </Container>
     );
   }
