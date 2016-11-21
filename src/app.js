@@ -13,6 +13,7 @@ import LoginContainer from './containers/Login';
 import CreateAccountContainer from './containers/CreateAccount';
 import ProgramsContainer from './containers/Programs';
 import StudentsContainer from './containers/Students';
+import AddStudentContainer from './containers/AddStudent';
 import PacerContainer from './containers/Pacer';
 import BMIContainer from './containers/BMI';
 import IndividualStudentContainer from './containers/IndividualStudent';
@@ -67,7 +68,15 @@ const App = () => {
             title="ProgramName"
             backTitle="Programs"
             rightTitle="Add"
-            onRight={() => alert('Add Student')}
+            onRight={() => Actions.addStudent()}
+          />
+          <Scene
+            key="addStudent"
+            component={AddStudentContainer}
+            title="Add Student"
+            hideBackImage="true"
+            backTitle="Cancel"
+            direction="vertical"
           />
           <Scene
             key="pacer"
