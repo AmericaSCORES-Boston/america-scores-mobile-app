@@ -11,13 +11,10 @@ import styles from '../styles';
 class ProgramsContainer extends Component {
   constructor(props) {
     super(props);
+    this.props.fetchPrograms(this.props.site_id);
     this.state = {
       dataSource: []
     }
-  }
-
-  componentDidMount() {
-    this.props.fetchPrograms(this.props.site_id);
   }
 
   componentWillReceiveProps(nextProps) {

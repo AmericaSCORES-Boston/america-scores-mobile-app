@@ -15,6 +15,7 @@ import ProgramsContainer from './containers/Programs';
 import StudentsContainer from './containers/Students';
 import PacerContainer from './containers/Pacer';
 import BMIContainer from './containers/BMI';
+import IndividualStudentContainer from './containers/IndividualStudent';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -84,6 +85,15 @@ const App = () => {
             title="BMI Collection"
             backTitle="Cancel"
             hideBackImage="true"
+            direction="vertical"
+          />
+          <Scene
+            key="individualStudent"
+            component={IndividualStudentContainer}
+            title="StudentName"
+            hideBackImage="true"
+            rightTitle="Done"
+            onRight={() => alert('Student Saved')}
             direction="vertical"
           />
         </Router>
