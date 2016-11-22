@@ -8,9 +8,9 @@ import * as actions from '../actions/login';
 import styles from '../styles';
 
 class AddStudentContainer extends Component {
-  state = {
-
-  };
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount() {
 
@@ -20,11 +20,28 @@ class AddStudentContainer extends Component {
 
   }
 
+    onValueChange (value: string) {
+        this.setState({
+            selected1 : value
+        });
+    }
+
+
   render() {
     return (
-      <Container style={[styles.container, styles.containerPadding]}>
+      <Container style={[styles.container, styles.grayBg]}>
         <Content>
           <Text style={styles.textAlignCenter}>To add a student to this program, search by their first and last name, and date of birth.</Text>
+          <InputGroup style={styles.inputGroup}>
+              <Input placeholder="First Name"/>
+          </InputGroup>
+          <InputGroup style={styles.inputGroup}>
+              <Input placeholder="Last Name"/>
+          </InputGroup>
+
+          <Button style={styles.textCenter}>
+            Add
+          </Button>
         </Content>
       </Container>
     );

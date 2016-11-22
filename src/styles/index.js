@@ -5,12 +5,15 @@ const styles = StyleSheet.create({
     marginTop: 65,
   },
   containerPadding: {
-    paddingTop: 30,
+    paddingTop: 15,
     paddingLeft: 30,
     paddingRight: 30,
   },
   grayBg: {
     backgroundColor: "#EEEEF3"
+  },
+  whiteBg: {
+    backgroundColor: "#FFFFFF"
   },
   textCenter: {
     alignSelf: 'center'
@@ -20,7 +23,14 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     marginTop: 30
-  }
+  },
+  largerText: {
+    fontSize: 45,
+  },
+  inputGroup: {
+    paddingLeft: 15,
+    backgroundColor: "#FFFFFF"
+  },
 });
 
 export default styles;

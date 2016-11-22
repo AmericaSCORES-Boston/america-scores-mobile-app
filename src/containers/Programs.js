@@ -30,8 +30,8 @@ class ProgramsContainer extends Component {
             <List
               dataArray={this.state.dataSource}
               renderRow={(rowData) =>
-                <ListItem button onPress={()=>Actions.students({title: rowData.site_name, site_id: rowData.site_id})}>
-                  <Text>{rowData.site_name}</Text>
+                <ListItem button onPress={()=>Actions.students({title: rowData.program_name, program_id: rowData.program_id})}>
+                  <Text>{rowData.program_name}</Text>
                 </ListItem>
               }
             />
