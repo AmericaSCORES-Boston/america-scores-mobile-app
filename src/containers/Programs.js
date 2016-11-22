@@ -4,14 +4,14 @@ import { View, ListView, Text, StyleSheet } from 'react-native';
 import { Container, Content, List, ListItem } from 'native-base';
 
 import { connect } from 'react-redux';
-import * as actions from '../actions/site';
+import * as actions from '../actions/program';
 
 import styles from '../styles';
 
-class SitesContainer extends Component {
+class ProgramsContainer extends Component {
   constructor(props) {
     super(props);
-    this.props.fetchSites();
+    this.props.fetchPrograms(this.props.site_id);
     this.state = {
       dataSource: []
     }
@@ -19,7 +19,7 @@ class SitesContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      dataSource: nextProps.siteData.sites
+      dataSource: nextProps.programData.programs
     });
   }
 
@@ -29,9 +29,9 @@ class SitesContainer extends Component {
           <Content>
             <List
               dataArray={this.state.dataSource}
-              renderRow={(rowData) => 
-                <ListItem button onPress={()=>Actions.programs({title: rowData.site_name, site_id: rowData.site_id})}>
-                  <Text>{rowData.site_name}</Text>
+              renderRow={(rowData) =>
+                <ListItem button onPress={()=>Actions.students({title: rowData.program_name, program_id: rowData.program_id})}>
+                  <Text>{rowData.program_name}</Text>
                 </ListItem>
               }
             />
@@ -41,26 +41,26 @@ class SitesContainer extends Component {
   }
 }
 
-SitesContainer.propTypes = {
-  fetchSites: PropTypes.func.isRequired,
-  siteData: PropTypes.object.isRequired
+ProgramsContainer.propTypes = {
+  fetchPrograms: PropTypes.func.isRequired,
+  programData: PropTypes.object.isRequired
 };
 
-SitesContainer.defaultProps = {
-  siteData: {}
+ProgramsContainer.defaultProps = {
+  programData: {}
 };
 
 const mapStateToProps = (state) => ({
-  siteData: state.sitesState
+  programData: state.programsState
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchSites: () => {
-    dispatch(actions.fetchSites());
+  fetchPrograms: (site_id) => {
+    dispatch(actions.fetchPrograms(site_id));
   }
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SitesContainer);
+)(ProgramsContainer);
