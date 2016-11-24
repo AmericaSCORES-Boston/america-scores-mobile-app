@@ -30,10 +30,20 @@ export function * fetchStudents(action) {
   }
 }
 
+export function * addProgram(action) {
+  try {
+    const program = yield call(Api.addProgram, action.site_id, action.program_name);
+    yield put(actions.addProgramSuccess(program));
+  } catch (e) {
+    yield put(actions.addProgramFailure(e.message));
+  }
+}
+
 export function * sagas() {
   yield [
     takeEvery('SITE_FETCH_REQUESTED', fetchSites),
     takeEvery('PROGRAM_FETCH_REQUESTED', fetchPrograms),
     takeEvery('STUDENT_FETCH_REQUESTED', fetchStudents),
+    takeEvery('ADD_PROGRAM_REQUESTED', addProgram),
   ]
 }
