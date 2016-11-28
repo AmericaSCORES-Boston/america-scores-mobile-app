@@ -15,7 +15,6 @@ class AddProgramContainer extends Component {
       newProgramName: ''
     };
     this.props.component.onRight = () => {
-      console.log(this.state);
       this.props.addProgram(this.props.site_id, this.state.newProgramName);
       Actions.pop();
     };

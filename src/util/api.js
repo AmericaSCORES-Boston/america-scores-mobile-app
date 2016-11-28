@@ -36,7 +36,7 @@ const Api = {
     },
 
     addProgram(site_id, program_name) {
-        return request(createEndpoint('sites/' + site_id + 'programs'), createRequestOptions(POST, { program_name }));
+        return request(createEndpoint('/sites/' + site_id + '/programs'), createRequestOptions(POST, { program_name }));
     },
 
     fetchStudents(program_id) {
