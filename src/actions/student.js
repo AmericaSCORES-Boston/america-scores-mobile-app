@@ -1,5 +1,5 @@
 export const STUDENT_FETCH_REQUESTED = 'STUDENT_FETCH_REQUESTED';
-export const STUDENT_FETCH_SUCCEDED = 'STUDENT_FETCH_SUCCEDED';
+export const STUDENT_FETCH_SUCCEEDED = 'STUDENT_FETCH_SUCCEEDED';
 export const STUDENT_FETCH_FAILED = 'STUDENT_FETCH_FAILED';
 
 export const fetchStudents = program_id => ({
@@ -8,7 +8,7 @@ export const fetchStudents = program_id => ({
 });
 
 export const fetchStudentsSuccess = students => ({
-  type: STUDENT_FETCH_SUCCEDED,
+  type: STUDENT_FETCH_SUCCEEDED,
   students
 });
 

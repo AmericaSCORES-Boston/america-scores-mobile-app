@@ -1,6 +1,6 @@
 import {
   SITE_FETCH_REQUESTED,
-  SITE_FETCH_SUCCEDED,
+  SITE_FETCH_SUCCEEDED,
   SITE_FETCH_FAILED
 } from '../actions/site';
 
@@ -11,7 +11,7 @@ export default function sitesState(state = {}, action) {
         ...state,
         isFetching: true
       };
-    case SITE_FETCH_SUCCEDED:
+    case SITE_FETCH_SUCCEEDED:
       return {
         ...state,
         isFetching: false,

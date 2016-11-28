@@ -11,20 +11,23 @@ import styles from '../styles';
 class ProgramsContainer extends Component {
   constructor(props) {
     super(props);
-    this.props.fetchPrograms(this.props.site_id);
-    this.state = {
-      dataSource: []
-    }
+    this.state = props.programsState;
+
     this.props.component.onRight = () => {
       Actions.addProgram({site_id: this.props.site_id});
-    }
+    };
     this.props.component.rightTitle = 'Add';
   }
 
+  componentWillMount() {
+    this.props.fetchPrograms(this.props.site_id);
+  }
+
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      dataSource: nextProps.programData.programs
-    });
+    const newProgramsState = nextProps.programsState;
+    if (newProgramsState && newProgramsState.programs) {
+      this.state = newProgramsState;
+    }
   }
 
   render() {
@@ -32,7 +35,7 @@ class ProgramsContainer extends Component {
       <Container style={styles.container}>
           <Content>
             <List
-              dataArray={this.state.dataSource}
+              dataArray={this.state.programs}
               renderRow={(rowData) =>
                 <ListItem button onPress={()=>Actions.students({title: rowData.program_name, program_id: rowData.program_id})}>
                   <Text>{rowData.program_name}</Text>
@@ -45,17 +48,8 @@ class ProgramsContainer extends Component {
   }
 }
 
-ProgramsContainer.propTypes = {
-  fetchPrograms: PropTypes.func.isRequired,
-  programData: PropTypes.object.isRequired
-};
-
-ProgramsContainer.defaultProps = {
-  programData: {}
-};
-
 const mapStateToProps = (state) => ({
-  programData: state.programsState
+  programsState: state.programsState
 });
 
 const mapDispatchToProps = (dispatch) => ({

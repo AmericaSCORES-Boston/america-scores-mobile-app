@@ -68,7 +68,7 @@ const App = () => {
             backTitle="Cancel"
             hideBackImage="true"
             direction="vertical"
-            panHandlers={() => null}
+            panHandlers={null}
           />
           <Scene
             key="students"
@@ -100,7 +100,7 @@ const App = () => {
             key="bmi"
             component={BMIContainer}
             title="BMI Collection"
-            backTitle="Cancel"
+            backTitle="Stop"
             hideBackImage="true"
             direction="vertical"
           />
@@ -108,11 +108,12 @@ const App = () => {
             key="individualStudent"
             component={IndividualStudentContainer}
             title="StudentName"
+            backTitle="Cancel"
             hideBackImage="true"
             rightTitle="Done"
             onRight={() => alert('Student Saved')}
             direction="vertical"
-            panHandlers={() => null}
+            panHandlers={null}
           />
         </Router>
       </Provider>

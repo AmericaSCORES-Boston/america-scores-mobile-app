@@ -11,16 +11,6 @@ import styles from '../styles';
 class IndividualStudentContainer extends Component {
   constructor(props) {
     super(props);
-    this.props.fetchStudents(this.props.program_id);
-    this.state = {
-      dataSource: []
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      dataSource: nextProps.studentData.students
-    });
   }
 
   render() {
@@ -42,22 +32,15 @@ class IndividualStudentContainer extends Component {
 }
 
 IndividualStudentContainer.propTypes = {
-  fetchStudents: PropTypes.func.isRequired,
-  studentData: PropTypes.object.isRequired
-};
 
-IndividualStudentContainer.defaultProps = {
-  studentData: {}
 };
 
 const mapStateToProps = (state) => ({
-  studentData: state.studentsState
+  
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchStudents: (program_id) => {
-    dispatch(actions.fetchStudents(program_id));
-  }
+  
 });
 
 export default connect(

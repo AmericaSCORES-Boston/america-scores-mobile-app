@@ -13,11 +13,11 @@ class AddProgramContainer extends Component {
     super(props);
     this.state = {
       newProgramName: ''
-    }
+    };
     this.props.component.onRight = () => {
       this.props.addProgram(this.props.site_id, this.state.newProgramName);
       Actions.pop();
-    }
+    };
     this.props.component.rightTitle = 'Done';
   }
 

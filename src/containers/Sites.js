@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { Text } from 'react-native';
 import { Container, Content, List, ListItem } from 'native-base';
+import scoresTheme from '../themes/scoresTheme';
 
 import { connect } from 'react-redux';
 import * as actions from '../actions/site';
@@ -11,24 +12,26 @@ import styles from '../styles';
 class SitesContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = props.sitesState;
+  }
+
+  componentWillMount() {
     this.props.fetchSites();
-    this.state = {
-      dataSource: []
-    }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      dataSource: nextProps.siteData.sites
-    });
+    const newSitesState = nextProps.sitesState;
+    if (newSitesState && newSitesState.sites) {
+      this.state = newSitesState;
+    }
   }
 
   render() {
     return (
       <Container style={styles.container}>
-          <Content>
+          <Content theme={scoresTheme}>
             <List
-              dataArray={this.state.dataSource}
+              dataArray={this.state.sites}
               renderRow={(rowData) => 
                 <ListItem button onPress={()=>Actions.programs({title: rowData.site_name, site_id: rowData.site_id})}>
                   <Text>{rowData.site_name}</Text>
@@ -41,17 +44,8 @@ class SitesContainer extends Component {
   }
 }
 
-SitesContainer.propTypes = {
-  fetchSites: PropTypes.func.isRequired,
-  siteData: PropTypes.object.isRequired
-};
-
-SitesContainer.defaultProps = {
-  siteData: {}
-};
-
 const mapStateToProps = (state) => ({
-  siteData: state.sitesState
+  sitesState: state.sitesState
 });
 
 const mapDispatchToProps = (dispatch) => ({
