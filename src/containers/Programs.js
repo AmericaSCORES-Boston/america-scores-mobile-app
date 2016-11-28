@@ -12,14 +12,15 @@ class ProgramsContainer extends Component {
   constructor(props) {
     super(props);
     this.state = props.programsState;
-  }
 
-  componentWillMount() {
-    this.props.fetchPrograms(this.props.site_id);
     this.props.component.onRight = () => {
       Actions.addProgram({site_id: this.props.site_id});
     };
     this.props.component.rightTitle = 'Add';
+  }
+
+  componentWillMount() {
+    this.props.fetchPrograms(this.props.site_id);
   }
 
   componentWillReceiveProps(nextProps) {
