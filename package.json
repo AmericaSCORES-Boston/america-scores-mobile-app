@@ -12,28 +12,28 @@
     "url": "https://github.com/CS4500-AmericaSCORES/america-scores-mobile-app.git"
   },
   "dependencies": {
-    "native-base": "^0.5.15",
-    "react": "15.3.2",
-    "react-native": "0.37.0",
+    "native-base": "^0.5.16",
+    "react": "^15.4.1",
+    "react-native": "^0.38.0",
     "react-native-router-flux": "^3.37.0",
     "react-native-vector-icons": "^3.0.0",
-    "react-redux": "^4.4.5",
+    "react-redux": "^4.4.6",
     "redux": "^3.6.0",
-    "redux-saga": "^0.12.1"
+    "redux-saga": "^0.13.0"
   },
   "jest": {
     "preset": "jest-react-native"
   },
   "devDependencies": {
-    "babel-eslint": "^7.1.0",
-    "babel-jest": "16.0.0",
+    "babel-eslint": "^7.1.1",
+    "babel-jest": "17.0.2",
     "babel-preset-react-native": "1.9.0",
     "eslint-plugin-react": "^6.5.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
-    "jest": "16.0.2",
-    "jest-react-native": "16.1.0",
-    "react-test-renderer": "15.3.2",
-    "yargs": "^6.3.0"
+    "jest": "17.0.3",
+    "jest-react-native": "17.0.3",
+    "react-test-renderer": "15.4.1",
+    "yargs": "^6.4.0"
   }
 }
