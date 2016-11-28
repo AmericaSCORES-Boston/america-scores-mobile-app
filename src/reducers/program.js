@@ -1,6 +1,6 @@
 import {
   PROGRAM_FETCH_REQUESTED,
-  PROGRAM_FETCH_SUCCEDED,
+  PROGRAM_FETCH_SUCCEEDED,
   PROGRAM_FETCH_FAILED
 } from '../actions/program';
 
@@ -11,7 +11,7 @@ export default function programsState(state = {}, action) {
         ...state,
         isFetching: true
       };
-    case PROGRAM_FETCH_SUCCEDED:
+    case PROGRAM_FETCH_SUCCEEDED:
       return {
         ...state,
         isFetching: false,

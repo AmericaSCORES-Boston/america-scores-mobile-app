@@ -1,5 +1,5 @@
 export const PROGRAM_FETCH_REQUESTED = 'PROGRAM_FETCH_REQUESTED';
-export const PROGRAM_FETCH_SUCCEDED = 'PROGRAM_FETCH_SUCCEDED';
+export const PROGRAM_FETCH_SUCCEEDED = 'PROGRAM_FETCH_SUCCEEDED';
 export const PROGRAM_FETCH_FAILED = 'PROGRAM_FETCH_FAILED';
 
 export const fetchPrograms = site_id => ({
@@ -8,7 +8,7 @@ export const fetchPrograms = site_id => ({
 });
 
 export const fetchProgramsSuccess = programs => ({
-  type: PROGRAM_FETCH_SUCCEDED,
+  type: PROGRAM_FETCH_SUCCEEDED,
   programs
 });
 
