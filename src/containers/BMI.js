@@ -101,23 +101,13 @@ class BMIContainer extends Component {
             <H2 style={styles.flexRowRight}>{studentProps.name}</H2>
           </View>
 
-          <View style={[styles.flexRow, styles.smallVerticalMargin]}>
-            <H2>Bib #:</H2>
-            <H2 style={styles.flexRowRight}>{currentStudentId}</H2>
-          </View>
-
-          <View style={styles.flexRow}>
-            <H2>Date of Birth:</H2>
-            <H2 style={styles.flexRowRight}>{studentProps.dob}</H2>
-          </View>
-
           <View style={styles.mediumMarginTop}>
             <H2>Height</H2>
             <View style={{flex: 1, flexDirection: 'row'}}>
               <InputGroup style={[styles.InputGroup, {flex: 1}]}>
                 <Input style={{flex: 1}}
                        ref={component => this._feet = component}
-                       placeholder={'None'}
+                       placeholder={''}
                        keyboardType="numeric"
                        defaultValue={studentProps.feet}
                        returnKeyType="next"
@@ -129,7 +119,7 @@ class BMIContainer extends Component {
               <InputGroup style={[styles.InputGroup, {flex: 1}]}>
                 <Input style={{flex: 1}}
                        ref={component => this._inches = component}
-                       placeholder={'None'}
+                       placeholder={''}
                        keyboardType="numeric"
                        defaultValue={studentProps.inches}
                        returnKeyType="next"
@@ -147,7 +137,7 @@ class BMIContainer extends Component {
               <InputGroup style={[styles.InputGroup, {flex: 1}]}>
                 <Input style={{flex: 1}}
                        ref={component => this._weight = component}
-                       placeholder={'None'}
+                       placeholder={''}
                        keyboardType="numeric"
                        defaultValue={studentProps.weight}
                        maxLength={3}
