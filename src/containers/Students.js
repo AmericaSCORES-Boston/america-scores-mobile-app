@@ -11,7 +11,7 @@ import styles from '../styles';
 class StudentsContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = props.state;
+    this.state = props.studentsState;
   }
 
   componentWillMount() {
@@ -19,15 +19,15 @@ class StudentsContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newStudentsState = nextProps.state.studentsState;
+    const newStudentsState = nextProps.studentsState;
     if (newStudentsState && newStudentsState.students) {
-      this.state.studentsState = newStudentsState;
+      this.state = newStudentsState;
     }
   }
 
   // Does this program have any students?
   hasStudents() {
-    const students = this.state.studentsState.students || [];
+    const students = this.state.students || [];
     return students.length > 0;
   }
 
@@ -52,7 +52,7 @@ class StudentsContainer extends Component {
   showStudents() {
     const students = (
         <List
-            dataArray={this.state.studentsState.students}
+            dataArray={this.state.students}
             renderRow={(rowData) =>
                 <ListItem button onPress={()=>Actions.individualStudent({title: rowData.first_name + ' ' + rowData.last_name, student: rowData})}>
                   <Text>{rowData.first_name + ' ' + rowData.last_name}</Text>
@@ -82,7 +82,7 @@ class StudentsContainer extends Component {
               Pacer Test
             </Button>
 
-            <Button active onPress={()=>Actions.bmi({program_name: this.props.title, students: this.state.studentsState.students})}>
+            <Button active onPress={()=>Actions.bmi({program_name: this.props.title, students: this.state.students})}>
               BMI Collection
             </Button>
 
@@ -95,7 +95,7 @@ class StudentsContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  state
+  studentsState: state.studentsState
 });
 
 const mapDispatchToProps = (dispatch) => ({

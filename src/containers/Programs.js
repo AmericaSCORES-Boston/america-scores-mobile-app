@@ -11,7 +11,7 @@ import styles from '../styles';
 class ProgramsContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = props.state;
+    this.state = props.programsState;
   }
 
   componentWillMount() {
@@ -23,9 +23,9 @@ class ProgramsContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newProgramsState = nextProps.state.programsState;
+    const newProgramsState = nextProps.programsState;
     if (newProgramsState && newProgramsState.programs) {
-      this.state.programsState = newProgramsState;
+      this.state = newProgramsState;
     }
   }
 
@@ -34,7 +34,7 @@ class ProgramsContainer extends Component {
       <Container style={styles.container}>
           <Content>
             <List
-              dataArray={this.state.programsState.programs}
+              dataArray={this.state.programs}
               renderRow={(rowData) =>
                 <ListItem button onPress={()=>Actions.students({title: rowData.program_name, program_id: rowData.program_id})}>
                   <Text>{rowData.program_name}</Text>
@@ -48,7 +48,7 @@ class ProgramsContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  state
+  programsState: state.programsState
 });
 
 const mapDispatchToProps = (dispatch) => ({
