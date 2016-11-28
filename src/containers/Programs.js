@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { View, ListView, Text, StyleSheet } from 'react-native';
+import { Text } from 'react-native';
 import { Container, Content, List, ListItem } from 'native-base';
 
 import { connect } from 'react-redux';
@@ -15,6 +15,10 @@ class ProgramsContainer extends Component {
     this.state = {
       dataSource: []
     }
+    this.props.component.onRight = () => {
+      Actions.addProgram({site_id: this.props.site_id});
+    }
+    this.props.component.rightTitle = 'Add';
   }
 
   componentWillReceiveProps(nextProps) {

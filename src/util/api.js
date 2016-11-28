@@ -24,6 +24,23 @@ const Api = {
         return result;
       })
       .catch(error => error);
+  },
+
+  addProgram(site_id, program_name) {
+    return fetch(`http://ec2-54-87-140-118.compute-1.amazonaws.com/api/sites/${site_id}/programs`, 
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({'program_name': program_name})
+      })
+      .then(result => result.json())
+      .then((result) => {
+        return result;
+      })
+      .catch(error => error);
   }
 };
 

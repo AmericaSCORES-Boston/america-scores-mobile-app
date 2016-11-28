@@ -12,6 +12,7 @@ import SitesContainer from './containers/Sites';
 import LoginContainer from './containers/Login';
 import CreateAccountContainer from './containers/CreateAccount';
 import ProgramsContainer from './containers/Programs';
+import AddProgramContainer from './containers/AddProgram';
 import StudentsContainer from './containers/Students';
 import AddStudentContainer from './containers/AddStudent';
 import PacerContainer from './containers/Pacer';
@@ -59,8 +60,15 @@ const App = () => {
             component={ProgramsContainer}
             title="SiteName"
             backTitle="Sites"
-            rightTitle="Add"
-            onRight={() => alert('Add Program')}
+          />
+          <Scene
+            key="addProgram"
+            component={AddProgramContainer}
+            title="New Program"
+            backTitle="Cancel"
+            hideBackImage="true"
+            direction="vertical"
+            panHandlers={() => null}
           />
           <Scene
             key="students"
@@ -104,6 +112,7 @@ const App = () => {
             rightTitle="Done"
             onRight={() => alert('Student Saved')}
             direction="vertical"
+            panHandlers={() => null}
           />
         </Router>
       </Provider>

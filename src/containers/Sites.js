@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { View, ListView, Text, StyleSheet } from 'react-native';
+import { Text } from 'react-native';
 import { Container, Content, List, ListItem } from 'native-base';
 
 import { connect } from 'react-redux';

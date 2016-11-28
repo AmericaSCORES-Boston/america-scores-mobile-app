@@ -7,7 +7,10 @@ export {
 export {
   fetchPrograms,
   fetchProgramsSuccess,
-  fetchProgramsFailure
+  fetchProgramsFailure,
+  addProgram,
+  addProgramSuccess,
+  addProgramFailure
 } from './program';
 
 export {
