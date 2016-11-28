@@ -12,7 +12,7 @@ import styles from '../styles';
 class SitesContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = props.state;
+    this.state = props.sitesState;
   }
 
   componentWillMount() {
@@ -20,9 +20,9 @@ class SitesContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newSitesState = nextProps.state.sitesState;
+    const newSitesState = nextProps.sitesState;
     if (newSitesState && newSitesState.sites) {
-      this.state.sitesState = newSitesState;
+      this.state = newSitesState;
     }
   }
 
@@ -31,7 +31,7 @@ class SitesContainer extends Component {
       <Container style={styles.container}>
           <Content theme={scoresTheme}>
             <List
-              dataArray={this.state.sitesState.sites}
+              dataArray={this.state.sites}
               renderRow={(rowData) => 
                 <ListItem button onPress={()=>Actions.programs({title: rowData.site_name, site_id: rowData.site_id})}>
                   <Text>{rowData.site_name}</Text>
@@ -45,7 +45,7 @@ class SitesContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  state
+  sitesState: state.sitesState
 });
 
 const mapDispatchToProps = (dispatch) => ({

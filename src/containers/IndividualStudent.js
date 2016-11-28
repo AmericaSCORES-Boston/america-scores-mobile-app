@@ -11,7 +11,6 @@ import styles from '../styles';
 class IndividualStudentContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = props.state;
   }
 
   render() {
@@ -37,7 +36,7 @@ IndividualStudentContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  state
+  
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -13,7 +13,7 @@ import styles from '../styles/index';
 class BMIContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = props.state;
+    this.state = props.bmiState;
   }
 
   componentWillMount() {
@@ -21,10 +21,9 @@ class BMIContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const bmiState = this.state.bmiState,
-        newBmiState = nextProps.state.bmiState;
-    if (newBmiState && newBmiState.currentBmiStudent != bmiState.currentBmiStudent) {
-      this.state.bmiState = newBmiState;
+    const newBmiState = nextProps.bmiState;
+    if (newBmiState.currentBmiStudent != this.state.currentBmiStudent) {
+      this.state = newBmiState;
     }
   }
 
@@ -45,7 +44,7 @@ class BMIContainer extends Component {
 
   // Are there more students in the list after the current one?
   hasMoreStudents() {
-    return this.state.bmiState.currentBmiStudent + 1 < this.props.students.length;
+    return this.state.currentBmiStudent + 1 < this.props.students.length;
   }
 
   // Clear the text inputs on this page for height and weight.
@@ -82,7 +81,7 @@ class BMIContainer extends Component {
 
 
   render() {
-    const currentStudentId = this.state.bmiState.currentBmiStudent,
+    const currentStudentId = this.state.currentBmiStudent,
         currentStudent = this.props.students[currentStudentId],
         studentProps = this.getCurrentStudentProperties(currentStudent);
 
@@ -181,7 +180,7 @@ class BMIContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  state
+  bmiState: state.bmiState
 });
 
 const mapDispatchToProps = (dispatch) => ({
