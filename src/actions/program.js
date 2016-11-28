@@ -1,8 +1,8 @@
 export const PROGRAM_FETCH_REQUESTED = 'PROGRAM_FETCH_REQUESTED';
-export const PROGRAM_FETCH_SUCCEDED = 'PROGRAM_FETCH_SUCCEDED';
+export const PROGRAM_FETCH_SUCCEEDED = 'PROGRAM_FETCH_SUCCEEDED';
 export const PROGRAM_FETCH_FAILED = 'PROGRAM_FETCH_FAILED';
 export const ADD_PROGRAM_REQUESTED = 'ADD_PROGRAM_REQUESTED';
-export const ADD_PROGRAM_SUCCEDED = 'ADD_PROGRAM_SUCCEDED';
+export const ADD_PROGRAM_SUCCEEDED = 'ADD_PROGRAM_SUCCEEDED';
 export const ADD_PROGRAM_FAILED = 'ADD_PROGRAM_FAILED';
 
 export const fetchPrograms = site_id => ({
@@ -11,7 +11,7 @@ export const fetchPrograms = site_id => ({
 });
 
 export const fetchProgramsSuccess = programs => ({
-  type: PROGRAM_FETCH_SUCCEDED,
+  type: PROGRAM_FETCH_SUCCEEDED,
   programs
 });
 
@@ -27,7 +27,7 @@ export const addProgram = (site_id, program_name) => ({
 });
 
 export const addProgramSuccess = program => ({
-  type: ADD_PROGRAM_SUCCEDED,
+  type: ADD_PROGRAM_SUCCEEDED,
   program
 });
 

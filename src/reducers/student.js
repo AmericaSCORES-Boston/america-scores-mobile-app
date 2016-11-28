@@ -1,6 +1,6 @@
 import {
   STUDENT_FETCH_REQUESTED,
-  STUDENT_FETCH_SUCCEDED,
+  STUDENT_FETCH_SUCCEEDED,
   STUDENT_FETCH_FAILED
 } from '../actions/student';
 
@@ -11,7 +11,7 @@ export default function studentsState(state = {}, action) {
         ...state,
         isFetching: true
       };
-    case STUDENT_FETCH_SUCCEDED:
+    case STUDENT_FETCH_SUCCEEDED:
       return {
         ...state,
         isFetching: false,

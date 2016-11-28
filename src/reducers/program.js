@@ -1,10 +1,10 @@
 import {
   PROGRAM_FETCH_REQUESTED,
-  PROGRAM_FETCH_SUCCEDED,
+  PROGRAM_FETCH_SUCCEEDED,
   PROGRAM_FETCH_FAILED,
   ADD_PROGRAM_REQUESTED,
-  ADD_PROGRAM_SUCCEDED,
-  ADD_PROGRAM_FAILED,
+  ADD_PROGRAM_SUCCEEDED,
+  ADD_PROGRAM_FAILED
 } from '../actions/program';
 
 export default function programsState(state = {}, action) {
@@ -14,7 +14,7 @@ export default function programsState(state = {}, action) {
         ...state,
         isFetching: true
       };
-    case PROGRAM_FETCH_SUCCEDED:
+    case PROGRAM_FETCH_SUCCEEDED:
       return {
         ...state,
         isFetching: false,
@@ -31,18 +31,18 @@ export default function programsState(state = {}, action) {
         ...state,
         isFetching: true
       };
-    case ADD_PROGRAM_SUCCEDED:
+    case ADD_PROGRAM_SUCCEEDED:
       return {
         ...state,
         isFetching: false,
         programs: [...state.programs, action.program[0]]
-      }
+      };
     case ADD_PROGRAM_FAILED:
       return {
         ...state,
         isFetching: false,
         message: action.message
-      }
+      };
     default:
       return state;
   }
