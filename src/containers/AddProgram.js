@@ -25,7 +25,7 @@ class AddProgramContainer extends Component {
     return (
       <Container style={[styles.container, styles.grayBg]}>
           <Content>
-            <InputGroup style={styles.inputGroup}>
+            <InputGroup style={[styles.mediumMarginTop, styles.inputGroup]}>
                 <Input placeholder="Program Name" onChangeText={(newProgramName) => this.setState({newProgramName})}/>
             </InputGroup>
           </Content>
