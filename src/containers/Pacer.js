@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { Container, Content, Button, InputGroup, Input } from 'native-base';
+import { Container, Content, Button } from 'native-base';
 
-import { ListView, View, TouchableOpacity, Text, Image } from 'react-native';
+import { ListView, View, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../actions/pacer';
 
