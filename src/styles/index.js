@@ -77,6 +77,22 @@ const styles = StyleSheet.create({
   },
   mediumVerticalMargin: {
     marginVertical: 25
+  },
+  gridList: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  gridItem: {
+    backgroundColor: '#FFF',
+    margin: 10,
+    width: 60,
+    height: 60,
+    borderRadius: 5,
+    borderColor: '#E4E4E4',
+    borderWidth: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 

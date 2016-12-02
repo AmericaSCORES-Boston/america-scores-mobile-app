@@ -3,11 +3,13 @@ import sitesState from './site';
 import programsState from './program';
 import studentsState from './student';
 import bmiState from './bmi';
+import pacerState from './pacer';
 import studentStatState from './stat';
 
 export default combineReducers({
-  sitesState, 
+  sitesState,
   programsState,
   studentsState,
-  bmiState
+  bmiState,
+  pacerState
 });

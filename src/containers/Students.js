@@ -78,7 +78,7 @@ class StudentsContainer extends Component {
     const footer = (
         <Footer>
           <FooterTab>
-            <Button active onPress={()=>Actions.pacer()}>
+            <Button active onPress={()=>Actions.pacer({students: this.state.students})}>
               Pacer Test
             </Button>
 
