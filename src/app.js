@@ -75,8 +75,6 @@ const App = () => {
             component={StudentsContainer}
             title="ProgramName"
             backTitle="Programs"
-            rightTitle="Add"
-            onRight={() => Actions.addStudent()}
           />
           <Scene
             key="addStudent"

@@ -61,7 +61,7 @@ it('creates an "FETCH_STUDENT" action', () => {
     last,
     dob,
   };
-  expect(fetchStudents.fetchStudent('Bob', 'Bobber', '08-12-1996')).toEqual(expectedAction);
+  expect(fetchStudents.searchStudent('Bob', 'Bobber', '08-12-1996')).toEqual(expectedAction);
 });
 
 it('creates an "FETCH_STUDENT_SUCCESS" action', () => {

@@ -44,6 +44,35 @@ export function * fetchStudents(action) {
   }
 }
 
+export function * searchStudent(action) {
+  try {
+    const student = yield call(Api.searchStudent, action.first_name, action.last_name, action.dob);
+    yield put(actions.searchStudentSuccess(student));
+  } catch (e) {
+    yield put(actions.searchStudentFailure(e.message));
+  }
+}
+
+export function * addExistingStudent(action) {
+  try {
+    const students = yield call(Api.addExistingStudent, action.program_id, action.student);
+    console.log(students);
+    yield put(actions.addExistingStudentSuccess(students[0]));
+  } catch (e) {
+    yield put(actions.addExistingStudentFailure(e.message));
+  }
+}
+
+export function * createStudent(action) {
+  try {
+    yield call(Api.createStudent, action.program_id, action.first_name, action.last_name, action.dob);
+    const students = yield call(Api.searchStudent, action.first_name, action.last_name, action.dob);
+    yield put(actions.createStudentSuccess(students[0]));
+  } catch (e) {
+    yield put(actions.createStudentFailure(e.message));
+  }
+}
+
 export function * fetchStat(action) {
   try {
     const stat = yield call(Api.fetchStat, action.stat_id);
@@ -86,6 +115,9 @@ export function * sagas() {
     takeEvery(program.PROGRAM_FETCH_REQUESTED, fetchPrograms),
     takeEvery(program.ADD_PROGRAM_REQUESTED, addProgram),
     takeEvery(student.STUDENT_FETCH_REQUESTED, fetchStudents),
+    takeEvery(student.SEARCH_STUDENT_REQUESTED, searchStudent),
+    takeEvery(student.CREATE_STUDENT_REQUESTED, createStudent),
+    takeEvery(student.ADD_EXISTING_STUDENT_REQUESTED, addExistingStudent),
     takeEvery(studentStat.STAT_FETCH_REQUESTED, fetchStat),
     takeEvery(studentStat.STAT_CREATE_REQUESTED, createStat),
     takeEvery(studentStat.STAT_UPDATE_REQUESTED, updateStat),
