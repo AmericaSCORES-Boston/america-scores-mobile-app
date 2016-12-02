@@ -42,6 +42,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch'
   },
+  smallMarginTop: {
+    marginTop: 5
+  },
   mediumMarginTop: {
     marginTop: 20
   },
@@ -85,14 +88,16 @@ const styles = StyleSheet.create({
   },
   gridItem: {
     backgroundColor: '#FFF',
-    margin: 10,
+    margin: 5,
     width: 60,
     height: 60,
     borderRadius: 5,
-    borderColor: '#E4E4E4',
     borderWidth: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  largeText: {
+    fontSize: 48
   }
 });
 
