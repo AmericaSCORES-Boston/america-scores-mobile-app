@@ -105,7 +105,7 @@ const App = () => {
             direction="vertical"
           />
           <Scene
-            key="individualStudent"
+            key="student"
             component={IndividualStudentContainer}
             title="StudentName"
             backTitle="Cancel"

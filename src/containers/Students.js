@@ -54,7 +54,7 @@ class StudentsContainer extends Component {
         <List
             dataArray={this.state.students}
             renderRow={(rowData) =>
-                <ListItem button onPress={()=>Actions.individualStudent({title: rowData.first_name + ' ' + rowData.last_name, student: rowData})}>
+                <ListItem button onPress={()=>Actions.student({title: rowData.first_name + ' ' + rowData.last_name, student_id: rowData.student_id})}>
                   <Text>{rowData.first_name + ' ' + rowData.last_name}</Text>
                 </ListItem>
               }
