@@ -1,23 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { View, Text } from 'react-native';
-import { Container, Content, List, ListItem, InputGroup, Input, H2 } from 'native-base';
-
+import { Container, Content, InputGroup, Input, H2 } from 'native-base';
+import scoresTheme from '../themes/scoresTheme';
 import { connect } from 'react-redux';
-import * as actions from '../actions/student';
+import * as actions from '../actions/individualStudent';
 
 import styles from '../styles';
 
 class IndividualStudentContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = props.studentsState;
-    this.state.bib_number = this.props.bib_num;
-    this.state.stud = this.props.stud;
+    this.state = props.individualStudentState;
+    //this.state.bib_number = this.props.bib_num;
   }
 
   componentWillMount() {
-    //this.props.fetchStudent(this.props.student_id);
+    this.props.fetchStudent(this.props.stud_id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,13 +27,13 @@ class IndividualStudentContainer extends Component {
   }
 
   render() {
-    const currentStudent = this.state.stud;
+    const currentStudent = this.state.students;
 
     return (
       <Container style={[styles.container, styles.grayBg]}>
           <Content>
             <Text style={styles.textAlignCenter}>Bib No.</Text>
-            <Text style={[styles.largerText, styles.textAlignCenter]}>{this.state.bib_number}</Text>
+            <Text style={[styles.largerText, styles.textAlignCenter]}>1</Text>
             <View style={styles.mediumMarginTop}>
               <H2>Name</H2>
               <View style={{flex: 1, flexDirection: 'row'}}>

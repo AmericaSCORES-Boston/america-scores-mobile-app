@@ -17,10 +17,13 @@ export {
   fetchStudents,
   fetchStudentsSuccess,
   fetchStudentsFailure,
+} from './student';
+
+export {
   fetchStudent,
   fetchStudentSuccess,
-  fetchStudentFailure
-} from './student';
+  fetchStudentFailure,
+} from './individualStudent';
 
 export {
     fetchStat,
@@ -29,7 +32,10 @@ export {
     createStatSuccess,
     updateStat,
     updateStatSuccess,
-    statRequestFailure
+    statRequestFailure,
+    fetchStudentStats,
+    fetchStudentStatsSucceeded,
+    fetchStudentStatsFailed
 } from './studentStat';
 
 export {

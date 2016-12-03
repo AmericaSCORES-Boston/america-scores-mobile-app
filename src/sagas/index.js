@@ -7,6 +7,7 @@ import * as program from '../actions/program';
 import * as student from '../actions/student';
 import * as studentStat from '../actions/studentStat';
 import * as stat from '../actions/stat';
+import * as individualStudent from '../actions/individualStudent';
 
 export function * fetchSites() {
   try {
@@ -47,7 +48,8 @@ export function * fetchStudents(action) {
 export function * fetchStudent(action) {
   try {
     const student = yield call(Api.fetchStudent, action.student_id);
-    yield put(actions.fetchStudentSuccess(student));
+    const stats = yield call(Api.fetchStudentStats, action.student_id);
+    yield put(actions.fetchStudentSuccess(student, stats));
   } catch (e) {
     yield put(actions.fetchStudentFailure(e.message));
   }
@@ -95,7 +97,7 @@ export function * sagas() {
     takeEvery(program.PROGRAM_FETCH_REQUESTED, fetchPrograms),
     takeEvery(program.ADD_PROGRAM_REQUESTED, addProgram),
     takeEvery(student.STUDENTS_FETCH_REQUESTED, fetchStudents),
-    takeEvery(student.STUDENT_FETCH_REQUESTED, fetchStudent),
+    takeEvery(individualStudent.STUDENT_FETCH_REQUESTED, fetchStudent),
     takeEvery(studentStat.STAT_FETCH_REQUESTED, fetchStat),
     takeEvery(studentStat.STAT_CREATE_REQUESTED, createStat),
     takeEvery(studentStat.STAT_UPDATE_REQUESTED, updateStat),

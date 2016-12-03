@@ -47,6 +47,10 @@ const Api = {
         return request(createEndpoint('/students/' + student_id));
     },
 
+    fetchStudentStats(student_id) {
+        return request(createEndpoint('/students/' + student_id + '/stats'));
+    },
+
     fetchStat(stat_id) {
         return request(createEndpoint('/stats/' + stat_id));
     },
