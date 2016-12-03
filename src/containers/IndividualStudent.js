@@ -12,10 +12,12 @@ class IndividualStudentContainer extends Component {
   constructor(props) {
     super(props);
     this.state = props.studentsState;
+    this.state.bib_number = this.props.bib_num;
+    this.state.stud = this.props.stud;
   }
 
   componentWillMount() {
-    this.props.fetchStudent(this.props.student_id);
+    //this.props.fetchStudent(this.props.student_id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -25,61 +27,35 @@ class IndividualStudentContainer extends Component {
     }
   }
 
-  // Get the properties for the given student.
-  getCurrentStudentProperties(currentStudent) {
-    let first_name = '', last_name = '', dob = '', feet = '', inches = '', weight = '';
-
-    if (currentStudent) {
-      const parsedDob = new Date(currentStudent.dob),
-        parsedHeight = parseInt(currentStudent.height),
-        parsedWeight = parseInt(currentStudent.weight);
-
-      first_name = currentStudent.first_name;
-      last_name = currentStudent.last_name;
-      dob = (parsedDob.getUTCMonth() + 1) + "/" + parsedDob.getUTCDate() + "/" + parsedDob.getUTCFullYear();
-
-      if (!isNaN(parsedHeight)) {
-        feet = Math.floor(parsedHeight / 12).toString();
-        inches = (parsedHeight % 12).toString();
-      }
-
-      if (!isNaN(parsedWeight)) {
-        weight = parsedWeight.toString();
-      }
-    }
-
-    return { first_name, last_name, dob, feet, inches, weight };
-  }
-
   render() {
-    const currentStudent = this.state.student,
-      studentProps = this.getCurrentStudentProperties(currentStudent);
+    const currentStudent = this.state.stud;
 
     return (
       <Container style={[styles.container, styles.grayBg]}>
           <Content>
             <Text style={styles.textAlignCenter}>Bib No.</Text>
-            <Text style={[styles.largerText, styles.textAlignCenter]}>1</Text>
+            <Text style={[styles.largerText, styles.textAlignCenter]}>{this.state.bib_number}</Text>
             <View style={styles.mediumMarginTop}>
               <H2>Name</H2>
               <View style={{flex: 1, flexDirection: 'row'}}>
-                <InputGroup style={[styles.InputGroup, {flex: 1}]}>
+                <InputGroup style={[styles.inputGroup, {flex: 1}]}>
                   <Input style={{flex: 1}}
                          ref="first_name"
-                         placeholder={studentProps.first_name}
-                         //defaultValue={studentProps.first_name}
+                         autoCorrect={false}
+                         defaultValue={currentStudent.first_name}
                          returnKeyType="done"
                   />
                 </InputGroup>
-                <InputGroup style={[styles.InputGroup, {flex: 1}]}>
+                <Text style={{flex: .5, paddingTop: 9}}></Text>
+                <InputGroup style={[styles.inputGroup, {flex: 1}]}>
                   <Input style={{flex: 1}}
                          ref="last_name"
-                         //placeholder={studentProps.last_name}
-                         defaultValue={studentProps.last_name}
+                         autoCorrect={false}
+                         defaultValue={currentStudent.last_name}
                          returnKeyType="done"
                   />
                 </InputGroup>
-                <InputGroup style={styles.inputgroup}>
+                <InputGroup style={styles.inputGroup}>
                   <Input placeholder="0"/>
                 </InputGroup>
               </View>
@@ -87,31 +63,26 @@ class IndividualStudentContainer extends Component {
             <View style={styles.mediumMarginTop}>
               <H2>Height</H2>
               <View style={{flex: 1, flexDirection: 'row'}}>
-                <InputGroup style={[styles.InputGroup, {flex: 1}]}>
+                <InputGroup style={[styles.inputGroup, {flex: 1}]}>
                   <Input style={{flex: 1}}
                          ref="feet"
-                         //placeholder={''}
                          keyboardType="numeric"
-                         defaultValue={studentProps.feet}
+                         defaultValue={currentStudent.height}
                          returnKeyType="done"
                          maxLength={1}
                   />
                 </InputGroup>
                 <Text style={{flex: .5, paddingTop: 9}}>ft</Text>
-                <InputGroup style={[styles.InputGroup, {flex: 1}]}>
+                <InputGroup style={[styles.inputGroup, {flex: 1, paddingTop: 3}]}>
                   <Input style={{flex: 1}}
                          ref="inches"
-                         //placeholder={''}
                          keyboardType="numeric"
-                         defaultValue={studentProps.inches}
+                         defaultValue={""}
                          returnKeyType="done"
                          maxLength={2}
                   />
                 </InputGroup>
                 <Text style={{flex: .5, paddingTop: 9}}>in</Text>
-                <InputGroup style={styles.inputgroup}>
-                  <Input placeholder="0"/>
-                </InputGroup>
               </View>
             </View>
           </Content>

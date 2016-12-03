@@ -1,4 +1,4 @@
-import reducer from '../src/reducers/students';
+import reducer from '../src/reducers/student';
 import * as types from '../src/actions/constants';
 import * as MockStudents from '../config/mockStudents';
 
