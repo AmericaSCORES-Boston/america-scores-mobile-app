@@ -55,8 +55,11 @@ export function * searchStudent(action) {
 
 export function * addExistingStudent(action) {
   try {
+    if (action.student_ids.includes(action.student.student_id)) {
+      throw new StudentAlreadyInProgramException(action.student);
+    }
+
     const students = yield call(Api.addExistingStudent, action.program_id, action.student);
-    console.log(students);
     yield put(actions.addExistingStudentSuccess(students[0]));
   } catch (e) {
     yield put(actions.addExistingStudentFailure(e.message));
@@ -123,4 +126,10 @@ export function * sagas() {
     takeEvery(studentStat.STAT_UPDATE_REQUESTED, updateStat),
     takeEvery(stat.STATS_FETCH_REQUESTED, fetchStats)
   ]
+}
+
+function StudentAlreadyInProgramException(student) {
+  this.name = "StudentAlreadyInProgram";
+  this.message = `${student.first_name} ${student.last_name} already exists in program.`;
+  this.stack = (new Error()).stack;
 }

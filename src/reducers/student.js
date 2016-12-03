@@ -11,6 +11,7 @@ export default function studentsState(state = {}, action) {
       return {
         ...state,
         isFetching: false,
+        student_ids: action.students.map((student) => student.student_id),
         students: action.students
       };
     case students.STUDENT_FETCH_FAILED:
@@ -22,23 +23,13 @@ export default function studentsState(state = {}, action) {
     case students.SEARCH_STUDENT_REQUESTED:
       return {
         ...state,
-        isFetching: true,
-        studentIds: state.studentIds
+        isFetching: true
       };
     case students.SEARCH_STUDENT_SUCCEEDED:
-      // const studentToAdd = action.student[0];
-      // if (state.studentIds.contains(studentToAdd.student_id)) {
-      //   return {
-      //     ...state,
-      //     isFetching: false
-      //   };
-      // }
-
       return {
         ...state,
         isFetching: false,
-        // studentIds: [...state.studentIds, action.student[0].student_id],
-        searchResult: action.student
+        searchResults: action.students
       };
     case students.SEARCH_STUDENT_FAILED:
       return {
@@ -57,6 +48,7 @@ export default function studentsState(state = {}, action) {
       return {
         ...state,
         isFetching: false,
+        student_ids: [...state.student_ids, action.student.student_id],
         students: [...state.students, action.student]
       };
     case students.CREATE_STUDENT_FAILED:

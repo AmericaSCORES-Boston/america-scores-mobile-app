@@ -36,9 +36,9 @@ export const searchStudent = (first_name, last_name, dob) => ({
   dob
 });
 
-export const searchStudentSuccess = (student) => ({
+export const searchStudentSuccess = (students) => ({
   type: SEARCH_STUDENT_SUCCEEDED,
-  student
+  students
 });
 
 export const searchStudentFailure = message => ({
@@ -54,7 +54,7 @@ export const createStudent = (program_id, first_name, last_name, dob) => ({
   dob
 });
 
-export const createStudentSuccess = (student) => ({
+export const createStudentSuccess = student => ({
   type: CREATE_STUDENT_SUCCEEDED,
   student
 });
@@ -64,18 +64,19 @@ export const createStudentFailure = message => ({
   message
 });
 
-export const addExistingStudent = (program_id, student) => ({
+export const addExistingStudent = (program_id, student_ids, student) => ({
   type: ADD_EXISTING_STUDENT_REQUESTED,
   program_id,
+  student_ids,
   student
 });
 
-export const addExistingStudentSuccess = (student) => ({
+export const addExistingStudentSuccess = student => ({
   type: ADD_EXISTING_STUDENT_SUCCEEDED,
   student
 });
 
-export const addExistingStudentFailure = (message) => ({
+export const addExistingStudentFailure = message => ({
   type: ADD_EXISTING_STUDENT_FAILED,
   message
 });
