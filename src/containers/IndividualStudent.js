@@ -20,14 +20,14 @@ class IndividualStudentContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newStudentState = nextProps.studentsState;
+    const newStudentState = nextProps.individualStudentState;
     if (newStudentState && newStudentState.student) {
-      this.state = newStudentState;
+      this.state = newStudentState.student[0];
     }
   }
 
   render() {
-    const currentStudent = this.state.students;
+    const currentStudent = this.state;
 
     return (
       <Container style={[styles.container, styles.grayBg]}>
@@ -91,7 +91,7 @@ class IndividualStudentContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  studentsState: state.studentsState
+  individualStudentState: state.individualStudentState
 });
 
 const mapDispatchToProps = (dispatch) => ({
