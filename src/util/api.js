@@ -15,10 +15,11 @@ function request(path, options={}) {
         .catch(error => error);
 }
 
-function createRequestOptions(request_type, data) {
+function createRequestOptions(request_type, data, bearer_token = 0) {
     return {
         method: request_type,
         headers: {
+            'Authorization': 'Bearer ' + bearer_token,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
@@ -27,53 +28,53 @@ function createRequestOptions(request_type, data) {
 }
 
 const Api = {
-    fetchSites() {
-        return request(createEndpoint('/sites'));
+    fetchSites(user) {
+        return request(createEndpoint('/sites'), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
     },
 
-    fetchPrograms(site_id) {
-        return request(createEndpoint(`/sites/${site_id}/programs`));
+    fetchPrograms(user, site_id) {
+        return request(createEndpoint(`/sites/${site_id}/programs`), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
     },
 
-    addProgram(site_id, program_name) {
-        return request(createEndpoint(`/sites/${site_id}/programs`), createRequestOptions(POST, { program_name }));
+    addProgram(user, site_id, program_name) {
+        return request(createEndpoint(`/sites/${site_id}/programs`), createRequestOptions(POST, { program_name }, user.idToken));
     },
 
-    fetchStudents(program_id) {
-        return request(createEndpoint(`/programs/${program_id}/students`));
+    fetchStudents(user, program_id) {
+        return request(createEndpoint(`/programs/${program_id}/students`), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
     },
 
-    searchStudent(first_name, last_name, dob) {
-        return request(createEndpoint(`/students/?first_name=${first_name}&last_name=${last_name}&dob=${dob}`));
+    searchStudent(user, first_name, last_name, dob) {
+        return request(createEndpoint(`/students/?first_name=${first_name}&last_name=${last_name}&dob=${dob}`), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
     },
 
-    addExistingStudent(program_id, student) {
+    addExistingStudent(user, program_id, student) {
         const student_id = student.student_id,
             first_name = student.first_name,
             last_name = student.last_name,
             dob = student.dob;
-        return request(createEndpoint(`/students/${student_id}/programs/${program_id}`), createRequestOptions(PUT, {first_name, last_name, dob}));
+        return request(createEndpoint(`/students/${student_id}/programs/${program_id}`), createRequestOptions(PUT, {first_name, last_name, dob}, user.idToken));
     },
 
-    createStudent(program_id, first_name, last_name, dob) {
-        return request(createEndpoint(`/programs/${program_id}/students`), createRequestOptions(POST, {first_name, last_name, dob}));
+    createStudent(user, program_id, first_name, last_name, dob) {
+        return request(createEndpoint(`/programs/${program_id}/students`), createRequestOptions(POST, {first_name, last_name, dob}, user.idToken));
     },
 
-    fetchStat(stat_id) {
-        return request(createEndpoint(`/stats/${stat_id}`));
+    fetchStat(user, stat_id) {
+        return request(createEndpoint(`/stats/${stat_id}`), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
     },
 
-    createStat(stat) {
-        return request(createEndpoint('/stats'), createRequestOptions(POST, stat));
+    createStat(user, stat) {
+        return request(createEndpoint('/stats'), createRequestOptions(POST, stat, user.idToken));
     },
 
-    updateStat(stat) {
+    updateStat(user, stat) {
         const statId = stat.stat_id || -1;
-        return request(createEndpoint(`/stats/${statId}`), createRequestOptions(PUT), stat);
+        return request(createEndpoint(`/stats/${statId}`), createRequestOptions(PUT, stat, user.idToken));
     },
 
-    fetchStats(program_id) {
-        return request(createEndpoint(`/programs/${program_id}/stats`));
+    fetchStats(user, program_id) {
+        return request(createEndpoint(`/programs/${program_id}/stats`), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
     }
 };
 
