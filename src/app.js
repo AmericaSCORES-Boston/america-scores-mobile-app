@@ -53,7 +53,7 @@ const App = () => {
             key="sites"
             component={SitesContainer}
             title="Sites"
-            initial // temp
+            hideBackImage="true"
           />
           <Scene
             key="programs"
@@ -68,7 +68,6 @@ const App = () => {
             backTitle="Cancel"
             hideBackImage="true"
             direction="vertical"
-            panHandlers={null}
           />
           <Scene
             key="students"
@@ -111,7 +110,6 @@ const App = () => {
             rightTitle="Done"
             onRight={() => alert('Student Saved')}
             direction="vertical"
-            panHandlers={null}
           />
         </Router>
       </Provider>

@@ -1,5 +1,6 @@
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
+import { Actions } from 'react-native-router-flux';
 import * as actions from '../actions/index';
 import Api from '../util/api';
 import * as site from '../actions/site';
@@ -7,6 +8,8 @@ import * as program from '../actions/program';
 import * as student from '../actions/student';
 import * as studentStat from '../actions/studentStat';
 import * as stat from '../actions/stat';
+import * as login from '../actions/login';
+var Auth0Lock = require('react-native-lock');
 
 export function * fetchSites() {
   try {
@@ -112,6 +115,32 @@ export function * fetchStats(action) {
   }
 }
 
+export function * loginUser() {
+  var lock = new Auth0Lock({clientId: 'HvNKnxLle17wN23DJj1TFmpMBwG1Kb0U', domain: 'asbadmin.auth0.com'});
+
+  const showLock = () =>
+    new Promise((resolve, reject) => {
+      lock.show({
+        closable: true,
+        disableSignUp: true,
+        connections: ["Username-Password-Authentication"]
+      }, (err, profile, auth0Token) => {
+        if (err) {
+          reject({ err });
+        }
+        resolve({ auth0Token });
+      });
+    });
+
+  try {
+    const {auth0Token} = yield call(showLock);
+    yield put(actions.loginUserSuccess(auth0Token));
+    Actions.sites();
+  } catch (e) {
+    yield put(actions.loginUserFailure(e.message));
+  }
+}
+
 export function * sagas() {
   yield [
     takeEvery(site.SITE_FETCH_REQUESTED, fetchSites),
@@ -124,7 +153,8 @@ export function * sagas() {
     takeEvery(studentStat.STAT_FETCH_REQUESTED, fetchStat),
     takeEvery(studentStat.STAT_CREATE_REQUESTED, createStat),
     takeEvery(studentStat.STAT_UPDATE_REQUESTED, updateStat),
-    takeEvery(stat.STATS_FETCH_REQUESTED, fetchStats)
+    takeEvery(stat.STATS_FETCH_REQUESTED, fetchStats),
+    takeEvery(login.LOGIN_REQUESTED, loginUser)
   ]
 }
 

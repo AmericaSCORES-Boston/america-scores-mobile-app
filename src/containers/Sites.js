@@ -45,6 +45,7 @@ class SitesContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  loginState: state.loginState,
   sitesState: state.sitesState
 });
 

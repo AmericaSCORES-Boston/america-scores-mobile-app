@@ -43,3 +43,9 @@ export {
     fetchStatsSuccess,
     fetchStatsFailure
 } from './stat';
+
+export {
+    loginUser,
+    loginUserSuccess,
+    loginUserFailure
+} from './login';
