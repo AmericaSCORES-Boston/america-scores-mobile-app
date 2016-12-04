@@ -32,7 +32,7 @@ class SitesContainer extends Component {
           <Content theme={scoresTheme}>
             <List
               dataArray={this.state.sites}
-              renderRow={(rowData) => 
+              renderRow={(rowData) =>
                 <ListItem button onPress={()=>Actions.programs({title: rowData.site_name, site_id: rowData.site_id})}>
                   <Text>{rowData.site_name}</Text>
                 </ListItem>

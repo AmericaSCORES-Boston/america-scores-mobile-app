@@ -43,3 +43,9 @@ export {
     fetchStatsSuccess,
     fetchStatsFailure
 } from './stat';
+
+export {
+    loadPacer,
+    pacerItemTapped,
+    pacerItemLongPress
+} from './pacer';
