@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
   white: {
     color: 'white'
   },
+  errorRed: {
+    color: '#ed2f2f'
+  },
+  bold: {
+    fontWeight: 'bold'
+  },
   textCenter: {
     alignSelf: 'center'
   },

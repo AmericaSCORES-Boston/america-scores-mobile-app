@@ -16,7 +16,16 @@ export {
 export {
   fetchStudents,
   fetchStudentsSuccess,
-  fetchStudentsFailure
+  fetchStudentsFailure,
+  searchStudent,
+  searchStudentSuccess,
+  searchStudentFailure,
+  createStudent,
+  createStudentSuccess,
+  createStudentFailure,
+  addExistingStudent,
+  addExistingStudentSuccess,
+  addExistingStudentFailure
 } from './student';
 
 export {

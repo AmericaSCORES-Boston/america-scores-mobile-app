@@ -11,7 +11,15 @@ import styles from '../styles';
 class StudentsContainer extends Component {
   constructor(props) {
     super(props);
+    const student_ids = [];
     this.state = props.studentsState;
+    this.state = {...this.state, student_ids};
+
+    this.props.component.onRight = () => {
+      Actions.addStudent({program_id: this.props.program_id});
+    };
+
+    this.props.component.rightTitle = 'Add';
   }
 
   componentWillMount() {

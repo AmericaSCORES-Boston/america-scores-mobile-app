@@ -1,73 +1,333 @@
 import React, { Component, PropTypes } from 'react';
-import { Container, Content, Button, InputGroup, Input } from 'native-base';
+import { Actions } from 'react-native-router-flux';
+import { Alert, View } from 'react-native';
+import { Container, Content, Button, Picker, InputGroup, Input, List, H1, H2, H3 } from 'native-base';
 
-import { Text, Image } from 'react-native';
 import { connect } from 'react-redux';
-import * as actions from '../actions/login';
+import * as actions from '../actions/student';
+import scoresTheme from '../themes/scoresTheme';
 
-import styles from '../styles';
+import styles from '../styles/index';
 
 class AddStudentContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            ...props.studentData,
+            first_name: '',
+            last_name: '',
+            year: '',
+            month: '',
+            day: '',
+            dob: ''
+        };
+    }
 
-  componentDidMount() {
+    componentWillReceiveProps(nextProps) {
+        const newStudentData = nextProps.studentData;
+        if (newStudentData.searchResults !== this.state.searchResults) {
+            this.state.searchResults = newStudentData.searchResults;
+            this.showSearchResults();
+        }
+        else if (newStudentData.message !== this.state.message) {
+            Alert.alert('Student Already Exists', newStudentData.message);
+        }
+    }
 
-  }
+    // Show the results of the search in an alert box (if a student has or hasn't been found).
+    showSearchResults() {
+        const self = this,
+            displayName = `${this.state.first_name} ${this.state.last_name}`,
+            displayDob = `${this.state.month}/${this.state.day}/${this.state.year}`,
+            studentFound = this.state.searchResults.length > 0,
+            student = (studentFound) ? this.state.searchResults[0] : null;
 
-  componentWillReceiveProps(nextProps) {
+        if (studentFound) {
+            student.dob = student.dob.substring(0, 10);
+        }
 
-  }
+        const alertTitle = (studentFound) ? 'Existing Student Found' : 'Student Not Found';
 
-    onValueChange (value: string) {
-        this.setState({
-            selected1 : value
+        const alertBody = (studentFound) ?
+                `${displayName} was found.\n` +
+                `Date of Birth: ${displayDob}\n\n` +
+                'Add them to this program?' :
+                `${displayName} was not found.\n` +
+                `Date of Birth: ${displayDob}\n\n` +
+                'Create this student?';
+
+        const alertButtons = (studentFound) ?
+            [{text: 'Cancel', style: 'cancel'},
+             {text: 'OK', onPress: () => self.addExistingStudent(student) }] :
+            [{text: 'Cancel', style: 'cancel'},
+             {text: 'OK', onPress: () => self.createStudent() }];
+
+        Alert.alert(alertTitle, alertBody, alertButtons);
+    }
+
+    // Add an existing student to this program and go back to the students page.
+    addExistingStudent(student) {
+        this.props.addExistingStudent(this.props.program_id, this.state.student_ids, student);
+        Actions.pop();
+    }
+
+    // Create a new student to add to this program, and go back to the students page.
+    createStudent() {
+        this.props.createStudent(this.props.program_id, this.state.first_name, this.state.last_name, this.state.dob);
+        Actions.pop();
+    }
+
+    // Search for a student with the given name and date of birth.
+    searchStudent() {
+        const self = this,
+            first_name = this.state.first_name.trim(),
+            last_name = this.state.last_name.trim(),
+            year = this.toIntString(this.state.year.trim()),
+            month = this.state.month.trim(),
+            day = this.formatDay(this.toIntString(this.state.day.trim())),
+            dob = [year, month, day];
+
+        this.setState({first_name, last_name, year, month, day, dob: dob.join('-')}, function() {
+            this.props.searchStudent(self.state.first_name, self.state.last_name, self.state.dob);
         });
     }
 
+    // Is the search input valid?  All fields must be filled, and date of birth must meet the required conditions.
+    isValidSearch() {
+        return this.isFirstNameValid() &&
+            this.isLastNameValid() &&
+            this.isMonthValid() &&
+            this.isDayValid() &&
+            this.isYearValid();
+    }
 
-  render() {
-    return (
-      <Container style={[styles.container, styles.grayBg]}>
-        <Content>
-          <Text style={styles.textAlignCenter}>To add a student to this program, search by their first and last name, and date of birth.</Text>
-          <InputGroup style={styles.inputGroup}>
-              <Input placeholder="First Name"/>
-          </InputGroup>
-          <InputGroup style={styles.inputGroup}>
-              <Input placeholder="Last Name"/>
-          </InputGroup>
+    // Is the first name entered valid?
+    isFirstNameValid() {
+        const first_name = this.state.first_name.trim();
+        return first_name.length > 0;
+    }
 
-          <Button style={styles.textCenter}>
-            Add
-          </Button>
-        </Content>
-      </Container>
-    );
-  }
+    // Is the last name entered valid?
+    isLastNameValid() {
+        const last_name = this.state.last_name.trim();
+        return last_name.length > 0;
+    }
+
+    // Is the month entered valid?
+    isMonthValid() {
+        const month = this.state.month.trim();
+        return month.length > 0;
+    }
+
+    // Is the day entered valid?  Checks that the day is an integer between 1 and 31.
+    isDayValid() {
+        const dayString = this.formatDay(this.toIntString(this.state.day.trim())),
+            day = parseInt(dayString, 10);
+
+        return (dayString.length > 0) &&
+            (this.isInt(dayString)) &&
+            (day >= this.props.dayMin) &&
+            (day <= this.props.dayMax);
+    }
+
+    // Is the year entered valid?  Checks that the year is an integer between the current year (2016) and 30 years
+    // before (1986).
+    isYearValid() {
+        const yearString = this.toIntString(this.state.year.trim()),
+            year = parseInt(yearString, 10);
+
+        return (yearString.length === 4) &&
+            (this.isInt(yearString)) &&
+            (year >= this.props.yearMin) &&
+            (year < this.props.currentYear);
+    }
+
+    // Is a given string an integer?
+    isInt(val) {
+        return !isNaN(parseInt(val, 10));
+    }
+
+    // Convert a string into an integer if possible.  Otherwise, return the value entered.
+    toIntString(val) {
+        const num = parseInt(val, 10);
+        return (isNaN(num)) ? val : num.toString();
+    }
+
+    // Format a day value so that it is in the form of DD.  If the day is already two digits, no modification is
+    // necessary.  If the day is only 1 digit, a '0' must be prepended.
+    formatDay(day) {
+        return (day.length === 1 && this.isInt(day)) ? '0' + day : day;
+    }
+
+    render() {
+        return (
+            <Container style={[styles.container, styles.containerPadding]}>
+                <Content theme={scoresTheme}>
+                    <H3 style={styles.textAlignCenter}>To add a student to this program,</H3>
+                    <H3 style={styles.textAlignCenter}>search by their name, and date of birth.</H3>
+
+                    <View style={styles.mediumMarginTop}>
+                        <H2 style={styles.bold}>Name</H2>
+                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={{flex: .75, flexDirection: 'row', paddingRight: 10 }}>
+                                <InputGroup style={[styles.InputGroup, {flex: 1}]}>
+                                    <Input placeholder={'First'}
+                                           autoCapitalize="words"
+                                           returnKeyType="next"
+                                           onChangeText={(first_name) => this.setState({first_name})}
+                                           onSubmitEditing={() => { this._last_name._textInput.focus();}}
+                                    />
+                                </InputGroup>
+                            </View>
+
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <InputGroup style={[styles.InputGroup, {flex: 1}]}>
+                                    <Input ref={component => this._last_name = component}
+                                           placeholder={'Last'}
+                                           autoCapitalize="words"
+                                           returnKeyType="next"
+                                           onChangeText={(last_name) => this.setState({last_name})}
+                                    />
+                                </InputGroup>
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style={styles.mediumMarginTop}>
+                        <H2 style={styles.bold}>Date of Birth</H2>
+                        <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={{flex: .75, flexDirection: 'row'}}>
+                                <Picker
+                                    style={{flex: 1}}
+                                    iosHeader="Month"
+                                    mode="dropdown"
+                                    selectedValue={this.state.month}
+                                    onValueChange={(month) => this.setState({month})} >
+
+                                    <Picker.Item label="Month" value="" />
+                                    <Picker.Item label="Jan."  value="01" />
+                                    <Picker.Item label="Feb."  value="02" />
+                                    <Picker.Item label="Mar."  value="03" />
+                                    <Picker.Item label="Apr."  value="04" />
+                                    <Picker.Item label="May"   value="05" />
+                                    <Picker.Item label="Jun."  value="06" />
+                                    <Picker.Item label="Jul."  value="07" />
+                                    <Picker.Item label="Aug."  value="08" />
+                                    <Picker.Item label="Sep."  value="09" />
+                                    <Picker.Item label="Oct."  value="10" />
+                                    <Picker.Item label="Nov."  value="11" />
+                                    <Picker.Item label="Dec."  value="12" />
+                                </Picker>
+                            </View>
+
+                            <View style={{flex: .4, flexDirection: 'row', paddingHorizontal: 10}}>
+                                <InputGroup error={!this.isDayValid()}
+                                            success={this.isDayValid()}
+                                            style={[styles.InputGroup, {flex: 1}]}>
+                                    <Input placeholder={'Day'}
+                                           keyboardType="numeric"
+                                           returnKeyType="next"
+                                           maxLength={2}
+                                           onChangeText={(day) => this.setState({day})}
+                                           onSubmitEditing={() => { this._year._textInput.focus();}}
+                                    />
+                                </InputGroup>
+                            </View>
+
+                            <View style={{flex: .75, flexDirection: 'row'}}>
+                                <InputGroup error={!this.isYearValid()}
+                                            success={this.isYearValid()}
+                                            style={[styles.InputGroup, {flex: 1}]}>
+                                    <Input ref={component => this._year = component}
+                                           placeholder={'Year'}
+                                           returnKeyType="next"
+                                           keyboardType="numeric"
+                                           maxLength={4}
+                                           onChangeText={(year) => this.setState({year})}
+                                    />
+                                </InputGroup>
+                            </View>
+                        </View>
+                    </View>
+
+                    {this.showErrors()}
+
+                    <View style={styles.mediumMarginTop}>
+                        <Button large block disabled={!this.isValidSearch()} onPress={() => this.searchStudent()}>
+                            <H1 style={styles.white}>Search</H1>
+                        </Button>
+                    </View>
+                </Content>
+            </Container>
+        );
+    }
+
+    // Show a list of errors to the user based on their inputs so far.
+    showErrors() {
+        let errors = [];
+
+        if (!this.isFirstNameValid()) {
+            errors.push('\u2022 The first name is missing.');
+        }
+        if (!this.isLastNameValid()) {
+            errors.push('\u2022 The last name is missing.');
+        }
+        if (!this.isMonthValid()) {
+            errors.push('\u2022 The month has not been selected.');
+        }
+        if (!this.isDayValid()) {
+            errors.push(`\u2022 The day must be between ${this.props.dayMin} and ${this.props.dayMax}.`);
+        }
+        if (!this.isYearValid()) {
+            errors.push(`\u2022 The year must be between ${this.props.yearMin} and ${this.props.currentYear}.`);
+        }
+
+        return (errors.length > 0) ? (
+            <List style={styles.mediumMarginTop}
+                  dataArray={errors}
+                  renderRow={(rowData) =>
+                    <H3 style={styles.errorRed}>{rowData}</H3>
+                  }
+            />
+        ) : null;
+    }
 }
 
 AddStudentContainer.propTypes = {
-  // fetchSites: PropTypes.func.isRequired,
-  loginData: PropTypes.object.isRequired
+    studentData: PropTypes.object.isRequired,
+    currentYear: PropTypes.number.isRequired,
+    yearMin: PropTypes.number.isRequired,
+    dayMin: PropTypes.number.isRequired,
+    dayMax: PropTypes.number.isRequired
 };
 
+const currentYear = new Date().getFullYear();
+
 AddStudentContainer.defaultProps = {
-  loginData: {}
+    studentData: {},
+    currentYear,
+    yearMin: currentYear - 30,
+    dayMin: 1,
+    dayMax: 31
 };
 
 const mapStateToProps = (state) => ({
-  loginData: state.loginState
+    studentData: state.studentsState
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchSites: () => {
-    dispatch(actions.fetchSites());
-  }
+    searchStudent: (first_name, last_name, dob) => {
+        dispatch(actions.searchStudent(first_name, last_name, dob));
+    },
+    createStudent: (program_id, first_name, last_name, dob) => {
+        dispatch(actions.createStudent(program_id, first_name, last_name, dob));
+    },
+    addExistingStudent: (program_id, student_ids, student) => {
+        dispatch(actions.addExistingStudent(program_id, student_ids, student));
+    }
 });
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(AddStudentContainer);
