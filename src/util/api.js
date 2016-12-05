@@ -4,6 +4,8 @@ const root = "http://ec2-54-87-140-118.compute-1.amazonaws.com/api",
     POST = "POST",
     PUT = "PUT";
 
+
+
 function createEndpoint(path) {
     return root + path;
 }
@@ -17,13 +19,18 @@ function request(path, options={}) {
         .catch(error => error);
 }
 
+function auth(idToken) {
+    return new Headers({ 'Authorization': 'Bearer' + idToken, 'Connection': 'mobile' });
+}
+
 function createRequestOptions(request_type, data, bearer_token = 0) {
     return {
         method: request_type,
         headers: {
             'Authorization': 'Bearer ' + bearer_token,
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Connection': 'mobile'
         },
         body: JSON.stringify(data)
     };
@@ -31,11 +38,11 @@ function createRequestOptions(request_type, data, bearer_token = 0) {
 
 const Api = {
     fetchSites(user) {
-        return request(createEndpoint('/sites'), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
+        return request(createEndpoint('/sites'), { headers: auth(user.idToken) });
     },
 
     fetchPrograms(user, site_id) {
-        return request(createEndpoint(`/sites/${site_id}/programs`), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
+        return request(createEndpoint(`/sites/${site_id}/programs`), { headers: auth(user.idToken) });
     },
 
     addProgram(user, site_id, program_name) {
@@ -43,11 +50,11 @@ const Api = {
     },
 
     fetchStudents(user, program_id) {
-        return request(createEndpoint(`/programs/${program_id}/students`), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
+        return request(createEndpoint(`/programs/${program_id}/students`), { headers: auth(user.idToken) });
     },
 
     searchStudent(user, first_name, last_name, dob) {
-        return request(createEndpoint(`/students/?first_name=${first_name}&last_name=${last_name}&dob=${dob}`), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
+        return request(createEndpoint(`/students/?first_name=${first_name}&last_name=${last_name}&dob=${dob}`), { headers: auth(user.idToken) });
     },
 
     addExistingStudent(user, program_id, student) {
@@ -63,7 +70,7 @@ const Api = {
     },
 
     fetchStat(user, stat_id) {
-        return request(createEndpoint(`/stats/${stat_id}`), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
+        return request(createEndpoint(`/stats/${stat_id}`), { headers: auth(user.idToken) });
     },
 
     createStat(user, stat) {
@@ -76,11 +83,11 @@ const Api = {
     },
 
     fetchStats(user, program_id) {
-        return request(createEndpoint(`/programs/${program_id}/stats`), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
+        return request(createEndpoint(`/programs/${program_id}/stats`), { headers: auth(user.idToken) });
     },
 
     createAccount(email, username, password, first_name, last_name) {
-        return request(createEndpoint(`/xxx`), createRequestOptions(POST, {email, username, password, first_name, last_name}));        
+        return request(createEndpoint(`/accounts`), createRequestOptions(POST, {email, username, password, first_name, last_name}));        
     }
 };
 
