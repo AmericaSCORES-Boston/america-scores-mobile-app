@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Actions } from 'react-native-router-flux';
 import { Container, Content, Button, InputGroup, Input, List, Radio, ListItem, H1 } from 'native-base';
 
-import { Alert, Text, Image } from 'react-native';
+import { View, Alert, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../actions/createAccount';
 
@@ -80,9 +80,11 @@ class CreateAccountContainer extends Component {
           <InputGroup borderType='underline'>
             <Input autoCapitalize="none" placeholder='Confirm Password' secureTextEntry onChangeText={(confirmPassword) => this.setState({confirmPassword})} />
           </InputGroup>
-          <Button large block style={[styles.textCenter, styles.loginButton]} onPress={() => this.createAccount()}>
-            <H1 style={styles.white}>Create Account</H1>
-          </Button>
+          <View style={styles.mediumMarginTop}>
+            <Button large block style={[styles.textCenter]} onPress={() => this.createAccount()}>
+              <H1 style={styles.white}>Create Account</H1>
+            </Button>
+          </View>
         </Content>
       </Container>
     );

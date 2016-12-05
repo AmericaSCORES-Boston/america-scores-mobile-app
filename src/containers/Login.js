@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Container, Content, Button, InputGroup, Input, H1 } from 'native-base';
 
-import { Text, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import * as actions from '../actions/login';
@@ -29,9 +29,11 @@ class LoginContainer extends Component {
       <Container style={[styles.container, styles.containerPadding]}>
         <Content theme={scoresTheme}>
           <Image style={styles.textCenter} source={require('../img/logo.jpg')} />
-          <Button large block onPress={() => this.login()}>
-            <H1 style={styles.white}>Login</H1>
-          </Button>
+          <View style={styles.mediumMarginTop}>
+            <Button large block onPress={() => this.login()}>
+              <H1 style={styles.white}>Login</H1>
+            </Button>
+          </View>
         </Content>
       </Container>
     );
