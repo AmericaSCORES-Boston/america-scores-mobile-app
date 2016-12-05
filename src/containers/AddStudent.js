@@ -84,7 +84,7 @@ class AddStudentContainer extends Component {
         const self = this,
             first_name = this.state.first_name.trim(),
             last_name = this.state.last_name.trim(),
-            year = numbers.toInt(this.state.year.trim()),
+            year = this.state.year.trim(),
             month = this.state.month.trim(),
             day = dates.formatDayMonth(numbers.toInt(this.state.day.trim())),
             dob = dates.formatDateString(month, day, year, '-');
@@ -127,7 +127,7 @@ class AddStudentContainer extends Component {
             dayString = dates.formatDayMonth(day);
 
         return (dayString.length > 0) &&
-            (numbers.isInt(dayString)) &&
+            (numbers.isInt(day)) &&
             (day >= this.props.dayMin) &&
             (day <= this.props.dayMax);
     }

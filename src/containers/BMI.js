@@ -17,7 +17,6 @@ class BMIContainer extends Component {
     super(props);
     this.state = {
       ...props.bmiState,
-      ...props.eventsState,
       feet: '',
       inches: '',
       weight: '',
@@ -34,8 +33,7 @@ class BMIContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newBmiState = nextProps.bmiState,
-        newEventsState = nextProps.eventsState;
+    const newBmiState = nextProps.bmiState;
 
     if (this.isBmiCollectionCompleted() && newBmiState.message) {
       Alert.alert('BMI Collection', newBmiState.message);
@@ -259,8 +257,7 @@ class BMIContainer extends Component {
 
 
 const mapStateToProps = (state) => ({
-  bmiState: state.bmiState,
-  eventsState: state.eventsState
+  bmiState: state.bmiState
 });
 
 const mapDispatchToProps = (dispatch) => ({

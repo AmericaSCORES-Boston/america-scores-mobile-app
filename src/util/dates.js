@@ -36,7 +36,7 @@ const Dates = {
     // If the given value is less than 10, prepend a 0.
     // Format for MM or DD.
     formatDayMonth(val) {
-        return (numbers.isInt(val) && numbers.toInt(val) < 10) ? '0' + val : val;
+        return (numbers.isInt(val) && (numbers.toInt(val) < 10)) ? '0' + val : val.toString();
     },
 
     // Format a date string as YYYY MM DD with a given joining string.

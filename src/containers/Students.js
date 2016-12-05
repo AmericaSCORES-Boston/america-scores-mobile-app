@@ -33,10 +33,10 @@ class StudentsContainer extends Component {
     const newStudentsState = nextProps.studentsState,
         newEventsState = nextProps.eventsState;
     if (newStudentsState && newStudentsState.students) {
-      this.state = newStudentsState;
+      this.state.students = newStudentsState.students;
     }
 
-    if (newEventsState.events && this.state.events !== newEventsState.events) {
+    if (newEventsState.events && newEventsState.events) {
       this.state.events = newEventsState.events;
       const filteredEvents = this.state.events.slice().filter(function(event) {
         return dates.getDateStringFromSql(event.event_date) === dates.getTodayDateString();
