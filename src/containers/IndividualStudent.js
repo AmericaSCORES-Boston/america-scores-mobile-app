@@ -38,7 +38,6 @@ class IndividualStudentContainer extends Component {
       const currentStats = this.state.stats[0];
       const newStudent = { student_id: this.props.stud_id, first_name: currentStudent.first_name,
         last_name: currentStudent.last_name, dob: currentStudent.dob };
-      console.log(newStudent);
       this.props.updateStudent(newStudent);
       return 1;
     } catch (e) {
@@ -52,16 +51,34 @@ class IndividualStudentContainer extends Component {
     return { feet, inches };
   }
 
+  getNewStats(newStats) {
+    var currentStats = { height: 0, weight: 0, pacer: 0 };
+    currentStats.measurement_id = newStats.measurement_id;
+    currentStats.student_id = newStats.student_id;
+    currentStats.event_id = newStats.event_id;
+    if (newStats.height != null)
+      currentStats.height = newStats.height;
+    if (newStats.weight != null)
+      currentStats.weight = newStats.weight;
+    if (newStats.pacer != null)
+      currentStats.pacer = newStats.pacer;
+
+    return currentStats;
+  }
+
   render() {
     if (this.state.student != null && this.state.stats != null) {
       const currentStudent = this.state.student[0];
       var currentStats = { height: 0, weight: 0, pacer: 0 };
       if (this.state.stats.length != 0) {
-        currentStats = this.state.stats[0];
+        const newStats = this.state.stats[this.state.stats.length - 1];
+        currentStats = this.getNewStats(newStats);
       }
       const bib_number = this.props.bib_num;
 
+      console.log(currentStudent);
       console.log(currentStats);
+
       return (
         <Container style={[styles.container, styles.grayBg]}>
           <Content>

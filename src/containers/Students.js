@@ -46,6 +46,14 @@ class StudentsContainer extends Component {
     );
   }
 
+  // Find the row number that contains the given student
+  findRow(student_id) {
+    for (var i = 0; i < this.state.students.length; i++) {
+      if (this.state.students[i].student_id == student_id) {
+        return i + 1;
+      }
+    }
+  }
 
   // Show a list of students for this program if it is not empty.
   // Otherwise, show a message about the program being empty.
@@ -55,7 +63,7 @@ class StudentsContainer extends Component {
             dataArray={this.state.students}
             renderRow={(rowData) =>
                 <ListItem button onPress={()=>Actions.student({title: rowData.first_name + ' ' + rowData.last_name,
-                    stud_id: rowData.student_id, bib_num: "TOFIX"})}>
+                    stud_id: rowData.student_id, bib_num: this.findRow(rowData.student_id)})}>
                   <Text>{rowData.first_name + ' ' + rowData.last_name}</Text>
                 </ListItem>
               }
