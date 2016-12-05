@@ -1,3 +1,5 @@
+import dates from './dates';
+
 const root = "http://ec2-54-87-140-118.compute-1.amazonaws.com/api",
     POST = "POST",
     PUT = "PUT";
@@ -39,6 +41,15 @@ const Api = {
         return request(createEndpoint(`/sites/${site_id}/programs`), createRequestOptions(POST, { program_name }));
     },
 
+    fetchEvents(program_id) {
+        return request(createEndpoint(`/programs/${program_id}/events`));
+    },
+
+    createEvent(program_id) {
+        const event_date = dates.getTodayDateString();
+        return request(createEndpoint(`/programs/${program_id}/events`), createRequestOptions(POST, {event_date}))
+    },
+
     fetchStudents(program_id) {
         return request(createEndpoint(`/programs/${program_id}/students`));
     },
@@ -69,11 +80,15 @@ const Api = {
 
     updateStat(stat) {
         const statId = stat.stat_id || -1;
-        return request(createEndpoint(`/stats/${statId}`), createRequestOptions(PUT), stat);
+        return request(createEndpoint(`/stats/${statId}`), createRequestOptions(PUT, stat));
     },
 
     fetchStats(program_id) {
         return request(createEndpoint(`/programs/${program_id}/stats`));
+    },
+
+    saveCollectedBmiData(event_id, stats) {
+        return request(createEndpoint(`/events/${event_id}/stats/bmi`), createRequestOptions(PUT, {stats}));
     }
 };
 

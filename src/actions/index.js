@@ -10,7 +10,7 @@ export {
   fetchProgramsFailure,
   addProgram,
   addProgramSuccess,
-  addProgramFailure
+  addProgramFailure,
 } from './program';
 
 export {
@@ -27,6 +27,15 @@ export {
   addExistingStudentSuccess,
   addExistingStudentFailure
 } from './student';
+
+export {
+  fetchEvents,
+  fetchEventsSuccess,
+  fetchEventsFailure,
+  createEvent,
+  createEventSuccess,
+  createEventFailure
+} from './event';
 
 export {
     fetchStat,
@@ -55,3 +64,9 @@ export {
     pacerItemTapped,
     pacerItemLongPress
 } from './pacer';
+
+export {
+    saveCollectedBmiData,
+    saveCollectedBmiDataSuccess,
+    saveCollectedBmiDataFailure
+} from './bmi';

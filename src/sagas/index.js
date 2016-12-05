@@ -5,10 +5,13 @@ import * as actions from '../actions/index';
 import Api from '../util/api';
 import * as site from '../actions/site';
 import * as program from '../actions/program';
+import * as event from '../actions/event';
 import * as student from '../actions/student';
 import * as studentStat from '../actions/studentStat';
 import * as stat from '../actions/stat';
 import * as login from '../actions/login';
+import * as bmi from '../actions/bmi';
+
 var Auth0Lock = require('react-native-lock');
 
 export function * fetchSites() {
@@ -35,6 +38,24 @@ export function * addProgram(action) {
     yield put(actions.addProgramSuccess(program));
   } catch (e) {
     yield put(actions.addProgramFailure(e.message));
+  }
+}
+
+export function * fetchEvents(action) {
+  try {
+    const events = yield call(Api.fetchEvents, action.program_id);
+    yield put(actions.fetchEventsSuccess(events));
+  } catch (e) {
+    yield put(actions.fetchEventsFailure(e.message));
+  }
+}
+
+export function * createEvent(action) {
+  try {
+    const event = yield call(Api.createEvent, action.program_id);
+    yield put(actions.createEventSuccess(event));
+  } catch (e) {
+    yield put(actions.createEventFailure(e.message));
   }
 }
 
@@ -115,6 +136,21 @@ export function * fetchStats(action) {
   }
 }
 
+export function * saveCollectedBmiData(action) {
+  try {
+    const result = yield call(Api.saveCollectedBmiData, action.event_id, action.stats);
+    if (!result.status || result.status < 400) {
+      yield put(actions.saveCollectedBmiDataSuccess("Data was successfully saved!"));
+    }
+    else {
+      yield put(actions.saveCollectedBmiDataFailure("Unfortunately, the collected data could not be saved. " +
+          "\n\nPlease start collection again and re-enter the data."));
+    }
+  } catch (e) {
+    yield put(actions.saveCollectedBmiDataFailure(e.message));
+  }
+}
+
 export function * loginUser() {
   var lock = new Auth0Lock({clientId: 'HvNKnxLle17wN23DJj1TFmpMBwG1Kb0U', domain: 'asbadmin.auth0.com'});
 
@@ -146,6 +182,8 @@ export function * sagas() {
     takeEvery(site.SITE_FETCH_REQUESTED, fetchSites),
     takeEvery(program.PROGRAM_FETCH_REQUESTED, fetchPrograms),
     takeEvery(program.ADD_PROGRAM_REQUESTED, addProgram),
+    takeEvery(event.EVENTS_FETCH_REQUESTED, fetchEvents),
+    takeEvery(event.CREATE_EVENT_REQUESTED, createEvent),
     takeEvery(student.STUDENT_FETCH_REQUESTED, fetchStudents),
     takeEvery(student.SEARCH_STUDENT_REQUESTED, searchStudent),
     takeEvery(student.CREATE_STUDENT_REQUESTED, createStudent),
@@ -154,6 +192,7 @@ export function * sagas() {
     takeEvery(studentStat.STAT_CREATE_REQUESTED, createStat),
     takeEvery(studentStat.STAT_UPDATE_REQUESTED, updateStat),
     takeEvery(stat.STATS_FETCH_REQUESTED, fetchStats),
+    takeEvery(bmi.SAVE_COLLECTED_BMI_DATA_REQUESTED, saveCollectedBmiData),
     takeEvery(login.LOGIN_REQUESTED, loginUser)
   ]
 }
