@@ -1,6 +1,5 @@
 import { takeEvery } from 'redux-saga';
 import { call, put, select } from 'redux-saga/effects';
-import { Actions } from 'react-native-router-flux';
 import { getUser } from '../selectors';
 import Auth0Lock from 'react-native-lock';
 import * as actions from '../actions/index';
@@ -11,6 +10,7 @@ import * as student from '../actions/student';
 import * as studentStat from '../actions/studentStat';
 import * as stat from '../actions/stat';
 import * as login from '../actions/login';
+import * as create from '../actions/createAccount';
 
 export function * fetchSites() {
   try {
@@ -136,7 +136,7 @@ export function * loginUser() {
         closable: true,
         disableSignUp: true,
         connections: ["Username-Password-Authentication"],
-        authParams: { scope: 'openid email user_metadata app_metadata' }
+        authParams: { scope: 'openid email user_id user_metadata app_metadata' }
       }, (err, profile, auth0Token) => {
         if (err) {
           reject({ err });
@@ -148,9 +148,17 @@ export function * loginUser() {
   try {
     const {auth0Token} = yield call(showLock);
     yield put(actions.loginUserSuccess(auth0Token));
-    Actions.sites();
   } catch (e) {
     yield put(actions.loginUserFailure(e.message));
+  }
+}
+
+export function * createAccount(action) {
+  try {
+    const user = yield call(Api.createAccount, action.email, action.username, action.password, action.first_name, action.last_name);
+    yield put(actions.createUserSuccess());
+  } catch (e) {
+    yield put(actions.createUserFailure(e.message));
   }
 }
 
@@ -167,7 +175,8 @@ export function * sagas() {
     takeEvery(studentStat.STAT_CREATE_REQUESTED, createStat),
     takeEvery(studentStat.STAT_UPDATE_REQUESTED, updateStat),
     takeEvery(stat.STATS_FETCH_REQUESTED, fetchStats),
-    takeEvery(login.LOGIN_REQUESTED, loginUser)
+    takeEvery(login.LOGIN_REQUESTED, loginUser),
+    takeEvery(create.CREATE_ACCOUNT_REQUESTED, createAccount)
   ]
 }
 

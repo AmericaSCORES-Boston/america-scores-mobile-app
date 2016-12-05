@@ -9,10 +9,15 @@ import * as actions from '../actions/login';
 import scoresTheme from '../themes/scoresTheme';
 import styles from '../styles';
 
-
 class LoginContainer extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.loginData.user) {
+      Actions.sites();
+    }
   }
 
   login() {

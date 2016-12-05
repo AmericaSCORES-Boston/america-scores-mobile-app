@@ -55,3 +55,9 @@ export {
     pacerItemTapped,
     pacerItemLongPress
 } from './pacer';
+
+export {
+    createAccount,
+    createAccountSuccess,
+    createAccountFailure
+} from './createAccount';

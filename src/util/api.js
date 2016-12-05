@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const root = "http://ec2-54-87-140-118.compute-1.amazonaws.com/api",
     POST = "POST",
     PUT = "PUT";
@@ -75,6 +77,10 @@ const Api = {
 
     fetchStats(user, program_id) {
         return request(createEndpoint(`/programs/${program_id}/stats`), { headers: new Headers({ 'Authorization' : 'Bearer ' + user.idToken })});
+    },
+
+    createAccount(email, username, password, first_name, last_name) {
+        return request(createEndpoint(`/xxx`), createRequestOptions(POST, {email, username, password, first_name, last_name}));        
     }
 };
 
