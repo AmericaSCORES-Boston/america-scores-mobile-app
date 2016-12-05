@@ -110,8 +110,6 @@ const App = () => {
             title="StudentName"
             backTitle="Cancel"
             hideBackImage="true"
-            rightTitle="Done"
-            onRight={() => alert('Student Saved')}
             direction="vertical"
             panHandlers={null}
           />

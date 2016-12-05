@@ -23,6 +23,9 @@ export {
   fetchStudent,
   fetchStudentSuccess,
   fetchStudentFailure,
+  updateStudent,
+  updateStudentSuccess,
+  updateStudentFailure,
 } from './individualStudent';
 
 export {
@@ -33,9 +36,6 @@ export {
     updateStat,
     updateStatSuccess,
     statRequestFailure,
-    fetchStudentStats,
-    fetchStudentStatsSucceeded,
-    fetchStudentStatsFailed
 } from './studentStat';
 
 export {

@@ -51,6 +51,11 @@ const Api = {
         return request(createEndpoint('/students/' + student_id + '/stats'));
     },
 
+    updateStudent(student) {
+        const stud_id = student.student_id || -1;
+        return request(createEndpoint('/students/') + stud_id, createRequestOptions(PUT, student));
+    },
+
     fetchStat(stat_id) {
         return request(createEndpoint('/stats/' + stat_id));
     },
@@ -61,7 +66,7 @@ const Api = {
 
     updateStat(stat) {
         const statId = stat.stat_id || -1;
-        return request(createEndpoint('/stats/' + statId), createRequestOptions(PUT), stat);
+        return request(createEndpoint('/stats/' + statId), createRequestOptions(PUT, stat));
     },
 
     fetchStats(program_id) {

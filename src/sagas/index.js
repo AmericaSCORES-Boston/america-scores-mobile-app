@@ -55,6 +55,15 @@ export function * fetchStudent(action) {
   }
 }
 
+export function * updateStudent(action) {
+  try {
+    const status = yield call(Api.updateStudent, action.newStudent);
+    yield put(actions.updateStudentSuccess(status));
+  } catch (e) {
+    yield put(actions.updateStudentFailure(e.message));
+  }
+}
+
 export function * fetchStat(action) {
   try {
     const stat = yield call(Api.fetchStat, action.stat_id);
@@ -98,6 +107,7 @@ export function * sagas() {
     takeEvery(program.ADD_PROGRAM_REQUESTED, addProgram),
     takeEvery(student.STUDENTS_FETCH_REQUESTED, fetchStudents),
     takeEvery(individualStudent.STUDENT_FETCH_REQUESTED, fetchStudent),
+    takeEvery(individualStudent.STUDENT_UPDATE_REQUESTED, updateStudent),
     takeEvery(studentStat.STAT_FETCH_REQUESTED, fetchStat),
     takeEvery(studentStat.STAT_CREATE_REQUESTED, createStat),
     takeEvery(studentStat.STAT_UPDATE_REQUESTED, updateStat),
