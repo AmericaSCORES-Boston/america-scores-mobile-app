@@ -79,7 +79,7 @@ class PacerContainer extends Component {
 
   startPacerTest() {
     // Start the audio
-    this.state.pacerAudio = new Sound('PacerAudio.mp3', Sound.MAIN_BUNDLE, (error) => {
+    this.state.pacerAudio = new Sound('pacer.mp3', Sound.MAIN_BUNDLE, (error) => {
       if (error) {
         console.log('failed to load the sound', error);
         // App doesn't work?

@@ -1,7 +1,6 @@
 package com.americascores;
 
 import com.facebook.react.ReactActivity;
-import com.zmxv.RNSound.RNSoundPackage;
 
 public class MainActivity extends ReactActivity {
 
@@ -12,13 +11,5 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "AmericaSCORES";
-    }
-
-    @Override
-    protected List<ReactPackage> getPackages() {
-        return Arrays.<ReactPackage>asList(
-            new MainReactPackage(),
-            new RNSoundPackage() // <-- New
-        );
     }
 }
