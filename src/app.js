@@ -32,12 +32,6 @@ const App = () => {
     <Provider store={store}>
         <Router name="root">
           <Scene
-            key="sites"
-            component={SitesContainer}
-            title="Sites"
-            hideBackImage="true"
-          />
-          <Scene
             key="login"
             component={LoginContainer}
             title="Login"
@@ -54,6 +48,13 @@ const App = () => {
             onRight={() => Actions.login()}
             direction="vertical"
             hideBackImage="true"
+          />
+          <Scene
+            key="sites"
+            component={SitesContainer}
+            title="Sites"
+            hideBackImage="true"
+            renderBackButton={() => null}
           />
           <Scene
             key="programs"
