@@ -154,7 +154,7 @@ class PacerContainer extends Component {
               <H2 style={{marginRight: 20}}>Level: {this.state.currentLevel + 1}</H2>
               <H2>Shuttle: {this.state.totalShuttles}</H2>
             </View>
-            <Button large block disabled={this.state.pacerDone} onPress={() => this.incrementShuttle()} style={styles.mediumMarginTop}>
+            <Button large block disabled={this.state.pacerDone || !this.state.disabled} onPress={() => this.incrementShuttle()} style={styles.mediumMarginTop}>
                 <H1 style={styles.white}>Next Shuttle</H1>
             </Button>
             <ListView contentContainerStyle={[styles.gridList, styles.mediumMarginTop]}
