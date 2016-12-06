@@ -29,8 +29,8 @@ class IndividualStudentContainer extends Component {
 
   saveStudent(newStudent, newStats) {
     this.props.updateStudent(newStudent);
-	if (newStats.measurement_id != 0)
-		this.props.updateStat(newStats);
+    if (newStats.measurement_id != 0)
+      this.props.updateStat(newStats);
   }
 
   getHeight(currentStats) {
@@ -53,29 +53,29 @@ class IndividualStudentContainer extends Component {
 
     return currentStats;
   }
-  
+
   isValidData(student, stats) {
-	  return isValidStudent(student) && areValidStats(stats);
+    return this.isValidStudent(student) && this.areValidStats(stats);
   }
-  
+
   isValidStudent(student) {
-	  return student.first_name.length > 0 &&
-			 student.last_name.length > 0 &&
-			 isValidDate(student.dob);
+    return student.first_name.length > 0 &&
+      student.last_name.length > 0 &&
+      this.isValidDate(student.dob);
   }
-  
+
   isValidDate(dob) {
-	  if (dob.length < 10)
-		  return false;
-	  return parseInt(dob.substring(0,4), 10) > 0 &&
-			 parseInt(dob.substring(5,7) 10) > 0 &&
-			 parseInt(dob.substring(8,10), 10) > 0;
+    if (dob.length < 10)
+      return false;
+    return parseInt(dob.substring(0,4), 10) > 0 &&
+      parseInt(dob.substring(5,7), 10) > 0 &&
+      parseInt(dob.substring(8,10), 10) > 0;
   }
-  
+
   areValidStats(stats) {
-	  return stats.weight > 0 &&
-			 stats.height > 0 &&
-			 stats.pacer > 0;
+    return stats.weight > 0 &&
+      stats.height > 0 &&
+      stats.pacer > 0;
   }
 
   render() {
@@ -129,9 +129,9 @@ class IndividualStudentContainer extends Component {
                     mode="dropdown"
                     selectedValue={this.state.student[0].dob.substring(5,7)}
                     onValueChange={(newMonth) => currentStudent.dob = 
-						dates.getDateStringFromSQL(currentStudent.dob).substring(0,5) + 
-						newMonth + dates.getDateStringFromSQL(currentStudent.dob).substring(7)} >
-						
+						dates.getDateStringFromSql(currentStudent.dob).substring(0,5) +
+						newMonth + dates.getDateStringFromSql(currentStudent.dob).substring(7)} >
+
                     <Picker.Item label="Month" value="" />
                     <Picker.Item label="Jan."  value="01" />
                     <Picker.Item label="Feb."  value="02" />
@@ -155,7 +155,7 @@ class IndividualStudentContainer extends Component {
                            keyboardType="numeric"
                            defaultValue={currentStudent.dob.substring(8,10)}
                            onChangeText={(day) => currentStudent.dob =
-                            dates.getDateStringFromSQL(currentStudent.dob).substring(0,8) + dates.formatDayMonth(day)}
+                            dates.getDateStringFromSql(currentStudent.dob).substring(0,8) + dates.formatDayMonth(day)}
                            returnKeyType="done"
                            maxLength={2}
                     />
@@ -169,7 +169,7 @@ class IndividualStudentContainer extends Component {
                            keyboardType="numeric"
                            defaultValue={currentStudent.dob.substring(0,4)}
                            onChangeText={(year) => currentStudent.dob =
-                              year + dates.getDateStringFromSQL(currentStudent.dob).substring(5)}
+                              year + dates.getDateStringFromSql(currentStudent.dob).substring(5)}
                            returnKeyType="done"
                            maxLength={4}
                     />
@@ -185,7 +185,7 @@ class IndividualStudentContainer extends Component {
                     <Input ref="feet"
                            keyboardType="numeric"
                            defaultValue={this.getHeight(currentStats).feet.toString()}
-						   onChangeText={(feet) => currentStats.height =
+                           onChangeText={(feet) => currentStats.height =
 							(feet * 12) + this.getHeight(currentStats).inches}
                            returnKeyType="done"
                            maxLength={1}
@@ -199,7 +199,7 @@ class IndividualStudentContainer extends Component {
                     <Input ref="inches"
                            keyboardType="numeric"
                            defaultValue={this.getHeight(currentStats).inches.toString()}
-						   onChangeText={(inches) => currentStats.height =
+                           onChangeText={(inches) => currentStats.height =
 							this.getHeight(currentStats).feet + inches}
                            returnKeyType="done"
                            maxLength={2}
@@ -218,7 +218,7 @@ class IndividualStudentContainer extends Component {
                       <Input ref="weight"
                              keyboardType="numeric"
                              defaultValue={currentStats.weight.toString()}
-							 onChangeText={(weight) = => currentStats.weight = weight}
+                             onChangeText={(weight) => currentStats.weight = weight}
                              returnKeyType="done"
                              maxLength={3}
                       />
@@ -236,7 +236,7 @@ class IndividualStudentContainer extends Component {
                     <Input ref="pacer"
                            keyboardType="numeric"
                            defaultValue={currentStats.pacer.toString()}
-						   onChangeText={(pacer) => currentStats.pacer = pacer}
+                           onChangeText={(pacer) => currentStats.pacer = pacer}
                            returnKeyType="done"
                            maxLength={3}
                     />
@@ -246,12 +246,12 @@ class IndividualStudentContainer extends Component {
               </View>
             </View>
             <View style={styles.mediumMarginTop}>
-	<Button block large diabled = {!this.isValidData(currentStudent, currentStats)} onPress={() => 
+              <Button block large diabled = {!this.isValidData(currentStudent, currentStats)} onPress={() =>
 		this.saveStudent(currentStudent, currentStats)}>
                 <H1 style={styles.white}>Save</H1>
               </Button>
             </View>
-        </Content>
+          </Content>
         </Container>
       );
     }
