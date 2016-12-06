@@ -29,6 +29,15 @@ export {
 } from './student';
 
 export {
+  fetchStudent,
+  fetchStudentSuccess,
+  fetchStudentFailure,
+  updateStudent,
+  updateStudentSuccess,
+  updateStudentFailure,
+} from './individualStudent';
+
+export {
   fetchEvents,
   fetchEventsSuccess,
   fetchEventsFailure,

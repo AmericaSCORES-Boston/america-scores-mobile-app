@@ -13,6 +13,7 @@ import * as stat from '../actions/stat';
 import * as login from '../actions/login';
 import * as create from '../actions/createAccount';
 import * as bmi from '../actions/bmi';
+import * as individualStudent from '../actions/individualStudent';
 
 export function * fetchSites() {
   try {
@@ -69,6 +70,25 @@ export function * fetchStudents(action) {
     yield put(actions.fetchStudentsSuccess(students));
   } catch (e) {
     yield put(actions.fetchStudentsFailure(e.message));
+  }
+}
+
+export function * fetchStudent(action) {
+  try {
+    const student = yield call(Api.fetchStudent, action.student_id);
+    const stats = yield call(Api.fetchStudentStats, action.student_id);
+    yield put(actions.fetchStudentSuccess(student, stats));
+  } catch (e) {
+    yield put(actions.fetchStudentFailure(e.message));
+  }
+}
+
+export function * updateStudent(action) {
+  try {
+    const status = yield call(Api.updateStudent, action.newStudent);
+    yield put(actions.updateStudentSuccess(status));
+  } catch (e) {
+    yield put(actions.updateStudentFailure(e.message));
   }
 }
 
@@ -214,7 +234,9 @@ export function * sagas() {
     takeEvery(stat.STATS_FETCH_REQUESTED, fetchStats),
     takeEvery(create.CREATE_ACCOUNT_REQUESTED, createAccount),
     takeEvery(bmi.SAVE_COLLECTED_BMI_DATA_REQUESTED, saveCollectedBmiData),
-    takeEvery(login.LOGIN_REQUESTED, loginUser)
+    takeEvery(login.LOGIN_REQUESTED, loginUser),
+    takeEvery(individualStudent.INDIVIDUAL_STUDENT_FETCH_REQUESTED, fetchStudent),
+    takeEvery(individualStudent.INDIVIDUAL_STUDENT_UPDATE_REQUESTED, updateStudent)
   ]
 }
 

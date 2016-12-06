@@ -63,7 +63,20 @@ const Api = {
     },
 
     searchStudent(user, first_name, last_name, dob) {
-        return request(createEndpoint(`/students/?first_name=${first_name}&last_name=${last_name}&dob=${dob}`), { headers: auth(user.idToken) });
+        return request(createEndpoint(`/students/?first_name=${first_name}&last_name=${last_name}&dob=${dob}`), {headers: auth(user.idToken)});
+    },
+
+    fetchStudent(student_id) {
+        return request(createEndpoint('/students/' + student_id));
+    },
+
+    fetchStudentStats(student_id) {
+        return request(createEndpoint('/students/' + student_id + '/stats'));
+    },
+
+    updateStudent(student) {
+        const stud_id = student.student_id || -1;
+        return request(createEndpoint('/students/' + stud_id), createRequestOptions(PUT, student));
     },
 
     addExistingStudent(user, program_id, student) {
