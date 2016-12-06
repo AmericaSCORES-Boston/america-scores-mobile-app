@@ -54,6 +54,7 @@ const App = () => {
             component={SitesContainer}
             title="Sites"
             hideBackImage="true"
+            renderBackButton={() => null}
           />
           <Scene
             key="programs"

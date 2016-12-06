@@ -1,45 +1,80 @@
 import React, { Component, PropTypes } from 'react';
-import { Container, Header, Content, Button, List, ListItem, InputGroup, Input, H1, H2, H3 } from 'native-base';
+import { Container, Content, Button, InputGroup, Input, List, H1, H2, H3 } from 'native-base';
 import Hr from 'react-native-hr';
 import {Actions} from 'react-native-router-flux';
 import scoresTheme from '../themes/scoresTheme';
 
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Alert } from 'react-native';
 import { connect } from 'react-redux';
-import * as actions from '../actions/bmi';
+import * as bmiActions from '../actions/bmi';
+import * as eventActions from '../actions/event';
+import numbers from '../util/numbers';
 
 import styles from '../styles/index';
 
 class BMIContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = props.bmiState;
+    this.state = {
+      ...props.bmiState,
+      feet: '',
+      inches: '',
+      weight: '',
+      student: props.students[0],
+      currentBmiStudent: 0,
+      bmiDataCollected: []
+    };
   }
 
   componentWillMount() {
-    this.props.startBmiCollection();
+    if (!this.props.event) {
+      this.props.createEvent(this.props.program.program_id);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     const newBmiState = nextProps.bmiState;
-    if (newBmiState.currentBmiStudent != this.state.currentBmiStudent) {
-      this.state = newBmiState;
+
+    if (this.isBmiCollectionCompleted() && newBmiState.message) {
+      Alert.alert('BMI Collection', newBmiState.message);
+      Actions.pop();
     }
   }
 
   // Continue BMI collection if there are more students.
   // Otherwise, end bmi collection and go back to the students page.
   getNextStudent() {
-    if (!this.hasMoreStudents()) {
-      Actions.pop();
+    const student_id = this.state.student.student_id,
+        height = this.getCurrentStudentHeight(),
+        weight = this.getCurrentStudentWeight(),
+        bmiData = {student_id, height, weight};
+
+    if (this.isBmiCollectionCompleted()) {
       return;
     }
 
-    // TODO Save height/weight here.
-    // TODO On success, continue. On failure, display error message and return.
+    const nextBmiStudent = this.state.currentBmiStudent + 1;
+    const nextStudent = (!this.hasMoreStudents()) ? this.state.student : this.props.students[nextBmiStudent];
 
-    this.clearTextBox();
-    this.props.continueBmiCollection();
+    this.setState({
+      currentBmiStudent: nextBmiStudent,
+      student: nextStudent,
+      bmiDataCollected: this.state.bmiDataCollected.concat([bmiData])
+    }, function() {
+      this.clearCurrentInputs();
+      if (!this.hasMoreStudents()) {
+        this.props.saveCollectedBmiData(this.props.event.event_id, this.state.bmiDataCollected);
+      }
+    });
+
+  }
+
+  getCurrentStudentHeight() {
+    return parseInt(this.state.feet, 10) * 12 + parseInt(this.state.inches, 10);
+  }
+
+  getCurrentStudentWeight() {
+    return parseInt(this.state.weight, 10);
   }
 
   // Are there more students in the list after the current one?
@@ -47,24 +82,22 @@ class BMIContainer extends Component {
     return this.state.currentBmiStudent + 1 < this.props.students.length;
   }
 
+  isBmiCollectionCompleted() {
+    return this.state.currentBmiStudent >= this.props.students.length;
+  }
+
   // Clear the text inputs on this page for height and weight.
-  clearTextBox() {
-    this._feet._textInput.setNativeProps({text: ''});
-    this._inches._textInput.setNativeProps({text: ''});
-    this._weight._textInput.setNativeProps({text: ''});
+  clearCurrentInputs() {
+    this.setState({feet: '', inches: '', weight: ''});
   }
 
   // Get the properties for the given student.
-  getCurrentStudentProperties(currentStudent) {
-    let name = '', dob = '', feet = '', inches = '', weight = '';
+  getCurrentStudentStats(currentStudent) {
+    let feet = '', inches = '', weight = '';
 
     if (currentStudent) {
-      const parsedDob = new Date(currentStudent.dob),
-          parsedHeight = parseInt(currentStudent.height),
+      const parsedHeight = parseInt(currentStudent.height),
           parsedWeight = parseInt(currentStudent.weight);
-
-      name = currentStudent.first_name + ' ' + currentStudent.last_name;
-      dob = (parsedDob.getUTCMonth() + 1) + "/" + parsedDob.getUTCDate() + "/" + parsedDob.getUTCFullYear();
 
       if (!isNaN(parsedHeight)) {
         feet = Math.floor(parsedHeight / 12).toString();
@@ -76,42 +109,67 @@ class BMIContainer extends Component {
       }
     }
 
-    return { name, dob, feet, inches, weight };
+    return { feet, inches, weight };
   }
 
+  isDataValid() {
+    return this.isFeetValid() &&
+            this.isInchesValid() &&
+            this.isWeightValid();
+  }
+
+  isInchesValid() {
+    const inches = this.state.inches;
+    return inches.length > 0 &&
+        numbers.isInt(inches) &&
+        numbers.toInt(inches) >= 0 &&
+        numbers.toInt(inches) < 12;
+  }
+
+  isFeetValid() {
+    const feet = this.state.feet;
+    return feet.length > 0 &&
+        numbers.isInt(feet) &&
+        numbers.toInt(feet) >= 0 &&
+        numbers.toInt(feet) < 10;
+  }
+
+  isWeightValid() {
+    const weight = this.state.weight;
+    return weight.length > 0 &&
+        numbers.isInt(weight) &&
+        numbers.toInt(weight) > 0 &&
+        numbers.toInt(weight) < 400;
+  }
 
   render() {
-    const currentStudentId = this.state.currentBmiStudent,
-        currentStudent = this.props.students[currentStudentId],
-        studentProps = this.getCurrentStudentProperties(currentStudent);
-
     return (
       <Container style={[styles.container, styles.containerPadding]}>
         <Content theme={scoresTheme}>
           <View>
             <H3 style={styles.textCenter}>Collecting BMI Data for:</H3>
-            <H2 style={styles.textCenter}>{this.props.program_name}</H2>
+            <H2 style={styles.textCenter}>{this.props.program.program_name}</H2>
             <View style={styles.smallVerticalMargin}>
               <Hr lineColor="#000" />
             </View>
           </View>
 
-          <View style={[styles.flexRow, styles.mediumMarginTop]}>
-            <H2>Student:</H2>
-            <H2 style={styles.flexRowRight}>{studentProps.name}</H2>
-          </View>
+          <H1 style={[styles.textCenter, styles.smallVerticalMargin]}>
+            {`${this.state.student.first_name} ${this.state.student.last_name}`}
+          </H1>
 
-          <View style={styles.mediumMarginTop}>
-            <H2>Height</H2>
+          <View style={styles.smallVerticalMargin}>
+            <H2 style={styles.bold}>Height</H2>
             <View style={{flex: 1, flexDirection: 'row'}}>
               <InputGroup style={[styles.InputGroup, {flex: 1}]}>
                 <Input style={{flex: 1}}
                        ref={component => this._feet = component}
                        placeholder={''}
                        keyboardType="numeric"
-                       defaultValue={studentProps.feet}
+                       defaultValue={this.state.feet}
                        returnKeyType="next"
                        maxLength={1}
+                       onChangeText={(feet) => this.setState({feet})}
                        onSubmitEditing={() => { this._inches._textInput.focus();}}
                 />
               </InputGroup>
@@ -121,9 +179,10 @@ class BMIContainer extends Component {
                        ref={component => this._inches = component}
                        placeholder={''}
                        keyboardType="numeric"
-                       defaultValue={studentProps.inches}
+                       defaultValue={this.state.inches}
                        returnKeyType="next"
                        maxLength={2}
+                       onChangeText={(inches) => this.setState({inches})}
                        onSubmitEditing={() => { this._weight._textInput.focus();}}
                 />
               </InputGroup>
@@ -131,22 +190,25 @@ class BMIContainer extends Component {
             </View>
           </View>
 
-          <View style={styles.mediumMarginTop}>
-            <H2>Weight</H2>
+          <View style={styles.smallVerticalMargin}>
+            <H2 style={styles.bold}>Weight</H2>
             <View style={{flex: .25, flexDirection: 'row'}}>
               <InputGroup style={[styles.InputGroup, {flex: 1}]}>
                 <Input style={{flex: 1}}
                        ref={component => this._weight = component}
                        placeholder={''}
                        keyboardType="numeric"
-                       defaultValue={studentProps.weight}
+                       defaultValue={this.state.weight}
                        maxLength={3}
+                       onChangeText={(weight) => this.setState({weight})}
                        returnKeyType="next"
                 />
               </InputGroup>
               <Text style={{flex: 1, paddingTop: 9}}>lbs</Text>
             </View>
           </View>
+
+          {this.showErrors()}
 
           <View style={styles.mediumMarginTop}>
             {this.showSaveButton()}
@@ -162,23 +224,48 @@ class BMIContainer extends Component {
     const buttonText = (this.hasMoreStudents()) ? 'Save' : 'Finish';
 
     return (
-        <Button large block onPress={() => this.getNextStudent()} style={styles.smallVerticalMargin}>
+        <Button large block disabled={!this.isDataValid()} onPress={() => this.getNextStudent()} style={styles.smallVerticalMargin}>
           <H1 style={styles.white}>{buttonText}</H1>
         </Button>
     );
   }
+
+  // Show a list of errors to the user based on their inputs so far.
+  showErrors() {
+    let errors = [];
+
+    if (!this.isFeetValid()) {
+      errors.push('\u2022 The feet entered must be between 0 and 10.');
+    }
+    if (!this.isInchesValid()) {
+      errors.push('\u2022 The inches entered must be between 0 and 11.');
+    }
+    if (!this.isWeightValid()) {
+      errors.push('\u2022 The weight entered must be between 0 and 400.');
+    }
+
+    return (errors.length > 0) ? (
+        <List style={styles.mediumMarginTop}
+              dataArray={errors}
+              renderRow={(rowData) =>
+                    <H3 style={styles.errorRed}>{rowData}</H3>
+                  }
+        />
+    ) : null;
+  }
 }
+
 
 const mapStateToProps = (state) => ({
   bmiState: state.bmiState
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  startBmiCollection: () => {
-    dispatch(actions.startBMICollection());
+  saveCollectedBmiData: (event_id, stats) => {
+    dispatch(bmiActions.saveCollectedBmiData(event_id, stats));
   },
-  continueBmiCollection: () => {
-    dispatch(actions.continueBMICollection());
+  createEvent: (program_id) => {
+    dispatch(eventActions.createEvent(program_id));
   }
 });
 

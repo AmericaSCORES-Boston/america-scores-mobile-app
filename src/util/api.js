@@ -1,10 +1,8 @@
-/* eslint-disable no-undef */
+import dates from './dates';
 
 const root = "http://ec2-54-87-140-118.compute-1.amazonaws.com/api",
     POST = "POST",
     PUT = "PUT";
-
-
 
 function createEndpoint(path) {
     return root + path;
@@ -49,6 +47,15 @@ const Api = {
         return request(createEndpoint(`/sites/${site_id}/programs`), createRequestOptions(POST, { program_name }, user.idToken));
     },
 
+    fetchEvents(user, program_id) {
+        return request(createEndpoint(`/programs/${program_id}/events`), { headers: auth(user.idToken) });
+    },
+
+    createEvent(user, program_id) {
+        const event_date = dates.getTodayDateString();
+        return request(createEndpoint(`/programs/${program_id}/events`), createRequestOptions(POST, {event_date}, user.idToken))
+    },
+
     fetchStudents(user, program_id) {
         return request(createEndpoint(`/programs/${program_id}/students`), { headers: auth(user.idToken) });
     },
@@ -84,6 +91,10 @@ const Api = {
 
     fetchStats(user, program_id) {
         return request(createEndpoint(`/programs/${program_id}/stats`), { headers: auth(user.idToken) });
+    },
+
+    saveCollectedBmiData(user, event_id, stats) {
+        return request(createEndpoint(`/events/${event_id}/stats/bmi`), createRequestOptions(PUT, {stats}, user.idToken));
     },
 
     createAccount(email, username, password, first_name, last_name) {
