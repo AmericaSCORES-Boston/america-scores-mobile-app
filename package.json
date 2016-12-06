@@ -1,6 +1,6 @@
 {
   "name": "AmericaSCORES",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "description": "The mobile app for the America SCORES data collection app.",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -16,7 +16,9 @@
     "react": "^15.4.1",
     "react-native": "^0.38.0",
     "react-native-hr": "^1.0.0",
+    "react-native-lock": "^0.4.0",
     "react-native-router-flux": "^3.37.0",
+    "react-native-sound": "^0.8.3",
     "react-native-vector-icons": "^3.0.0",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0",

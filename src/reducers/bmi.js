@@ -1,20 +1,19 @@
-import {
-  START_BMI_COLLECTION,
-  CONTINUE_BMI_COLLECTION,
-  END_BMI_COLLECTION
-} from '../actions/bmi';
+import * as bmi from '../actions/bmi';
 
 export default function bmiState(state = {}, action) {
   switch (action.type) {
-    case START_BMI_COLLECTION:
+    case bmi.SAVE_COLLECTED_BMI_DATA_REQUESTED:
       return {
         ...state,
-        currentBmiStudent: 0
+        isFetching: true,
+        message: ""
       };
-    case CONTINUE_BMI_COLLECTION:
+    case bmi.SAVE_COLLECTED_BMI_DATA_SUCCEEDED:
+    case bmi.SAVE_COLLECTED_BMI_DATA_FAILED:
       return {
         ...state,
-        currentBmiStudent: state.currentBmiStudent + 1
+        isFetching: false,
+        message: action.message
       };
     default:
       return state;

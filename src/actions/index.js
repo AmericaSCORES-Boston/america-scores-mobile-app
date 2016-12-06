@@ -10,7 +10,7 @@ export {
   fetchProgramsFailure,
   addProgram,
   addProgramSuccess,
-  addProgramFailure
+  addProgramFailure,
 } from './program';
 
 export {
@@ -29,6 +29,15 @@ export {
 } from './student';
 
 export {
+  fetchEvents,
+  fetchEventsSuccess,
+  fetchEventsFailure,
+  createEvent,
+  createEventSuccess,
+  createEventFailure
+} from './event';
+
+export {
     fetchStat,
     fetchStatSuccess,
     createStat,
@@ -43,3 +52,27 @@ export {
     fetchStatsSuccess,
     fetchStatsFailure
 } from './stat';
+
+export {
+    loginUser,
+    loginUserSuccess,
+    loginUserFailure
+} from './login';
+
+export {
+    loadPacer,
+    pacerItemTapped,
+    pacerItemLongPress
+} from './pacer';
+
+export {
+    createAccount,
+    createAccountSuccess,
+    createAccountFailure
+} from './createAccount';
+
+export {
+    saveCollectedBmiData,
+    saveCollectedBmiDataSuccess,
+    saveCollectedBmiDataFailure
+} from './bmi';
