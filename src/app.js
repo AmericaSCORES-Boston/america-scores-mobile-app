@@ -32,6 +32,12 @@ const App = () => {
     <Provider store={store}>
         <Router name="root">
           <Scene
+            key="sites"
+            component={SitesContainer}
+            title="Sites"
+            hideBackImage="true"
+          />
+          <Scene
             key="login"
             component={LoginContainer}
             title="Login"
@@ -47,12 +53,6 @@ const App = () => {
             rightTitle="Login"
             onRight={() => Actions.login()}
             direction="vertical"
-            hideBackImage="true"
-          />
-          <Scene
-            key="sites"
-            component={SitesContainer}
-            title="Sites"
             hideBackImage="true"
           />
           <Scene
@@ -89,8 +89,6 @@ const App = () => {
             title="Pacer Test"
             backTitle="Cancel"
             hideBackImage="true"
-            rightTitle="Start"
-            onRight={() => alert('Start Pacer')}
             direction="vertical"
           />
           <Scene
