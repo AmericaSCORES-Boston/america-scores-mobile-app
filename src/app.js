@@ -90,8 +90,6 @@ const App = () => {
             title="Pacer Test"
             backTitle="Cancel"
             hideBackImage="true"
-            rightTitle="Start"
-            onRight={() => alert('Start Pacer')}
             direction="vertical"
           />
           <Scene
