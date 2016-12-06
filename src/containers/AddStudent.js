@@ -6,6 +6,8 @@ import { Container, Content, Button, Picker, InputGroup, Input, List, H1, H2, H3
 import { connect } from 'react-redux';
 import * as actions from '../actions/student';
 import scoresTheme from '../themes/scoresTheme';
+import numbers from '../util/numbers';
+import dates from '../util/dates';
 
 import styles from '../styles/index';
 
@@ -82,12 +84,12 @@ class AddStudentContainer extends Component {
         const self = this,
             first_name = this.state.first_name.trim(),
             last_name = this.state.last_name.trim(),
-            year = this.toIntString(this.state.year.trim()),
+            year = this.state.year.trim(),
             month = this.state.month.trim(),
-            day = this.formatDay(this.toIntString(this.state.day.trim())),
-            dob = [year, month, day];
+            day = dates.formatDayMonth(numbers.toInt(this.state.day.trim())),
+            dob = dates.formatDateString(month, day, year, '-');
 
-        this.setState({first_name, last_name, year, month, day, dob: dob.join('-')}, function() {
+        this.setState({first_name, last_name, year, month, day, dob}, function() {
             this.props.searchStudent(self.state.first_name, self.state.last_name, self.state.dob);
         });
     }
@@ -121,11 +123,11 @@ class AddStudentContainer extends Component {
 
     // Is the day entered valid?  Checks that the day is an integer between 1 and 31.
     isDayValid() {
-        const dayString = this.formatDay(this.toIntString(this.state.day.trim())),
-            day = parseInt(dayString, 10);
+        const day = numbers.toInt(this.state.day.trim()),
+            dayString = dates.formatDayMonth(day);
 
         return (dayString.length > 0) &&
-            (this.isInt(dayString)) &&
+            (numbers.isInt(day)) &&
             (day >= this.props.dayMin) &&
             (day <= this.props.dayMax);
     }
@@ -133,30 +135,12 @@ class AddStudentContainer extends Component {
     // Is the year entered valid?  Checks that the year is an integer between the current year (2016) and 30 years
     // before (1986).
     isYearValid() {
-        const yearString = this.toIntString(this.state.year.trim()),
-            year = parseInt(yearString, 10);
+        const year = numbers.toInt(this.state.year.trim());
 
-        return (yearString.length === 4) &&
-            (this.isInt(yearString)) &&
+        return (year.toString().length === 4) &&
+            (numbers.isInt(year)) &&
             (year >= this.props.yearMin) &&
             (year < this.props.currentYear);
-    }
-
-    // Is a given string an integer?
-    isInt(val) {
-        return !isNaN(parseInt(val, 10));
-    }
-
-    // Convert a string into an integer if possible.  Otherwise, return the value entered.
-    toIntString(val) {
-        const num = parseInt(val, 10);
-        return (isNaN(num)) ? val : num.toString();
-    }
-
-    // Format a day value so that it is in the form of DD.  If the day is already two digits, no modification is
-    // necessary.  If the day is only 1 digit, a '0' must be prepended.
-    formatDay(day) {
-        return (day.length === 1 && this.isInt(day)) ? '0' + day : day;
     }
 
     render() {

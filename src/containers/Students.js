@@ -4,16 +4,18 @@ import { View, Text } from 'react-native';
 import { Container, Content, List, ListItem, Footer, FooterTab, Button, H2, H3 } from 'native-base';
 import scoresTheme from '../themes/scoresTheme';
 import { connect } from 'react-redux';
-import * as actions from '../actions/student';
+import * as studentActions from '../actions/student';
+import * as eventActions from '../actions/event';
+import dates from '../util/dates';
 
 import styles from '../styles';
 
 class StudentsContainer extends Component {
   constructor(props) {
     super(props);
-    const student_ids = [];
-    this.state = props.studentsState;
-    this.state = {...this.state, student_ids};
+    const student_ids = [],
+        eventToday = null;
+    this.state = {...props.studentsState, ...props.eventsState, student_ids, eventToday};
 
     this.props.component.onRight = () => {
       Actions.addStudent({program_id: this.props.program_id});
@@ -24,12 +26,24 @@ class StudentsContainer extends Component {
 
   componentWillMount() {
     this.props.fetchStudents(this.props.program_id);
+    this.props.fetchEvents(this.props.program_id);
   }
 
   componentWillReceiveProps(nextProps) {
-    const newStudentsState = nextProps.studentsState;
+    const newStudentsState = nextProps.studentsState,
+        newEventsState = nextProps.eventsState;
     if (newStudentsState && newStudentsState.students) {
-      this.state = newStudentsState;
+      this.state.students = newStudentsState.students;
+    }
+
+    if (newEventsState.events && newEventsState.events) {
+      this.state.events = newEventsState.events;
+      const filteredEvents = this.state.events.slice().filter(function(event) {
+        return dates.getDateStringFromSql(event.event_date) === dates.getTodayDateString();
+      });
+      if (filteredEvents.length > 0) {
+        this.setState({eventToday: filteredEvents[0]});
+      }
     }
   }
 
@@ -83,14 +97,15 @@ class StudentsContainer extends Component {
   // Show a footer with a pacer and bmi collection button if this program has students.
   // Otherwise, hide the footer.
   showFooter() {
+    const program = {program_name: this.props.title, program_id: this.props.program_id};
     const footer = (
         <Footer>
           <FooterTab>
-            <Button active onPress={()=>Actions.pacer()}>
+            <Button active onPress={()=>Actions.pacer({students: this.state.students, event: this.state.eventToday})}>
               Pacer Test
             </Button>
 
-            <Button active onPress={()=>Actions.bmi({program_name: this.props.title, students: this.state.students})}>
+            <Button active onPress={()=>Actions.bmi({program, students: this.state.students, event: this.state.eventToday})}>
               BMI Collection
             </Button>
 
@@ -103,12 +118,16 @@ class StudentsContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  studentsState: state.studentsState
+  studentsState: state.studentsState,
+  eventsState: state.eventsState
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchStudents: (program_id) => {
-    dispatch(actions.fetchStudents(program_id));
+    dispatch(studentActions.fetchStudents(program_id));
+  },
+  fetchEvents: (program_id) => {
+    dispatch(eventActions.fetchEvents(program_id));
   }
 });
 
