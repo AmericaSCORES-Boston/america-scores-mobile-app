@@ -1,8 +1,9 @@
 import numbers from './numbers';
+const currentYear = parseInt(new Date().getUTCFullYear(), 10);
 
 const Dates = {
-    CURRENT_YEAR: new Date().getUTCFullYear(),
-    YEAR_MIN: this.CURRENT_YEAR - 30,
+    CURRENT_YEAR: currentYear,
+    YEAR_MIN: currentYear - 30,
     DAY_MIN: 1,
     DAY_MAX: 31,
     MONTH_MIN: 1,

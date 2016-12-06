@@ -96,11 +96,8 @@ class AddStudentContainer extends Component {
 
     // Is the search input valid?  All fields must be filled, and date of birth must meet the required conditions.
     isValidSearch() {
-        return this.isFirstNameValid() &&
-            this.isLastNameValid() &&
-            this.isMonthValid() &&
-            this.isDayValid() &&
-            this.isYearValid();
+        return this.isFirstNameValid() && this.isLastNameValid() &&
+            dates.isDateValid(this.state.day, this.state.month, this.state.year);
     }
 
     // Is the first name entered valid?
@@ -177,8 +174,8 @@ class AddStudentContainer extends Component {
                             </View>
 
                             <View style={{flex: .4, flexDirection: 'row', paddingHorizontal: 10}}>
-                                <InputGroup error={!this.isDayValid()}
-                                            success={this.isDayValid()}
+                                <InputGroup error={!dates.isDayValid(this.state.day)}
+                                            success={dates.isDayValid(this.state.day)}
                                             style={[styles.InputGroup, {flex: 1}]}>
                                     <Input placeholder={'Day'}
                                            keyboardType="numeric"
@@ -191,8 +188,8 @@ class AddStudentContainer extends Component {
                             </View>
 
                             <View style={{flex: .75, flexDirection: 'row'}}>
-                                <InputGroup error={!this.isYearValid()}
-                                            success={this.isYearValid()}
+                                <InputGroup error={!dates.isYearValid(this.state.year)}
+                                            success={dates.isYearValid(this.state.year)}
                                             style={[styles.InputGroup, {flex: 1}]}>
                                     <Input ref={component => this._year = component}
                                            placeholder={'Year'}
@@ -228,13 +225,13 @@ class AddStudentContainer extends Component {
         if (!this.isLastNameValid()) {
             errors.push('\u2022 The last name is missing.');
         }
-        if (!this.isMonthValid()) {
+        if (!dates.isMonthValid(this.state.month)) {
             errors.push('\u2022 The month has not been selected.');
         }
-        if (!this.isDayValid()) {
+        if (!dates.isDayValid(this.state.day)) {
             errors.push(`\u2022 The day must be between ${dates.DAY_MIN} and ${dates.DAY_MAX}.`);
         }
-        if (!this.isYearValid()) {
+        if (!dates.isYearValid(this.state.year)) {
             errors.push(`\u2022 The year must be between ${dates.YEAR_MIN} and ${dates.CURRENT_YEAR}.`);
         }
 
