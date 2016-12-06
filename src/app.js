@@ -55,6 +55,7 @@ const App = () => {
             title="Sites"
             initial
             hideBackImage="true"
+            renderBackButton={() => null}
           />
           <Scene
             key="programs"
@@ -90,8 +91,6 @@ const App = () => {
             title="Pacer Test"
             backTitle="Cancel"
             hideBackImage="true"
-            rightTitle="Start"
-            onRight={() => alert('Start Pacer')}
             direction="vertical"
           />
           <Scene

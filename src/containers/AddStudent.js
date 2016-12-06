@@ -96,11 +96,8 @@ class AddStudentContainer extends Component {
 
     // Is the search input valid?  All fields must be filled, and date of birth must meet the required conditions.
     isValidSearch() {
-        return this.isFirstNameValid() &&
-            this.isLastNameValid() &&
-            this.isMonthValid() &&
-            this.isDayValid() &&
-            this.isYearValid();
+        return this.isFirstNameValid() && this.isLastNameValid() &&
+            dates.isDateValid(this.state.day, this.state.month, this.state.year);
     }
 
     // Is the first name entered valid?
@@ -113,34 +110,6 @@ class AddStudentContainer extends Component {
     isLastNameValid() {
         const last_name = this.state.last_name.trim();
         return last_name.length > 0;
-    }
-
-    // Is the month entered valid?
-    isMonthValid() {
-        const month = this.state.month.trim();
-        return month.length > 0;
-    }
-
-    // Is the day entered valid?  Checks that the day is an integer between 1 and 31.
-    isDayValid() {
-        const day = numbers.toInt(this.state.day.trim()),
-            dayString = dates.formatDayMonth(day);
-
-        return (dayString.length > 0) &&
-            (numbers.isInt(day)) &&
-            (day >= this.props.dayMin) &&
-            (day <= this.props.dayMax);
-    }
-
-    // Is the year entered valid?  Checks that the year is an integer between the current year (2016) and 30 years
-    // before (1986).
-    isYearValid() {
-        const year = numbers.toInt(this.state.year.trim());
-
-        return (year.toString().length === 4) &&
-            (numbers.isInt(year)) &&
-            (year >= this.props.yearMin) &&
-            (year < this.props.currentYear);
     }
 
     render() {
@@ -205,8 +174,8 @@ class AddStudentContainer extends Component {
                             </View>
 
                             <View style={{flex: .4, flexDirection: 'row', paddingHorizontal: 10}}>
-                                <InputGroup error={!this.isDayValid()}
-                                            success={this.isDayValid()}
+                                <InputGroup error={!dates.isDayValid(this.state.day)}
+                                            success={dates.isDayValid(this.state.day)}
                                             style={[styles.InputGroup, {flex: 1}]}>
                                     <Input placeholder={'Day'}
                                            keyboardType="numeric"
@@ -219,8 +188,8 @@ class AddStudentContainer extends Component {
                             </View>
 
                             <View style={{flex: .75, flexDirection: 'row'}}>
-                                <InputGroup error={!this.isYearValid()}
-                                            success={this.isYearValid()}
+                                <InputGroup error={!dates.isYearValid(this.state.year)}
+                                            success={dates.isYearValid(this.state.year)}
                                             style={[styles.InputGroup, {flex: 1}]}>
                                     <Input ref={component => this._year = component}
                                            placeholder={'Year'}
@@ -256,14 +225,14 @@ class AddStudentContainer extends Component {
         if (!this.isLastNameValid()) {
             errors.push('\u2022 The last name is missing.');
         }
-        if (!this.isMonthValid()) {
+        if (!dates.isMonthValid(this.state.month)) {
             errors.push('\u2022 The month has not been selected.');
         }
-        if (!this.isDayValid()) {
-            errors.push(`\u2022 The day must be between ${this.props.dayMin} and ${this.props.dayMax}.`);
+        if (!dates.isDayValid(this.state.day)) {
+            errors.push(`\u2022 The day must be between ${dates.DAY_MIN} and ${dates.DAY_MAX}.`);
         }
-        if (!this.isYearValid()) {
-            errors.push(`\u2022 The year must be between ${this.props.yearMin} and ${this.props.currentYear}.`);
+        if (!dates.isYearValid(this.state.year)) {
+            errors.push(`\u2022 The year must be between ${dates.YEAR_MIN} and ${dates.CURRENT_YEAR}.`);
         }
 
         return (errors.length > 0) ? (
@@ -276,24 +245,6 @@ class AddStudentContainer extends Component {
         ) : null;
     }
 }
-
-AddStudentContainer.propTypes = {
-    studentData: PropTypes.object.isRequired,
-    currentYear: PropTypes.number.isRequired,
-    yearMin: PropTypes.number.isRequired,
-    dayMin: PropTypes.number.isRequired,
-    dayMax: PropTypes.number.isRequired
-};
-
-const currentYear = new Date().getFullYear();
-
-AddStudentContainer.defaultProps = {
-    studentData: {},
-    currentYear,
-    yearMin: currentYear - 30,
-    dayMin: 1,
-    dayMax: 31
-};
 
 const mapStateToProps = (state) => ({
     studentData: state.studentsState

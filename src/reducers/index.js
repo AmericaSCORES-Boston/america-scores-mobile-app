@@ -7,6 +7,7 @@ import bmiState from './bmi';
 import pacerState from './pacer';
 import studentStatState from './stat';
 import loginState from './login';
+import createAccountState from './createAccount';
 import individualStudentState from './individualStudent';
 
 export default combineReducers({
@@ -16,6 +17,7 @@ export default combineReducers({
   studentsState,
   bmiState,
   loginState,
+  createAccountState,
   pacerState,
   individualStudentState
 });

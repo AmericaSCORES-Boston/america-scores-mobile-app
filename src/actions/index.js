@@ -75,6 +75,12 @@ export {
 } from './pacer';
 
 export {
+    createAccount,
+    createAccountSuccess,
+    createAccountFailure
+} from './createAccount';
+
+export {
     saveCollectedBmiData,
     saveCollectedBmiDataSuccess,
     saveCollectedBmiDataFailure
