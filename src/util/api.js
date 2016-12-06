@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 import dates from './dates';
 
 const root = "http://ec2-54-87-140-118.compute-1.amazonaws.com/api",
