@@ -115,34 +115,6 @@ class AddStudentContainer extends Component {
         return last_name.length > 0;
     }
 
-    // Is the month entered valid?
-    isMonthValid() {
-        const month = this.state.month.trim();
-        return month.length > 0;
-    }
-
-    // Is the day entered valid?  Checks that the day is an integer between 1 and 31.
-    isDayValid() {
-        const day = numbers.toInt(this.state.day.trim()),
-            dayString = dates.formatDayMonth(day);
-
-        return (dayString.length > 0) &&
-            (numbers.isInt(day)) &&
-            (day >= this.props.dayMin) &&
-            (day <= this.props.dayMax);
-    }
-
-    // Is the year entered valid?  Checks that the year is an integer between the current year (2016) and 30 years
-    // before (1986).
-    isYearValid() {
-        const year = numbers.toInt(this.state.year.trim());
-
-        return (year.toString().length === 4) &&
-            (numbers.isInt(year)) &&
-            (year >= this.props.yearMin) &&
-            (year < this.props.currentYear);
-    }
-
     render() {
         return (
             <Container style={[styles.container, styles.containerPadding]}>
@@ -260,10 +232,10 @@ class AddStudentContainer extends Component {
             errors.push('\u2022 The month has not been selected.');
         }
         if (!this.isDayValid()) {
-            errors.push(`\u2022 The day must be between ${this.props.dayMin} and ${this.props.dayMax}.`);
+            errors.push(`\u2022 The day must be between ${dates.DAY_MIN} and ${dates.DAY_MAX}.`);
         }
         if (!this.isYearValid()) {
-            errors.push(`\u2022 The year must be between ${this.props.yearMin} and ${this.props.currentYear}.`);
+            errors.push(`\u2022 The year must be between ${dates.YEAR_MIN} and ${dates.CURRENT_YEAR}.`);
         }
 
         return (errors.length > 0) ? (
@@ -276,24 +248,6 @@ class AddStudentContainer extends Component {
         ) : null;
     }
 }
-
-AddStudentContainer.propTypes = {
-    studentData: PropTypes.object.isRequired,
-    currentYear: PropTypes.number.isRequired,
-    yearMin: PropTypes.number.isRequired,
-    dayMin: PropTypes.number.isRequired,
-    dayMax: PropTypes.number.isRequired
-};
-
-const currentYear = new Date().getFullYear();
-
-AddStudentContainer.defaultProps = {
-    studentData: {},
-    currentYear,
-    yearMin: currentYear - 30,
-    dayMin: 1,
-    dayMax: 31
-};
 
 const mapStateToProps = (state) => ({
     studentData: state.studentsState

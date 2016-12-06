@@ -1,6 +1,12 @@
 import numbers from './numbers';
 
 const Dates = {
+    CURRENT_YEAR: new Date().getUTCFullYear(),
+    YEAR_MIN: this.CURRENT_YEAR - 30,
+    DAY_MIN: 1,
+    DAY_MAX: 31,
+    MONTH_MIN: 1,
+    MONTH_MAX: 12,
 
     // Get a new date object for today.
     getDateToday() {
@@ -42,6 +48,44 @@ const Dates = {
     // Format a date string as YYYY MM DD with a given joining string.
     formatDateString(month, day, year, joiner) {
         return [year, month, day].join(joiner);
+    },
+    
+    isDateValid(day, month, year) {
+        return this.isDayValid(day) && this.isMonthValid(month) && this.isYearValid(year);
+    },
+
+    // Is the month entered valid?
+    isMonthValid(month) {
+        // const month = this.state.month.trim();
+        const monthVal = numbers.toInt(month.trim()),
+            monthString = this.formatDayMonth(month);
+        
+        return (month.length > 0) &&
+            numbers.isInt(monthVal) &&
+            (month >= this.MONTH_MIN) &&
+            (month <= this.MONTH_MAX);
+    },
+
+    // Is the day entered valid?  Checks that the day is an integer between 1 and 31.
+    isDayValid(day) {
+        const dayVal = numbers.toInt(day.trim()),
+            dayString = this.formatDayMonth(dayVal);
+
+        return (dayString.length > 0) &&
+            (numbers.isInt(dayVal)) &&
+            (dayVal >= this.DAY_MIN) &&
+            (dayVal <= this.DAY_MAX);
+    },
+
+    // Is the year entered valid?  Checks that the year is an integer between the current year (2016) and 30 years
+    // before (1986).
+    isYearValid(year) {
+        const yearVal = numbers.toInt(year.trim());
+
+        return (yearVal.toString().length === 4) &&
+            (numbers.isInt(yearVal)) &&
+            (yearVal >= this.YEAR_MIN) &&
+            (yearVal < this.CURRENT_YEAR);
     }
 };
 

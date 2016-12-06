@@ -4,6 +4,7 @@ import { Container, Content, InputGroup, Input, H2 , H1, Picker, Button } from '
 import { connect } from 'react-redux';
 import * as actions from '../actions/individualStudent';
 import * as studentActions from '../actions/student';
+import * as statActions from '../actions/studentStat';
 import dates from '../util/dates';
 import { Actions } from 'react-native-router-flux';
 
@@ -29,8 +30,11 @@ class IndividualStudentContainer extends Component {
 
   saveStudent(newStudent, newStats) {
     this.props.updateStudent(newStudent);
-    if (newStats.measurement_id != 0)
+    if (newStats.measurement_id != 0) {
       this.props.updateStat(newStats);
+    }
+
+    Actions.pop();
   }
 
   getHeight(currentStats) {
@@ -210,10 +214,17 @@ class IndividualStudentContainer extends Component {
               </View>
             </View>
             <View style={styles.mediumMarginTop}>
-              <H2 style={styles.bold}>Weight</H2>
+              <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <H2 style={styles.bold}>Weight</H2>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row', paddingRight: 10, justifyContent: 'flex-start' }}>
+                  <H2 style={styles.bold}>PACER</H2>
+                </View>
+              </View>
               <View style={{flex: 1, flexDirection: 'row'}}>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                  <View style={{flex: .75, flexDirection: 'row', paddingRight: 10 }}>
+                  <View style={{flex: 1, flexDirection: 'row', paddingRight: 10 }}>
                     <InputGroup style={[styles.InputGroup, {flex: 1}]}>
                       <Input ref="weight"
                              keyboardType="numeric"
@@ -224,30 +235,27 @@ class IndividualStudentContainer extends Component {
                       />
                     </InputGroup>
                   </View>
-                  <Text style={{flex: 2, paddingTop: 9}}>lbs</Text>
+                  <Text style={{flex: 1, paddingTop: 9}}>lbs</Text>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                  <View style={{flex: 1, flexDirection: 'row', paddingRight: 10 }}>
+                    <InputGroup style={[styles.InputGroup, {flex: 1}]}>
+                      <Input ref="pacer"
+                             keyboardType="numeric"
+                             defaultValue={currentStats.pacer.toString()}
+                             onChangeText={(pacer) => currentStats.pacer = pacer}
+                             returnKeyType="done"
+                             maxLength={3}
+                      />
+                    </InputGroup>
+                    <Text style={{flex: 1, paddingTop: 9}}>laps</Text>
+                  </View>
                 </View>
               </View>
             </View>
+
             <View style={styles.mediumMarginTop}>
-              <H2 style={styles.bold}>PACER</H2>
-              <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <View style={{flex: .75, flexDirection: 'row', paddingRight: 10 }}>
-                  <InputGroup style={[styles.InputGroup, {flex: 1}]}>
-                    <Input ref="pacer"
-                           keyboardType="numeric"
-                           defaultValue={currentStats.pacer.toString()}
-                           onChangeText={(pacer) => currentStats.pacer = pacer}
-                           returnKeyType="done"
-                           maxLength={3}
-                    />
-                  </InputGroup>
-                  <Text style={{flex: 2, paddingTop: 9}}>laps</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.mediumMarginTop}>
-              <Button block large diabled = {!this.isValidData(currentStudent, currentStats)} onPress={() =>
-		this.saveStudent(currentStudent, currentStats)}>
+              <Button block large onPress={() => this.saveStudent(currentStudent, currentStats)}>
                 <H1 style={styles.white}>Save</H1>
               </Button>
             </View>
@@ -256,11 +264,7 @@ class IndividualStudentContainer extends Component {
       );
     }
     else {
-      return (
-        <View>
-          <H2 style={[styles.textAlignCenter, styles.mediumVerticalMargin]}>An error has occurred</H2>
-        </View>
-      )
+      return null;
     }
   }
 }
@@ -279,6 +283,9 @@ const mapDispatchToProps = (dispatch) => ({
   fetchStudents: (program_id) => {
     dispatch(studentActions.fetchStudents(program_id));
   },
+  updateStat: (stats) => {
+    dispatch(statActions.updateStat(stats));
+  }
 });
 
 export default connect(
