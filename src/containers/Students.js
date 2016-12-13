@@ -13,9 +13,8 @@ import styles from '../styles';
 class StudentsContainer extends Component {
   constructor(props) {
     super(props);
-    const student_ids = [],
-        eventToday = null;
-    this.state = {...props.studentsState, ...props.eventsState, student_ids, eventToday};
+    const student_ids = [], event = null;
+    this.state = {...props.studentsState, ...props.eventsState, student_ids, event};
 
     this.props.component.onRight = () => {
       Actions.addStudent({program_id: this.props.program_id});
@@ -32,18 +31,20 @@ class StudentsContainer extends Component {
   componentWillReceiveProps(nextProps) {
     const newStudentsState = nextProps.studentsState,
         newEventsState = nextProps.eventsState;
+
     if (newStudentsState && newStudentsState.students) {
       this.state.students = newStudentsState.students;
     }
 
-    if (newEventsState.events && newEventsState.events) {
+    if (newEventsState && newEventsState.events) {
       this.state.events = newEventsState.events;
+
       const filteredEvents = this.state.events.slice().filter(function(event) {
         return dates.getDateStringFromSql(event.event_date) === dates.getTodayDateString();
       });
-      if (filteredEvents.length > 0) {
-        this.setState({eventToday: filteredEvents[0]});
-      }
+
+      const event = (filteredEvents.length > 0) ? filteredEvents[0] : null;
+      this.setState({event});
     }
   }
 
@@ -101,11 +102,11 @@ class StudentsContainer extends Component {
     const footer = (
         <Footer>
           <FooterTab>
-            <Button active onPress={()=>Actions.pacer({students: this.state.students, event: this.state.eventToday})}>
+            <Button active onPress={()=>Actions.pacer({students: this.state.students, event: this.state.event})}>
               Pacer Test
             </Button>
 
-            <Button active onPress={()=>Actions.bmi({program, students: this.state.students, event: this.state.eventToday})}>
+            <Button active onPress={()=>Actions.bmi({program, students: this.state.students, event: this.state.event})}>
               BMI Collection
             </Button>
 
