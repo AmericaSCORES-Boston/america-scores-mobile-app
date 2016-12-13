@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import * as bmiActions from '../actions/bmi';
 import * as eventActions from '../actions/event';
 import numbers from '../util/numbers';
-
+import dates from '../util/dates';
 import styles from '../styles/index';
 
 class BMIContainer extends Component {
@@ -22,7 +22,8 @@ class BMIContainer extends Component {
       weight: '',
       student: props.students[0],
       currentBmiStudent: 0,
-      bmiDataCollected: []
+      bmiDataCollected: [],
+      event: props.event
     };
   }
 
@@ -33,11 +34,23 @@ class BMIContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newBmiState = nextProps.bmiState;
+    const newBmiState = nextProps.bmiState,
+        newEventsState = nextProps.eventsState;
 
     if (this.isBmiCollectionCompleted() && newBmiState.message) {
       Alert.alert('BMI Collection', newBmiState.message);
       Actions.pop();
+    }
+
+    if (newEventsState && newEventsState.events) {
+      this.state.events = newEventsState.events;
+
+      const filteredEvents = this.state.events.slice().filter(function(event) {
+        return dates.getDateStringFromSql(event.event_date) === dates.getTodayDateString();
+      });
+
+      const event = (filteredEvents.length > 0) ? filteredEvents[0] : null;
+      this.setState({event});
     }
   }
 
@@ -62,8 +75,9 @@ class BMIContainer extends Component {
       bmiDataCollected: this.state.bmiDataCollected.concat([bmiData])
     }, function() {
       this.clearCurrentInputs();
-      if (!this.hasMoreStudents()) {
-        this.props.saveCollectedBmiData(this.props.event.event_id, this.state.bmiDataCollected);
+      if (this.isBmiCollectionCompleted()) {
+        const event = this.state.event || this.props.event;
+        this.props.saveCollectedBmiData(event.event_id, this.state.bmiDataCollected);
       }
     });
 
@@ -221,7 +235,7 @@ class BMIContainer extends Component {
 
   // Shows the save button.  On press, it will continue or finish bmi collection.
   showSaveButton() {
-    const buttonText = (this.hasMoreStudents()) ? 'Save' : 'Finish';
+    const buttonText = (this.hasMoreStudents()) ? 'Next' : 'Finish';
 
     return (
         <Button large block disabled={!this.isDataValid()} onPress={() => this.getNextStudent()} style={styles.smallVerticalMargin}>
@@ -257,7 +271,8 @@ class BMIContainer extends Component {
 
 
 const mapStateToProps = (state) => ({
-  bmiState: state.bmiState
+  bmiState: state.bmiState,
+  eventsState: state.eventsState
 });
 
 const mapDispatchToProps = (dispatch) => ({
