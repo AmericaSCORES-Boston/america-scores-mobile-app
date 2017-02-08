@@ -6,3 +6,8 @@ script:
     #- npm run test -- --failTaskOnError
 before_script:
     - npm install
+
+notifications:
+    slack:
+        rooms:
+            secure: "BSGp3DlBGKEvwohvDKTTIn8WTUQtBiAnmquhZ1ckiwkA7dNHwA9hM1DzKad23pYm5kWLd0nI00dUTxsOfQQxO4tkvjEx2jZ3DTdMmo6183LhpIbeBAaDN+QpWxh/pid6o5hp4ThlcWTJOIFLom8H8R3L19cn/KL0598y7xAVZg36/6i9wXY/DF5YKNQPnpv02YJthmrbmJ4K54BlJMWXPlv0EEyMtkUKcjYOsLHJa3nfhf7F9UPGdkPgkd/z2DgcvYvnfsMig5rxTcuIb+OpUeS2Yp/hvYVszLPngegx+CXX9aCMEjWurkdFgK0yreMP6aZ7erHv+wmMP4iBQDthuWkQ2gTqxtc79DPfYsNf/qtH9hmW4mEqTB1pH0dmnRzqTxznh9Yp10jJsgwiQw46uYEUw+tuXEvGJ2w+XytZqYp89Zk5ivDx8Jg5Bql16KNRVu4xrQ2KMt3MC3nfu4o4GnPrnPBqaUYxnu6ujgQ/onfqEaRC5uVWrTNLeb0g/Rbu1pTmxMFMnfRkv6qulLcuG6cFdXukvid23e+9jjLx9PEVF/SintfBIo9hyaZH2mfBGYfdfNQamu1V4jcuIgfyH0hx/BrcLwZCkHXYY/uUOzdhP24m59LTqHrte/OrMoR5vfuff/wVGCyvJhkgNzhYQnTAKA6bm50WKkjCSa1fcfg="
