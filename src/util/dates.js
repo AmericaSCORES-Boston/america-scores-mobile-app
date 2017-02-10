@@ -9,7 +9,7 @@ const Dates = {
 
     // Retrieves the first ten characters of a sql date string. (YYYY-MM-DD)
     getDateStringFromSql(sqlDateString) {
-        return sqlDateString.substring(0, 10);
+        return (sqlDateString && sqlDateString.length > 10) ? sqlDateString.substring(0, 10) : "";
     },
 
     // Get a date string for today formatted as YYYY-MM-DD, the format the database expects.
