@@ -73,9 +73,18 @@ class StudentsContainer extends Component {
   // Show a list of students for this program if it is not empty.
   // Otherwise, show a message about the program being empty.
   showStudents() {
+    const studentList = this.state.students || [];
+    studentList.sort(function(a, b) {
+      if (a.first_name < b.first_name) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+    
     const students = (
         <List
-            dataArray={this.state.students}
+            dataArray={studentList}
             renderRow={(rowData) =>
                 <ListItem button onPress={()=>Actions.individualStudent({title: rowData.first_name + ' ' + rowData.last_name, student: rowData})}>
                   <Text>{rowData.first_name + ' ' + rowData.last_name}</Text>
