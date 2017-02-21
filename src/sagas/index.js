@@ -46,7 +46,8 @@ export function * addProgram(action) {
 
 export function * fetchEvents(action) {
   try {
-    const events = yield call(Api.fetchEvents, action.program_id);
+    const user = yield select(getUser);
+    const events = yield call(Api.fetchEvents, user, action.program_id);
     yield put(actions.fetchEventsSuccess(events));
   } catch (e) {
     yield put(actions.fetchEventsFailure(e.message));
@@ -55,8 +56,9 @@ export function * fetchEvents(action) {
 
 export function * createEvent(action) {
   try {
-    const event = yield call(Api.createEvent, action.program_id);
-    yield put(actions.createEventSuccess(event));
+    const user = yield select(getUser);
+    const events = yield call(Api.createEvent, user, action.program_id);
+    yield put(actions.createEventSuccess(events[0]));
   } catch (e) {
     yield put(actions.createEventFailure(e.message));
   }
@@ -149,7 +151,8 @@ export function * fetchStats(action) {
 
 export function * saveCollectedBmiData(action) {
   try {
-    const result = yield call(Api.saveCollectedBmiData, action.event_id, action.stats);
+    const user = yield select(getUser);
+    const result = yield call(Api.saveCollectedBmiData, user, action.event_id, action.stats);
     if (!result.status || result.status < 400) {
       yield put(actions.saveCollectedBmiDataSuccess("Data was successfully saved!"));
     }
@@ -191,9 +194,9 @@ export function * loginUser() {
 export function * createAccount(action) {
   try {
     const user = yield call(Api.createAccount, action.email, action.username, action.password, action.first_name, action.last_name);
-    yield put(actions.createUserSuccess());
+    yield put(actions.createAccountSuccess());
   } catch (e) {
-    yield put(actions.createUserFailure(e.message));
+    yield put(actions.createAccountFailure(e.message));
   }
 }
 
