@@ -73,9 +73,20 @@ class StudentsContainer extends Component {
   // Show a list of students for this program if it is not empty.
   // Otherwise, show a message about the program being empty.
   showStudents() {
+    const studentArray = this.state.students;
+    // // if there is no array, return an empty array
+    // if (studentArray == undefined) {
+    //   studentArray = [];
+    // }
+    // studentArray.sort(function(a,b){
+    //     if(a.first_name < b.first_name) return -1;
+    //     if(a.first_name > b.first_name) return 1;
+    //     return 0;
+    // });
+
     const students = (
         <List
-            dataArray={this.state.students}
+            dataArray={studentArray}
             renderRow={(rowData) =>
                 <ListItem button onPress={()=>Actions.individualStudent({title: rowData.first_name + ' ' + rowData.last_name, student: rowData})}>
                   <Text>{rowData.first_name + ' ' + rowData.last_name}</Text>
@@ -90,7 +101,6 @@ class StudentsContainer extends Component {
           <H2 style={styles.textAlignCenter}>Click the 'Add' button to get started.</H2>
         </View>
     );
-
     return (this.hasStudents()) ? students : noStudents;
   }
 

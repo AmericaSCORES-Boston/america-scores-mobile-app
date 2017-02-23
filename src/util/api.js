@@ -2,7 +2,7 @@
 
 import dates from './dates';
 
-const root = "http://ec2-54-87-140-118.compute-1.amazonaws.com/api",
+const root = "http://54.86.143.245",
     POST = "POST",
     PUT = "PUT";
 
@@ -58,6 +58,7 @@ const Api = {
         return request(createEndpoint(`/programs/${program_id}/events`), createRequestOptions(POST, {event_date}, user.idToken))
     },
 
+//TODO changed sort by
     fetchStudents(user, program_id) {
         return request(createEndpoint(`/programs/${program_id}/students`), { headers: auth(user.idToken) });
     },
@@ -100,7 +101,7 @@ const Api = {
     },
 
     createAccount(email, username, password, first_name, last_name) {
-        return request(createEndpoint(`/accounts`), createRequestOptions(POST, {email, username, password, first_name, last_name}));        
+        return request(createEndpoint(`/accounts`), createRequestOptions(POST, {email, username, password, first_name, last_name}));
     }
 };
 

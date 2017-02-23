@@ -1,34 +1,56 @@
-import reducer from '../src/reducers/students';
-import * as types from '../src/actions/constants';
+import reducer from '../src/reducers/student';
 import * as MockStudents from '../config/mockStudents';
+import * as studentsAction from '../src/actions/student';
+
 
 // Tests are mocked in for now so they pass travis
 // Should replace the .toMatchSnapshot() calls with .toEqual() calls for real testing
 
 describe('students reducer', () => {
+    
+    let state = {
+    isFetching: false,
+    student_ids: {},
+    students: {},
+    message: null,
+    searchResults: {},
+    };
+    
+    //pass in the action
+    state = reducer(state, studentsAction);
+    
   it('should return the initial state', () => {
-    expect(
-      reducer(undefined, {})
-    ).toMatchSnapshot();
+      let reducer1 = reducer(undefined, {});
+      expect(reducer1).toEqual(state);
+  });
+    
+  it('should handle STUDENT_FETCH_REQUESTED', () => {
+      var fetchStudentsResult = studentsAction.fetchStudents(undefined);
+      state = reducer(state, fetchStudentsResult);
+/*      This tests the action
+        expect(fetchStudentsResult['program_id']).not.toBeDefined();
+      expect(fetchStudentsResult['type']).toEqual('STUDENT_FETCH_REQUESTED');*/
+      expect(state.isFetching).toEqual(true);
   });
 
-  it('should handle ADD_STUDENT', () => {
-    const student = MockStudents.student1;
-    expect(
-      reducer([], {
-        type: types.ADD_STUDENT,
-        student,
-      })
-    ).toMatchSnapshot();
+  it('should handle STUDENT_FETCH_SUCCEEDED', () => {
+      
+      const first = 'Bob';
+      const last = 'Bobber';
+      const dob = '09-12-1333';
+      const student1 = {first, last, dob};
+      const studentList1 = {student1};
+      
+      var fetchStudentsSuccessAction = studentsAction.fetchStudentsSuccess({first, last, dob});
+      //state = reducer(state, fetchStudentsSuccessAction);
+      expect(fetchStudentsSuccessAction).toEqual(true);
+      expect(state.students).toEqual(studentList1);
+
+      //expect(studentsAction.fetchStudentsSuccess(studentList1)[1]).toEqual(studentList1);
   });
 
-  it('should handle ADD_STUDENT_SUCCESS', () => {
-    expect(
-      reducer([], {
-        type: types.ADD_STUDENT_SUCCESS,
-      })
-    ).toMatchSnapshot();
-  });
+/*
+
 
   it('should handle FETCH_STUDENT', () => {
     const first = 'Bob';
@@ -71,6 +93,7 @@ describe('students reducer', () => {
       })
     ).toMatchSnapshot();
   });
+*/
 
 
 });

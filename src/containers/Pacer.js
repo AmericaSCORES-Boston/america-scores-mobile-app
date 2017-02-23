@@ -165,6 +165,7 @@ class PacerContainer extends Component {
           <Button large block disabled={this.state.disabled} onPress={() => this.startPacerTest()} style={styles.mediumMarginTop}>
               <H1 style={styles.white}>Start Test</H1>
             </Button>
+            //undo button here?? TODO
           </Content>
 
       </Container>
