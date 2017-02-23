@@ -2,7 +2,7 @@
 
 import dates from './dates';
 
-const root = "http://ec2-54-87-140-118.compute-1.amazonaws.com/api",
+const root = "http://54.86.143.245",
     POST = "POST",
     PUT = "PUT";
 
