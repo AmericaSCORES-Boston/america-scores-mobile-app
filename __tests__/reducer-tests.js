@@ -7,7 +7,7 @@ import * as studentsAction from '../src/actions/student';
 // Should replace the .toMatchSnapshot() calls with .toEqual() calls for real testing
 
 describe('students reducer', () => {
-    
+
     let state = {
     isFetching: false,
     student_ids: {},
@@ -15,40 +15,38 @@ describe('students reducer', () => {
     message: null,
     searchResults: {},
     };
-    
+
     //pass in the action
     state = reducer(state, studentsAction);
-    
+
   it('should return the initial state', () => {
       let reducer1 = reducer(undefined, {});
       expect(reducer1).toEqual(state);
   });
-    
+
   it('should handle STUDENT_FETCH_REQUESTED', () => {
       var fetchStudentsResult = studentsAction.fetchStudents(undefined);
       state = reducer(state, fetchStudentsResult);
-/*      This tests the action
-        expect(fetchStudentsResult['program_id']).not.toBeDefined();
-      expect(fetchStudentsResult['type']).toEqual('STUDENT_FETCH_REQUESTED');*/
       expect(state.isFetching).toEqual(true);
   });
 
   it('should handle STUDENT_FETCH_SUCCEEDED', () => {
-      
+
       const first = 'Bob';
       const last = 'Bobber';
       const dob = '09-12-1333';
-      const student1 = {first, last, dob};
-      const studentList1 = {student1};
-      
-      var fetchStudentsSuccessAction = studentsAction.fetchStudentsSuccess({first, last, dob});
-      //state = reducer(state, fetchStudentsSuccessAction);
-      expect(fetchStudentsSuccessAction).toEqual(true);
-      expect(state.students).toEqual(studentList1);
+      const student = {first, last, dob};
 
-      //expect(studentsAction.fetchStudentsSuccess(studentList1)[1]).toEqual(studentList1);
+      var fetchStudentsSuccessAction = studentsAction.fetchStudentsSuccess({first, last, dob});
+      state = reducer(state, fetchStudentsSuccessAction);
+      expect(state.students).toEqual(true);
+      expect(fetchStudentsSuccessAction['students']).toEqual(student);
   });
 
+  //new tests added for the 'undo' feature and sorted student list
+  it('should handle ADD_EXISTING_STUDENT_SUCCEEDED'), () => {
+
+  }
 /*
 
 
