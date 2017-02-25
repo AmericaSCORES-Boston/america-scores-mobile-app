@@ -25,7 +25,8 @@ class PacerContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.loadPacer(this.props.students.length);
+    const numToLoad = Math.min(this.props.students.length, 15);
+    this.props.loadPacer(numToLoad);
   }
 
   componentWillUnmount() {
