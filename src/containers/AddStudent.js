@@ -100,7 +100,8 @@ class AddStudentContainer extends Component {
             this.isLastNameValid() &&
             this.isMonthValid() &&
             this.isDayValid() &&
-            this.isYearValid();
+            this.isYearValid() &&
+            this.isLeapYearValid();
     }
 
     // Is the first name entered valid?
@@ -125,11 +126,17 @@ class AddStudentContainer extends Component {
     isDayValid() {
         const day = numbers.toInt(this.state.day.trim()),
             dayString = dates.formatDayMonth(day);
+        const month = this.state.month.trim();
 
+        var min = this.props.dayMin;
+        var max = this.props.dayMax;
+        if (month == '02') {
+          max = 29
+        }
         return (dayString.length > 0) &&
             (numbers.isInt(day)) &&
-            (day >= this.props.dayMin) &&
-            (day <= this.props.dayMax);
+            (day >= min) &&
+            (day <= max);
     }
 
     // Is the year entered valid?  Checks that the year is an integer between the current year (2016) and 30 years
@@ -141,6 +148,28 @@ class AddStudentContainer extends Component {
             (numbers.isInt(year)) &&
             (year >= this.props.yearMin) &&
             (year < this.props.currentYear);
+        return true;
+    }
+
+    // Checking special cases for leap years
+    isLeapYearValid() {
+      const day = numbers.toInt(this.state.day.trim());
+      const month = this.state.month.trim();
+      const year = numbers.toInt(this.state.year.trim());
+      var dayMax = this.props.dayMax;
+      var isLeapYear = false;
+
+      // checking if this is a leap year
+      if (year % 4 == 0 ||
+        ((year % 100 == 0) && (year % 400 == 0))) {
+        isLeapYear = true;
+      }
+
+      if (!isLeapYear && month == '02') {
+        dayMax = 28;
+      }
+      // final checking for the day with conditions about the month and year
+      return (day <= dayMax);
     }
 
     render() {
@@ -260,10 +289,18 @@ class AddStudentContainer extends Component {
             errors.push('\u2022 The month has not been selected.');
         }
         if (!this.isDayValid()) {
+          if (this.state.month.trim() == '02') {
+            errors.push(`\u2022 For February, the day must be between 1 and 29.`);
+          }
+          else {
             errors.push(`\u2022 The day must be between ${this.props.dayMin} and ${this.props.dayMax}.`);
+          }
         }
         if (!this.isYearValid()) {
             errors.push(`\u2022 The year must be between ${this.props.yearMin} and ${this.props.currentYear}.`);
+        }
+        if (!this.isLeapYearValid()) {
+            errors.push(`\u2022 Day is invalid with February in a common year.`);
         }
 
         return (errors.length > 0) ? (
