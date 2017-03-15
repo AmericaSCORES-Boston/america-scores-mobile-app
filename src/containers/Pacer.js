@@ -152,10 +152,10 @@ class PacerContainer extends Component {
           <Content theme={scoresTheme}>
             <View style={[{flex: 1, flexDirection: 'row', justifyContent: 'center'}, styles.smallMarginTop]}>
               <H2 style={{marginRight: 20}}>Level: {this.state.currentLevel + 1}</H2>
-              <H2>Shuttle: {this.state.totalShuttles}</H2>
+              <H2>Lap: {this.state.totalShuttles}</H2>
             </View>
             <Button small block disabled={this.state.pacerDone || !this.state.disabled} onPress={() => this.incrementShuttle()} style={styles.mediumMarginTop}>
-                <H2 style={styles.white}>Next Shuttle</H2>
+                <H2 style={styles.white}>Next Lap</H2>
             </Button>
             <ListView contentContainerStyle={[styles.gridList, styles.mediumMarginTop]}
               dataSource={this.state.dataSource}
