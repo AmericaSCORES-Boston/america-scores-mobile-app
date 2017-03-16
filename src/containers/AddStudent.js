@@ -168,6 +168,10 @@ class AddStudentContainer extends Component {
       if (!isLeapYear && month == '02') {
         dayMax = 28;
       }
+      if (month != '02') {
+        // avoid throwing double errors
+        return true;
+      }
       // final checking for the day with conditions about the month and year
       return (day <= dayMax);
     }

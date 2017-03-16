@@ -8,7 +8,7 @@ import * as actions from '../actions/pacer';
 
 import styles from '../styles';
 
-const Sound = require('react-native-sound');
+import {default as Sound} from 'react-native-sound';
 
 class PacerContainer extends Component {
   constructor(props) {
