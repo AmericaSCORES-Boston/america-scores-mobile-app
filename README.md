@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/CS4500-AmericaSCORES/america-scores-mobile-app.svg?branch=master)](https://travis-ci.org/CS4500-AmericaSCORES/america-scores-mobile-app)
+[![Build Status](https://travis-ci.org/AmericaSCORES-Boston/america-scores-mobile-app.svg?branch=master)](https://travis-ci.org/AmericaSCORES-Boston/america-scores-mobile-app)
+[![Coverage Status](https://coveralls.io/repos/github/AmericaSCORES-Boston/america-scores-mobile-app/badge.svg?branch=master)](https://coveralls.io/github/AmericaSCORES-Boston/america-scores-mobile-app?branch=master)
 
 # America SCORES Mobile App
 
