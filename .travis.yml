@@ -3,9 +3,12 @@ node_js:
     - '6'
 script:
     - npm run eslint -- --failTaskOnError
-    #- npm run test -- --failTaskOnError
+    - npm run test # -- --failTaskOnError
 before_script:
     - npm install
+
+after_success:
+    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
 
 notifications:
     slack:
