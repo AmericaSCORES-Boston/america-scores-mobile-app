@@ -25,8 +25,8 @@
     "redux-saga": "^0.13.0"
   },
   "jest": {
-    "preset": "jest-react-native",
-    "collectCoverage": "true",
+    "preset": "react-native",
+    "collectCoverage": true,
     "coverageDirectory": "./coverage/",
     "coverageReporters": ["lcov"]
   },
@@ -34,12 +34,11 @@
     "babel-eslint": "^7.1.1",
     "babel-jest": "17.0.2",
     "babel-preset-react-native": "1.9.0",
+    "coveralls": "^2.1.0",
     "eslint-plugin-react": "^6.5.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "jest": "17.0.3",
-    "jest-react-native": "17.0.3",
-    "coveralls": "^2.1.0",
     "react-test-renderer": "15.4.1",
     "yargs": "^6.4.0"
   }
