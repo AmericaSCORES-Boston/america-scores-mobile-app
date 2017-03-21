@@ -1,26 +1,8 @@
 exports[`test renders a RosterItem using Snapshots 1`] = `
-<View
-  accessibilityComponentType={undefined}
-  accessibilityLabel={undefined}
-  accessibilityTraits={undefined}
-  accessible={true}
-  hitSlop={undefined}
-  onLayout={undefined}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "backgroundColor": "transparent",
-      },
-      undefined,
-    ]
-  }
-  testID={undefined}>
+<TouchableHighlight
+  activeOpacity={0.85}
+  onPress={[Function]}
+  underlayColor="#E0F2F1">
   <View
     style={
       Object {
@@ -53,32 +35,14 @@ exports[`test renders a RosterItem using Snapshots 1`] = `
       John Doe,Jane Doe stars
     </Text>
   </View>
-</View>
+</TouchableHighlight>
 `;
 
 exports[`test renders a selected RosterItem using Snapshots 1`] = `
-<View
-  accessibilityComponentType={undefined}
-  accessibilityLabel={undefined}
-  accessibilityTraits={undefined}
-  accessible={true}
-  hitSlop={undefined}
-  onLayout={undefined}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  style={
-    Array [
-      Object {
-        "backgroundColor": "transparent",
-      },
-      undefined,
-    ]
-  }
-  testID={undefined}>
+<TouchableHighlight
+  activeOpacity={0.85}
+  onPress={[Function]}
+  underlayColor="#E0F2F1">
   <View
     style={
       Array [
@@ -116,5 +80,5 @@ exports[`test renders a selected RosterItem using Snapshots 1`] = `
       John Doe,Jane Doe stars
     </Text>
   </View>
-</View>
+</TouchableHighlight>
 `;

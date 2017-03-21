@@ -25,28 +25,10 @@ exports[`test renders a RosterPage using Snapshots 1`] = `
   scrollEventThrottle={50}
   scrollRenderAheadDistance={1000}
   stickyHeaderIndices={Array []}>
-  <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
-    accessible={true}
-    hitSlop={undefined}
-    onLayout={undefined}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Array [
-        Object {
-          "backgroundColor": "transparent",
-        },
-        undefined,
-      ]
-    }
-    testID={undefined}>
+  <TouchableHighlight
+    activeOpacity={0.85}
+    onPress={[Function]}
+    underlayColor="#E0F2F1">
     <View
       style={
         Object {
@@ -79,29 +61,11 @@ exports[`test renders a RosterPage using Snapshots 1`] = `
         John Doe,Jane Doe stars
       </Text>
     </View>
-  </View>
-  <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
-    accessible={true}
-    hitSlop={undefined}
-    onLayout={undefined}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Array [
-        Object {
-          "backgroundColor": "transparent",
-        },
-        undefined,
-      ]
-    }
-    testID={undefined}>
+  </TouchableHighlight>
+  <TouchableHighlight
+    activeOpacity={0.85}
+    onPress={[Function]}
+    underlayColor="#E0F2F1">
     <View
       style={
         Object {
@@ -134,29 +98,11 @@ exports[`test renders a RosterPage using Snapshots 1`] = `
         Billy Bob stars
       </Text>
     </View>
-  </View>
-  <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
-    accessible={true}
-    hitSlop={undefined}
-    onLayout={undefined}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Array [
-        Object {
-          "backgroundColor": "transparent",
-        },
-        undefined,
-      ]
-    }
-    testID={undefined}>
+  </TouchableHighlight>
+  <TouchableHighlight
+    activeOpacity={0.85}
+    onPress={[Function]}
+    underlayColor="#E0F2F1">
     <View
       style={
         Object {
@@ -189,6 +135,6 @@ exports[`test renders a RosterPage using Snapshots 1`] = `
         John Michael,Harry Reynolds stars
       </Text>
     </View>
-  </View>
+  </TouchableHighlight>
 </ScrollView>
 `;
