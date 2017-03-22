@@ -1,140 +1,182 @@
 exports[`test renders a RosterPage using Snapshots 1`] = `
-<ScrollView
-  contentContainerStyle={
-    Object {
-      "paddingVertical": 40,
-    }
-  }
-  dataSource={
-    ListViewDataSource {
-      "items": 3,
-    }
-  }
-  initialListSize={10}
-  onContentSizeChange={[Function]}
-  onEndReachedThreshold={1000}
-  onKeyboardDidHide={undefined}
-  onKeyboardDidShow={undefined}
-  onKeyboardWillHide={undefined}
-  onKeyboardWillShow={undefined}
-  onLayout={[Function]}
-  onScroll={[Function]}
-  pageSize={1}
-  removeClippedSubviews={true}
-  renderRow={[Function]}
-  scrollEventThrottle={50}
-  scrollRenderAheadDistance={1000}
-  stickyHeaderIndices={Array []}>
-  <TouchableHighlight
-    activeOpacity={0.85}
-    onPress={[Function]}
-    underlayColor="#E0F2F1">
-    <View
-      style={
-        Object {
-          "paddingHorizontal": 24,
-          "paddingVertical": 8,
+<View>
+  <RCTScrollView>
+    <View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        hasTVPreferredFocus={undefined}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ]
         }
-      }>
-      <Text
+        testID={undefined}
+        tvParallaxProperties={undefined}>
+        <View
+          style={
+            Object {
+              "paddingHorizontal": 24,
+              "paddingVertical": 8,
+            }
+          }>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "fontSize": 16,
+                "fontWeight": "bold",
+                "paddingBottom": 4,
+              }
+            }>
+            Test 1
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "paddingBottom": 8,
+              }
+            }>
+            John Doe,Jane Doe stars
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
         accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
+        hasTVPreferredFocus={undefined}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "fontSize": 16,
-            "fontWeight": "bold",
-            "paddingBottom": 4,
-          }
-        }>
-        Test 1
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "paddingBottom": 8,
-          }
-        }>
-        John Doe,Jane Doe stars
-      </Text>
-    </View>
-  </TouchableHighlight>
-  <TouchableHighlight
-    activeOpacity={0.85}
-    onPress={[Function]}
-    underlayColor="#E0F2F1">
-    <View
-      style={
-        Object {
-          "paddingHorizontal": 24,
-          "paddingVertical": 8,
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ]
         }
-      }>
-      <Text
+        testID={undefined}
+        tvParallaxProperties={undefined}>
+        <View
+          style={
+            Object {
+              "paddingHorizontal": 24,
+              "paddingVertical": 8,
+            }
+          }>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "fontSize": 16,
+                "fontWeight": "bold",
+                "paddingBottom": 4,
+              }
+            }>
+            Test 2
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "paddingBottom": 8,
+              }
+            }>
+            Billy Bob stars
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
         accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
+        hasTVPreferredFocus={undefined}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "fontSize": 16,
-            "fontWeight": "bold",
-            "paddingBottom": 4,
-          }
-        }>
-        Test 2
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "paddingBottom": 8,
-          }
-        }>
-        Billy Bob stars
-      </Text>
-    </View>
-  </TouchableHighlight>
-  <TouchableHighlight
-    activeOpacity={0.85}
-    onPress={[Function]}
-    underlayColor="#E0F2F1">
-    <View
-      style={
-        Object {
-          "paddingHorizontal": 24,
-          "paddingVertical": 8,
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ]
         }
-      }>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "fontSize": 16,
-            "fontWeight": "bold",
-            "paddingBottom": 4,
-          }
-        }>
-        Test 3
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "paddingBottom": 8,
-          }
-        }>
-        John Michael,Harry Reynolds stars
-      </Text>
+        testID={undefined}
+        tvParallaxProperties={undefined}>
+        <View
+          style={
+            Object {
+              "paddingHorizontal": 24,
+              "paddingVertical": 8,
+            }
+          }>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "fontSize": 16,
+                "fontWeight": "bold",
+                "paddingBottom": 4,
+              }
+            }>
+            Test 3
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "paddingBottom": 8,
+              }
+            }>
+            John Michael,Harry Reynolds stars
+          </Text>
+        </View>
+      </View>
     </View>
-  </TouchableHighlight>
-</ScrollView>
+  </RCTScrollView>
+</View>
 `;
