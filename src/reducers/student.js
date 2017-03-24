@@ -11,10 +11,28 @@ export default function studentsState(state = {}, action) {
       return {
         ...state,
         isFetching: false,
+        student_id: action.student.student_id,
+        student: action.student
+      };
+    case students.STUDENT_FETCH_FAILED:
+      return {
+        ...state,
+        isFetching: false,
+        message: action.message
+      };
+    case students.STUDENTS_FETCH_REQUESTED:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case students.STUDENTS_FETCH_SUCCEEDED:
+      return {
+        ...state,
+        isFetching: false,
         student_ids: action.students.map((student) => student.student_id),
         students: action.students
       };
-    case students.STUDENT_FETCH_FAILED:
+    case students.STUDENTS_FETCH_FAILED:
       return {
         ...state,
         isFetching: false,

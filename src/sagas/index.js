@@ -64,6 +64,16 @@ export function * createEvent(action) {
   }
 }
 
+export function * fetchStudent(action) {
+  try {
+    const user = yield select(getUser);
+    const student = yield call(Api.fetchStudent, user, action.student_id);
+    yield put(actions.fetchStudentSuccess(student));
+  } catch (e) {
+    yield put(actions.fetchStudentFailure(e.message));
+  }
+}
+
 export function * fetchStudents(action) {
   try {
     const user = yield select(getUser);
@@ -207,7 +217,8 @@ export function * sagas() {
     takeEvery(program.ADD_PROGRAM_REQUESTED, addProgram),
     takeEvery(event.EVENTS_FETCH_REQUESTED, fetchEvents),
     takeEvery(event.CREATE_EVENT_REQUESTED, createEvent),
-    takeEvery(student.STUDENT_FETCH_REQUESTED, fetchStudents),
+    takeEvery(student.STUDENT_FETCH_REQUESTED, fetchStudent),
+    takeEvery(student.STUDENTS_FETCH_REQUESTED, fetchStudents),
     takeEvery(student.SEARCH_STUDENT_REQUESTED, searchStudent),
     takeEvery(student.CREATE_STUDENT_REQUESTED, createStudent),
     takeEvery(student.ADD_EXISTING_STUDENT_REQUESTED, addExistingStudent),

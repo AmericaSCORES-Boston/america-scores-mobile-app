@@ -14,6 +14,9 @@ export {
 } from './program';
 
 export {
+  fetchStudent,
+  fetchStudentSuccess,
+  fetchStudentFailure,
   fetchStudents,
   fetchStudentsSuccess,
   fetchStudentsFailure,

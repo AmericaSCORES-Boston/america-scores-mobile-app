@@ -2,6 +2,10 @@ export const STUDENT_FETCH_REQUESTED = 'STUDENT_FETCH_REQUESTED';
 export const STUDENT_FETCH_SUCCEEDED = 'STUDENT_FETCH_SUCCEEDED';
 export const STUDENT_FETCH_FAILED = 'STUDENT_FETCH_FAILED';
 
+export const STUDENTS_FETCH_REQUESTED = 'STUDENTS_FETCH_REQUESTED';
+export const STUDENTS_FETCH_SUCCEEDED = 'STUDENTS_FETCH_SUCCEEDED';
+export const STUDENTS_FETCH_FAILED = 'STUDENTS_FETCH_FAILED';
+
 export const SEARCH_STUDENT_REQUESTED = 'SEARCH_STUDENT_REQUESTED';
 export const SEARCH_STUDENT_SUCCEEDED = 'SEARCH_STUDENT_SUCCEEDED';
 export const SEARCH_STUDENT_FAILED = 'SEARCH_STUDENT_FAILED';
@@ -14,18 +18,33 @@ export const ADD_EXISTING_STUDENT_REQUESTED = 'ADD_EXISTING_STUDENT_REQUESTED';
 export const ADD_EXISTING_STUDENT_SUCCEEDED = 'ADD_EXISTING_STUDENT_SUCCEEDED';
 export const ADD_EXISTING_STUDENT_FAILED = 'ADD_EXISTING_STUDENT_FAILED';
 
-export const fetchStudents = program_id => ({
+export const fetchStudent = student_id => ({
   type: STUDENT_FETCH_REQUESTED,
+  student_id
+})
+
+export const fetchStudentSuccess = student => ({
+  type: STUDENT_FETCH_SUCCEEDED,
+  student
+});
+
+export const fetchStudentFailure = message => ({
+  type: STUDENT_FETCH_FAILED,
+  message
+});
+
+export const fetchStudents = program_id => ({
+  type: STUDENTS_FETCH_REQUESTED,
   program_id
 });
 
 export const fetchStudentsSuccess = students => ({
-  type: STUDENT_FETCH_SUCCEEDED,
+  type: STUDENTS_FETCH_SUCCEEDED,
   students
 });
 
 export const fetchStudentsFailure = message => ({
-  type: STUDENT_FETCH_FAILED,
+  type: STUDENTS_FETCH_FAILED,
   message
 });
 
