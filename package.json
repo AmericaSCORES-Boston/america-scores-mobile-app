@@ -25,7 +25,8 @@
     "redux-saga": "^0.13.0"
   },
   "jest": {
-    "preset": "jest-react-native"
+    "preset": "react-native",
+	"setupFiles": ["node_modules/react-native/jest/setup.js"]
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",

@@ -100,7 +100,7 @@ const Api = {
     },
 
     createAccount(email, username, password, first_name, last_name) {
-        return request(createEndpoint(`/accounts`), createRequestOptions(POST, {email, username, password, first_name, last_name}));        
+        return request(createEndpoint(`/accounts`), createRequestOptions(POST, {email, username, password, first_name, last_name}));
     }
 };
 
