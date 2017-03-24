@@ -74,15 +74,6 @@ class StudentsContainer extends Component {
   // Otherwise, show a message about the program being empty.
   showStudents() {
     const studentArray = this.state.students;
-    // // if there is no array, return an empty array
-    // if (studentArray == undefined) {
-    //   studentArray = [];
-    // }
-    // studentArray.sort(function(a,b){
-    //     if(a.first_name < b.first_name) return -1;
-    //     if(a.first_name > b.first_name) return 1;
-    //     return 0;
-    // });
 
     const students = (
         <List

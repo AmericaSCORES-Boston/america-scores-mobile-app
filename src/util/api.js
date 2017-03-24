@@ -58,7 +58,6 @@ const Api = {
         return request(createEndpoint(`/programs/${program_id}/events`), createRequestOptions(POST, {event_date}, user.idToken))
     },
 
-//TODO changed sort by
     fetchStudents(user, program_id) {
         return request(createEndpoint(`/programs/${program_id}/students`), { headers: auth(user.idToken) });
     },
