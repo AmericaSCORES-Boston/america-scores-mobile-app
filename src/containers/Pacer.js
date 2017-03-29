@@ -8,7 +8,7 @@ import * as actions from '../actions/pacer';
 
 import styles from '../styles';
 
-const Sound = require('react-native-sound');
+import Sound from 'react-native-sound';
 
 class PacerContainer extends Component {
   constructor(props) {
@@ -20,6 +20,9 @@ class PacerContainer extends Component {
     this.state.totalShuttles = 0;
     this.state.disabled = false;
     this.state.pacerDone = false;
+    // adding a new array for logging all the actions, each element specifies
+    // the student index that refers to the student that just got modified
+    this.state.actionHistory = [];
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state.dataSource = ds.cloneWithRows(this.state.pacerArray);
   }
@@ -40,6 +43,8 @@ class PacerContainer extends Component {
       this.state.totalShuttles = newPacerState.totalShuttles;
       this.state.currentShuttle = newPacerState.currentShuttle;
       this.state.currentLevel = newPacerState.currentLevel;
+      // adding a new array for logging all the actions
+      this.state.actionHistory = newPacerState.actionHistory;
 
       if (this.isPacerTestOver()) {
         this.clearPacerTest();
@@ -88,7 +93,7 @@ class PacerContainer extends Component {
         console.log('duration in seconds: ' + this.state.pacerAudio.getDuration());
         this.state.disabled = true;
         this.forceUpdate();
-        this.state.pacerAudio.play();
+        this.state.pacerAudio.play(() => this.state.pacerAudio.release); //release when done
       }
     });
   }
@@ -105,13 +110,16 @@ class PacerContainer extends Component {
   }
 
   handlePacerPress(rowData, rowId) {
+    // put the action in history whether it is the the second or the first miss
+    this.state.actionHistory.push(rowId);
     if (rowData < 2) {
       this.props.incrementSquare(rowId);
     }
-
-    // Set the student's total shuttles here
-    this.props.students[parseInt(rowId, 10)].pacer = this.state.currentLevel;
-    // Maybe modify the passed in students array with a new field?
+    else {
+      // Set the student's total shuttles here
+      this.props.students[parseInt(rowId, 10)].pacer = this.state.currentLevel;
+      // Maybe modify the passed in students array with a new field?
+    }
   }
 
   handlePacerHold(rowData, rowId) {
@@ -119,6 +127,17 @@ class PacerContainer extends Component {
       // Unset the student's total shuttles here if it was set
       this.props.students[parseInt(rowId, 10)].pacer = null;
       this.props.decrementSquare(rowId);
+    }
+  }
+
+  handleUndo() {
+    if (this.state.actionHistory.length > 0 && this.state.actionHistory != null) {
+      // get the last index that an action is performed on, basicaly an rowId
+      var lastId = this.state.actionHistory.pop();
+      // get the data of the last index
+      var lastData = this.state.pacerArray[parseInt(lastId, 10)];
+      // refers to the hold function
+      this.handlePacerHold(lastData, lastId);
     }
   }
 
@@ -164,6 +183,9 @@ class PacerContainer extends Component {
             />
           <Button large block disabled={this.state.disabled} onPress={() => this.startPacerTest()} style={styles.mediumMarginTop}>
               <H1 style={styles.white}>Start Test</H1>
+            </Button>
+          <Button large block disabled={this.state.disabled} onPress={() => this.handleUndo()} style={styles.mediumMarginTop}>
+              <H1 style={styles.white}>Undo</H1>
             </Button>
           </Content>
 
