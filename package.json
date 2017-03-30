@@ -26,17 +26,19 @@
   },
   "jest": {
     "preset": "react-native",
-	"setupFiles": ["node_modules/react-native/jest/setup.js"]
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage/",
+    "coverageReporters": ["lcov"]
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
     "babel-jest": "17.0.2",
     "babel-preset-react-native": "1.9.0",
+    "coveralls": "^2.1.0",
     "eslint-plugin-react": "^6.5.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "jest": "17.0.3",
-    "jest-react-native": "17.0.3",
     "react-test-renderer": "15.4.1",
     "yargs": "^6.4.0"
   }

@@ -5,7 +5,7 @@ const eslint = require('gulp-eslint');
 const yargs = require('yargs');
 
 gulp.task('eslint', () => {
-  var stream = gulp.src(['**/*.js', '!node_modules/**', '!ios/', '!android/'])
+  var stream = gulp.src(['**/*.js', '!node_modules/**', '!ios/', '!android/', '!coverage/**'])
     .pipe(eslint({
       quiet: true,
       globals: [
