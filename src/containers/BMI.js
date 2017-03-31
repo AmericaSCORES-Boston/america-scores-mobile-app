@@ -30,6 +30,10 @@ class BMIContainer extends Component {
   componentWillMount() {
     if (!this.props.event) {
       this.props.createEvent(this.props.program.program_id);
+      console.log("event" + this.props.event);
+      console.log("programid" + this.props.program.program_id);
+
+
     }
   }
 

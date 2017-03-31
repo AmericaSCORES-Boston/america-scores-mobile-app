@@ -5,26 +5,54 @@ import scoresTheme from '../themes/scoresTheme';
 import { connect } from 'react-redux';
 import pacerStages from '../util/pacerStages';
 import * as actions from '../actions/pacer';
+import { Actions } from 'react-native-router-flux';
+import * as eventActions from '../actions/event';
 
 import styles from '../styles';
-
 import Sound from 'react-native-sound';
 
 class PacerContainer extends Component {
   constructor(props) {
     super(props);
     this.state = props.pacerState;
+    //this.state = {...props.programsState, ...props.pacerState};
+
     this.state.pacerArray = [];
     this.state.currentLevel = 0;
     this.state.currentShuttle = 1;
     this.state.totalShuttles = 0;
     this.state.disabled = false;
     this.state.pacerDone = false;
+    // adding an event for passing the event_id
+    event: props.event;
+
     // adding a new array for logging all the actions, each element specifies
     // the student index that refers to the student that just got modified
     this.state.actionHistory = [];
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state.dataSource = ds.cloneWithRows(this.state.pacerArray);
+
+    this.props.component.onRight = () => {
+      //TODO complete with backend
+      if (this.state.pacerDone) {
+        this.sendPacerData();
+        alert('Pacer Results Submitted');
+        Actions.pop();
+      }
+      else {
+        alert('Pacer Test Incomplete');
+      }
+
+    }
+    this.props.component.rightTitle = 'Submit';
+  }
+
+  // adding events
+  componentWillMount() {
+    if (!this.props.event) {
+      this.props.createEvent(this.props.program_id);
+      console.log("event" + this.props.event);
+    }
   }
 
   componentDidMount() {
@@ -141,6 +169,13 @@ class PacerContainer extends Component {
     }
   }
 
+  sendPacerData() {
+    //TODO fix this, linking with backend, is stats correct?
+      for (i = 0; i < this.props.students.length; i++) {
+        const event = this.state.event || this.props.event;
+        this.props.savePacerData(event.event_id, i.pacer);
+    }
+  }
   renderSquares(rowData, rowId) {
     rowId = parseInt(rowId, 10);
     // Light gray
@@ -184,7 +219,7 @@ class PacerContainer extends Component {
           <Button large block disabled={this.state.disabled} onPress={() => this.startPacerTest()} style={styles.mediumMarginTop}>
               <H1 style={styles.white}>Start Test</H1>
             </Button>
-          <Button large block disabled={this.state.disabled} onPress={() => this.handleUndo()} style={styles.mediumMarginTop}>
+          <Button large block disabled={this.state.pacerDone} onPress={() => this.handleUndo()} style={styles.mediumMarginTop}>
               <H1 style={styles.white}>Undo</H1>
             </Button>
           </Content>
@@ -195,7 +230,8 @@ class PacerContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  pacerState: state.pacerState
+  pacerState: state.pacerState,
+  eventsState: state.eventsState
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -213,6 +249,14 @@ const mapDispatchToProps = (dispatch) => ({
   },
   maxShuttlesReached: () => {
     dispatch(actions.maxShuttlesReached());
+  },
+  //maps to action save pacer data
+  savePacerData: (event_id, stats) => {
+    dispatch(actions.savePacerData(event_id, stats));
+  },
+  //create an event
+  createEvent: (program_id) => {
+    dispatch(eventActions.createEvent(program_id));
   }
 });
 

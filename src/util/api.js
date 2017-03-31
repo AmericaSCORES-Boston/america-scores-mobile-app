@@ -101,7 +101,12 @@ const Api = {
 
     createAccount(email, username, password, first_name, last_name) {
         return request(createEndpoint(`/accounts`), createRequestOptions(POST, {email, username, password, first_name, last_name}));
-    }
+    },
+    //saves the pacer result for each student
+    //TODO is the pacer page consistent with one event_id? how does it input each student's pacer?
+    savePacerData(user, event_id, stats) {
+        return request(createEndpoint(`/events/${event_id}/stats/pacer`), createRequestOptions(PUT, {stats}, user.idToken));
+    },
 };
 
 export default Api;
