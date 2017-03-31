@@ -4,9 +4,7 @@ exports[`test renders a RosterItem using Snapshots 1`] = `
   accessibilityLabel={undefined}
   accessibilityTraits={undefined}
   accessible={true}
-  hasTVPreferredFocus={undefined}
   hitSlop={undefined}
-  isTVSelectable={true}
   onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -22,8 +20,7 @@ exports[`test renders a RosterItem using Snapshots 1`] = `
       undefined,
     ]
   }
-  testID={undefined}
-  tvParallaxProperties={undefined}>
+  testID={undefined}>
   <View
     style={
       Object {
@@ -65,9 +62,7 @@ exports[`test renders a selected RosterItem using Snapshots 1`] = `
   accessibilityLabel={undefined}
   accessibilityTraits={undefined}
   accessible={true}
-  hasTVPreferredFocus={undefined}
   hitSlop={undefined}
-  isTVSelectable={true}
   onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -83,8 +78,7 @@ exports[`test renders a selected RosterItem using Snapshots 1`] = `
       undefined,
     ]
   }
-  testID={undefined}
-  tvParallaxProperties={undefined}>
+  testID={undefined}>
   <View
     style={
       Array [
