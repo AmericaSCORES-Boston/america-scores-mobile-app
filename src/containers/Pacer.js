@@ -171,7 +171,7 @@ class PacerContainer extends Component {
 
   sendPacerData() {
     //TODO fix this, linking with backend, is stats correct?
-      for (i = 0; i < this.props.students.length; i++) {
+      for (var i = 0; i < this.props.students.length; i++) {
         const event = this.state.event || this.props.event;
         this.props.savePacerData(event.event_id, i.pacer);
     }
