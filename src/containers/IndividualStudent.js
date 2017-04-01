@@ -27,10 +27,6 @@ class IndividualStudentContainer extends Component {
   }
 
   render() {
-    console.log("this.state.student");
-    console.log(this.state.student);
-    console.log("this.state.stats");
-    console.log(this.state.stats);
     if (this.state.student != null) {
       console.log(this.state.student[0]);
       const currentStudent = this.state.student[0];
