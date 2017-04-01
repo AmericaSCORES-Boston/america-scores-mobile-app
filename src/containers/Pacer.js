@@ -147,30 +147,33 @@ class PacerContainer extends Component {
   }
 
   render() {
-    return (
-      <Container style={[styles.container, styles.containerPadding]}>
-          <Content theme={scoresTheme}>
-            <View style={[{flex: 1, flexDirection: 'row', justifyContent: 'center'}, styles.smallMarginTop]}>
-              <H2 style={{marginRight: 20}}>Level: {this.state.currentLevel + 1}</H2>
-              <H2>Shuttle: {this.state.totalShuttles}</H2>
-            </View>
-            <Button large block disabled={this.state.pacerDone || !this.state.disabled} onPress={() => this.incrementShuttle()} style={styles.mediumMarginTop}>
-                <H1 style={styles.white}>Next Shuttle</H1>
-            </Button>
-            <ListView contentContainerStyle={[styles.gridList, styles.mediumMarginTop]}
-              dataSource={this.state.dataSource}
-              renderRow={(rowData, seciondId, rowId) => this.renderSquares(rowData, rowId)}
-              enableEmptySections={true}
-            />
-          <Button large block disabled={this.state.disabled} onPress={() => this.startPacerTest()} style={styles.mediumMarginTop}>
-              <H1 style={styles.white}>Start Test</H1>
-            </Button>
-          </Content>
+      return (
+        <Container style={[styles.container, styles.containerPadding]}>
+            <Content theme={scoresTheme}>
+              <View style={[{flex: 1, flexDirection: 'row', justifyContent: 'center'}, styles.smallMarginTop]}>
+                <H2 style={{marginRight: 20}}>Level: {this.state.currentLevel + 1}</H2>
+                <H2>Shuttle: {this.state.totalShuttles}</H2>
+              </View>
+              <Button small block disabled={this.state.pacerDone || !this.state.disabled} onPress={() => this.incrementShuttle()} style={styles.mediumMarginTop}>
+                  <H1 style={styles.white}>Next Shuttle</H1>
+              </Button>
+              <ListView contentContainerStyle={[styles.gridList, styles.mediumMarginTop]}
+                dataSource={this.state.dataSource}
+                renderRow={(rowData, seciondId, rowId) => this.renderSquares(rowData, rowId)}
+                enableEmptySections={true}
+              />
+            <Button small block disabled={this.state.disabled} onPress={() => this.startPacerTest()} style={styles.mediumMarginTop}>
+                <H1 style={styles.white}>Start Test</H1>
+              </Button>
+            <Button small block disabled={this.state.disabled} onPress={() => this.handleUndo()} style={styles.mediumMarginTop}>
+                <H1 style={styles.white}>Undo</H1>
+              </Button>
+            </Content>
 
-      </Container>
-    );
+        </Container>
+      );
+    }
   }
-}
 
 const mapStateToProps = (state) => ({
   pacerState: state.pacerState

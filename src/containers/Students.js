@@ -69,7 +69,7 @@ class StudentsContainer extends Component {
     );
   }
 
-
+  //Possibly add an attemdance feature here when rendering, maybe on press
   // Show a list of students for this program if it is not empty.
   // Otherwise, show a message about the program being empty.
   showStudents() {
@@ -77,6 +77,7 @@ class StudentsContainer extends Component {
         <List
             dataArray={this.state.students}
             renderRow={(rowData) =>
+            // onPress Actions.individualStudent
                 <ListItem button onPress={()=>Actions.individualStudent({title: rowData.first_name + ' ' + rowData.last_name, student: rowData})}>
                   <Text>{rowData.first_name + ' ' + rowData.last_name}</Text>
                 </ListItem>

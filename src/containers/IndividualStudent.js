@@ -25,6 +25,9 @@ class IndividualStudentContainer extends Component {
             <InputGroup style={styles.inputGroup}>
                 <Input placeholder="Last Name"/>
             </InputGroup>
+            <InputGroup style={styles.inputGroup}>
+                <Input placeholder="Present?"/>
+            </InputGroup>
           </Content>
       </Container>
     );
