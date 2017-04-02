@@ -6,6 +6,14 @@ import {
   MAX_SHUTTLES_REACHED
 } from '../actions/pacer';
 
+//export for test purposes
+export const initialState = {
+    currentLevel: 0,
+    currentShuttle: 1,
+    totalShuttles: 0,
+    pacerArray: []
+};
+
 export default function pacerState(state = {}, action) {
   switch (action.type) {
     case LOAD_PACER_TEST:
