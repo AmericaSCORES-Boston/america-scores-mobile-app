@@ -175,6 +175,8 @@ class PacerContainer extends Component {
         const event = this.state.event || this.props.event;
         this.props.savePacerData(event.event_id, i.pacer);
     }
+    console.log("event.event_id on BMI " + event.event_id);
+
   }
   renderSquares(rowData, rowId) {
     rowId = parseInt(rowId, 10);

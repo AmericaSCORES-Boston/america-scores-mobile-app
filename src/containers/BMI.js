@@ -33,6 +33,7 @@ class BMIContainer extends Component {
     }
     console.log("event" + this.props.event);
     console.log("programid" + this.props.program.program_id);
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -79,6 +80,7 @@ class BMIContainer extends Component {
       this.clearCurrentInputs();
       if (this.isBmiCollectionCompleted()) {
         const event = this.state.event || this.props.event;
+        console.log("event.event_id on BMI " + event.event_id);
         this.props.saveCollectedBmiData(event.event_id, this.state.bmiDataCollected);
       }
     });
