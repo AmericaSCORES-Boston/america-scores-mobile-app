@@ -38,12 +38,12 @@ export const savePacerData = (event_id, stats) => ({
     stats
 });
 
-export const saveCollectedBmiDataSuccess = message => ({
+export const savePacerdataSucceeded = message => ({
     type: SAVE_PACER_DATA_SUCCEEDED,
     message
 });
 
-export const saveCollectedBmiDataFailure = message => ({
+export const savePacerDataFailure = message => ({
     type: SAVE_PACER_DATA_FAILED,
     message
 });

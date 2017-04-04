@@ -13,6 +13,7 @@ import * as stat from '../actions/stat';
 import * as login from '../actions/login';
 import * as create from '../actions/createAccount';
 import * as bmi from '../actions/bmi';
+import * as pacer from '../actions/pacer';
 
 export function * fetchSites() {
   try {
@@ -165,6 +166,22 @@ export function * saveCollectedBmiData(action) {
   }
 }
 
+export function * savePacerData(action) {
+  try {
+    const user = yield select(getUser);
+    const result = yield call(Api.savePacerData, user, action.event_id, action.stats);
+    if (!result.status || result.status < 400) {
+      yield put(actions.savePacerdataSucceeded("Data was successfully saved!"));
+    }
+    else {
+      yield put(actions.savePacerDataFailure("Unfortunately, the collected data could not be saved. " +
+          "\n\nPlease start collection again and re-enter the data."));
+    }
+  } catch (e) {
+    yield put(actions.savePacerDataFailure(e.message));
+  }
+}
+
 export function * loginUser() {
   var lock = new Auth0Lock({clientId: 'HvNKnxLle17wN23DJj1TFmpMBwG1Kb0U', domain: 'asbadmin.auth0.com'});
 
@@ -217,6 +234,7 @@ export function * sagas() {
     takeEvery(stat.STATS_FETCH_REQUESTED, fetchStats),
     takeEvery(create.CREATE_ACCOUNT_REQUESTED, createAccount),
     takeEvery(bmi.SAVE_COLLECTED_BMI_DATA_REQUESTED, saveCollectedBmiData),
+    takeEvery(pacer.SAVE_PACER_DATA_REQUESTED, savePacerData),
     takeEvery(login.LOGIN_REQUESTED, loginUser)
   ]
 }

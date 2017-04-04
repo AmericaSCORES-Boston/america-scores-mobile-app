@@ -62,7 +62,10 @@ export {
 export {
     loadPacer,
     pacerItemTapped,
-    pacerItemLongPress
+    pacerItemLongPress,
+    savePacerData,
+    savePacerdataSucceeded,
+    savePacerDataFailure
 } from './pacer';
 
 export {

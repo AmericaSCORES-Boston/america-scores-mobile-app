@@ -96,6 +96,7 @@ const Api = {
     },
 
     saveCollectedBmiData(user, event_id, stats) {
+        console.log("sending BMI info to the endpoint");
         return request(createEndpoint(`/events/${event_id}/stats/bmi`), createRequestOptions(PUT, {stats}, user.idToken));
     },
 
@@ -105,6 +106,7 @@ const Api = {
     //saves the pacer result for each student
     //TODO is the pacer page consistent with one event_id? how does it input each student's pacer?
     savePacerData(user, event_id, stats) {
+        console.log("sending pacer result to the endpoint");
         return request(createEndpoint(`/events/${event_id}/stats/pacer`), createRequestOptions(PUT, {stats}, user.idToken));
     },
 };

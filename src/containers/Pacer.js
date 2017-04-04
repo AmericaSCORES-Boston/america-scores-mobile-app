@@ -18,13 +18,13 @@ class PacerContainer extends Component {
     //this.state = {...props.programsState, ...props.pacerState};
 
     this.state.pacerArray = [];
-    this.state.currentLevel = 0;
+    this.state.currentLevel = 1;
     this.state.currentShuttle = 1;
     this.state.totalShuttles = 0;
     this.state.disabled = false;
     this.state.pacerDone = false;
     // adding an event for passing the event_id
-    event: props.event;
+    this.state.event = props.event;
 
     // adding a new array for logging all the actions, each element specifies
     // the student index that refers to the student that just got modified
@@ -33,9 +33,8 @@ class PacerContainer extends Component {
     this.state.dataSource = ds.cloneWithRows(this.state.pacerArray);
 
     this.props.component.onRight = () => {
-      //TODO complete with backend
       if (this.state.pacerDone) {
-        this.sendPacerData();
+        this.passPacerData();
         alert('Pacer Results Submitted');
         Actions.pop();
       }
@@ -80,6 +79,21 @@ class PacerContainer extends Component {
     }
   }
 
+  passPacerData() {
+      var studentList = this.props.students;
+      console.log("student list " + studentList);
+      console.log("student list first " + studentList[0].pacer);
+      for (var i = 0; i < studentList.length; i++) {
+        var dataArray = [];
+        const event = this.state.event || this.props.event;
+        const student_id = studentList[parseInt(i, 10)].student_id,
+            pacerLevel = studentList[parseInt(i, 10)].pacer,
+            pacerData = {student_id, pacerLevel};
+
+        console.log("pacer data sent " + pacerData);
+        this.props.savePacerData(event.event_id, dataArray.concat([pacerData]));
+      }
+  }
   isPacerTestOver() {
     if (this.state.currentLevel >= 21) {
       return true;
@@ -140,14 +154,17 @@ class PacerContainer extends Component {
   handlePacerPress(rowData, rowId) {
     // put the action in history whether it is the the second or the first miss
     this.state.actionHistory.push(rowId);
+    // set the data when the item is tapped the second time
     if (rowData < 2) {
       this.props.incrementSquare(rowId);
     }
     else {
       // Set the student's total shuttles here
       this.props.students[parseInt(rowId, 10)].pacer = this.state.currentLevel;
+      console.log("current level " + this.props.students[parseInt(rowId, 10)].pacer);
       // Maybe modify the passed in students array with a new field?
     }
+    console.log("number of times that it is pressed " + rowData);
   }
 
   handlePacerHold(rowData, rowId) {
@@ -169,15 +186,6 @@ class PacerContainer extends Component {
     }
   }
 
-  sendPacerData() {
-    //TODO fix this, linking with backend, is stats correct?
-      for (var i = 0; i < this.props.students.length; i++) {
-        const event = this.state.event || this.props.event;
-        this.props.savePacerData(event.event_id, i.pacer);
-    }
-    console.log("event.event_id on BMI " + event.event_id);
-
-  }
   renderSquares(rowData, rowId) {
     rowId = parseInt(rowId, 10);
     // Light gray
@@ -192,12 +200,12 @@ class PacerContainer extends Component {
     }
     return (
       <TouchableOpacity
-        style={[styles.gridItem, {borderColor: rowColor}]}
-        onPress={() => this.handlePacerPress(rowData, rowId)}
-        onLongPress={() => this.handlePacerHold(rowData, rowId)} >
-        <View>
-          <Text>{rowId + 1}</Text>
-        </View>
+      style={[styles.gridItem, {borderColor: rowColor}]}
+      onPress={() => this.handlePacerPress(rowData, rowId)}
+      onLongPress={() => this.handlePacerHold(rowData, rowId)} >
+      <View>
+      <Text>{rowId + 1}</Text>
+      </View>
       </TouchableOpacity>
     );
   }
@@ -205,26 +213,26 @@ class PacerContainer extends Component {
   render() {
     return (
       <Container style={[styles.container, styles.containerPadding]}>
-          <Content theme={scoresTheme}>
-            <View style={[{flex: 1, flexDirection: 'row', justifyContent: 'center'}, styles.smallMarginTop]}>
-              <H2 style={{marginRight: 20}}>Level: {this.state.currentLevel + 1}</H2>
-              <H2>Shuttle: {this.state.totalShuttles}</H2>
-            </View>
-            <Button large block disabled={this.state.pacerDone || !this.state.disabled} onPress={() => this.incrementShuttle()} style={styles.mediumMarginTop}>
-                <H1 style={styles.white}>Next Shuttle</H1>
-            </Button>
-            <ListView contentContainerStyle={[styles.gridList, styles.mediumMarginTop]}
-              dataSource={this.state.dataSource}
-              renderRow={(rowData, seciondId, rowId) => this.renderSquares(rowData, rowId)}
-              enableEmptySections={true}
-            />
-          <Button large block disabled={this.state.disabled} onPress={() => this.startPacerTest()} style={styles.mediumMarginTop}>
-              <H1 style={styles.white}>Start Test</H1>
-            </Button>
-          <Button large block disabled={this.state.pacerDone} onPress={() => this.handleUndo()} style={styles.mediumMarginTop}>
-              <H1 style={styles.white}>Undo</H1>
-            </Button>
-          </Content>
+      <Content theme={scoresTheme}>
+      <View style={[{flex: 1, flexDirection: 'row', justifyContent: 'center'}, styles.smallMarginTop]}>
+      <H2 style={{marginRight: 20}}>Level: {this.state.currentLevel}</H2>
+      <H2>Shuttle: {this.state.totalShuttles}</H2>
+      </View>
+      <Button large block disabled={this.state.pacerDone || !this.state.disabled} onPress={() => this.incrementShuttle()} style={styles.mediumMarginTop}>
+      <H1 style={styles.white}>Next Shuttle</H1>
+      </Button>
+      <ListView contentContainerStyle={[styles.gridList, styles.mediumMarginTop]}
+      dataSource={this.state.dataSource}
+      renderRow={(rowData, seciondId, rowId) => this.renderSquares(rowData, rowId)}
+      enableEmptySections={true}
+      />
+      <Button large block disabled={this.state.disabled} onPress={() => this.startPacerTest()} style={styles.mediumMarginTop}>
+      <H1 style={styles.white}>Start Test</H1>
+      </Button>
+      <Button large block disabled={this.state.pacerDone} onPress={() => this.handleUndo()} style={styles.mediumMarginTop}>
+      <H1 style={styles.white}>Undo</H1>
+      </Button>
+      </Content>
 
       </Container>
     );
