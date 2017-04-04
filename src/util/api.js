@@ -2,7 +2,7 @@
 
 import dates from './dates';
 
-const root = "http://54.86.143.245",
+const root = "http://52.54.56.68",
     POST = "POST",
     PUT = "PUT";
 
