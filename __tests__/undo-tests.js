@@ -11,8 +11,8 @@ describe('Pacer Undo Feature', () => {
   };
   //pass in the action
   state = pacerState(state, pacerAction);
-  sampleArray1 = [0, 0, 0];
-  sampleArray2 = [1, 2, 3, 0, 0];
+  var sampleArray1 = [0, 0, 0];
+  var sampleArray2 = [1, 2, 3, 0, 0];
 
   it('should return the initial state', () => {
     let reducer1 = pacerState(undefined, {});
