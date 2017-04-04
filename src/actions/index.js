@@ -47,7 +47,10 @@ export {
     createStatSuccess,
     updateStat,
     updateStatSuccess,
-    statRequestFailure
+    statRequestFailure,
+    fetchStatsForStudent,
+    fetchStatsForStudentSuccess,
+    fetchStatsForStudentFailure
 } from './studentStat';
 
 export {

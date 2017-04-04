@@ -2,7 +2,7 @@
 
 import dates from './dates';
 
-const root = "http://54.86.143.245",
+const root = "http://52.54.56.68",
     POST = "POST",
     PUT = "PUT";
 
@@ -80,6 +80,10 @@ const Api = {
 
     createStudent(user, program_id, first_name, last_name, dob) {
         return request(createEndpoint(`/programs/${program_id}/students`), createRequestOptions(POST, {first_name, last_name, dob}, user.idToken));
+    },
+
+    fetchStatsForStudent(user, student_id) {
+        return request(createEndpoint(`/students/${student_id}/stats`), createRequestOptions(GET, {student_id}, user.idToken));
     },
 
     fetchStat(user, stat_id) {

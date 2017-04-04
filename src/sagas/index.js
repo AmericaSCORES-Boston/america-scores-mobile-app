@@ -159,6 +159,16 @@ export function * fetchStats(action) {
   }
 }
 
+export function * fetchStatsForStudent(action) {
+  try {
+    const user = yield select(getUser);
+    const stats = yield call(Api.fetchStatsForStudent, user, action.student_id);
+    yield put(actions.fetchStatsForStudentSuccess(stats));
+  } catch (e) {
+    yield put(actions.fetchStatsForStudentFailure(e.message));
+  }
+}
+
 export function * saveCollectedBmiData(action) {
   try {
     const user = yield select(getUser);
@@ -225,6 +235,7 @@ export function * sagas() {
     takeEvery(studentStat.STAT_FETCH_REQUESTED, fetchStat),
     takeEvery(studentStat.STAT_CREATE_REQUESTED, createStat),
     takeEvery(studentStat.STAT_UPDATE_REQUESTED, updateStat),
+    takeEvery(studentStat.STUDENT_STATS_FETCH_REQUESTED, fetchStatsForStudent),
     takeEvery(stat.STATS_FETCH_REQUESTED, fetchStats),
     takeEvery(create.CREATE_ACCOUNT_REQUESTED, createAccount),
     takeEvery(bmi.SAVE_COLLECTED_BMI_DATA_REQUESTED, saveCollectedBmiData),

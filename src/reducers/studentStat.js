@@ -13,7 +13,19 @@ export default function studentStatState(state = {}, action) {
                 isFetching: false,
                 stat: action.stat
             };
-        case stat.STAT_CREATE_SUCCEEDED || stat.STAT_UPDATE_SUCCEEDED || stat.STAT_REQUEST_FAILED:
+        case stat.STUDENT_STATS_FETCH_REQUESTED:
+        return {
+                ...state,
+                isFetching: true,
+                student_id: action.student_id
+            };
+        case stat.STUDENT_STATS_FETCH_SUCCEEDED:
+        return {
+                ...state,
+                isFetching: false,
+                stats: action.stats
+            };
+        case stat.STAT_CREATE_SUCCEEDED || stat.STAT_UPDATE_SUCCEEDED || stat.STAT_REQUEST_FAILED || stat.STUDENT_STATS_FETCH_FAILED:
             return {
                 ...state,
                 isFetching: false,

@@ -4,7 +4,8 @@ import { View, ListView, Text } from 'react-native';
 import { Container, Content, List, ListItem, InputGroup, Input, H2, Picker } from 'native-base';
 
 import { connect } from 'react-redux';
-import * as actions from '../actions/student';
+import * as studentActions from '../actions/student';
+import * as statActions from '../actions/studentStat';
 
 import styles from '../styles';
 
@@ -17,6 +18,7 @@ class IndividualStudentContainer extends Component {
 
   componentWillMount() {
     this.props.fetchStudent(this.props.student_id);
+    this.props.fetchStats(this.props.student_id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -208,7 +210,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchStudent: (student_id) => {
-    dispatch(actions.fetchStudent(student_id));
+    dispatch(studentActions.fetchStudent(student_id));
+  },
+  fetchStats: (student_id) => {
+    dispatch(statActions.fetchStatsForStudent(student_id));
   }
 });
 
