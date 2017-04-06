@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
 
 import dates from './dates';
+import environments from './environment'
 
-const root = "http://52.54.56.68",
+const root = environments.development().BASE_URL,
     POST = "POST",
     PUT = "PUT";
 
