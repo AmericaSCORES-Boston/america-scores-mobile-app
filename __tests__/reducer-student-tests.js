@@ -25,6 +25,12 @@ describe('students reducer', () => {
     expect(state.isFetching).toEqual(true);
   });
 
+  it('should handle SEARCH_STUDENT_REQUESTED', () => {
+    var searchResult = studentsAction.searchStudent("bob", "bobber", "09-12-1333");
+    state = studentState(state, searchResult);
+    expect(state.isFetching).toEqual(true);
+  });
+
   it('should handle STUDENT_FETCH_SUCCEEDED', () => {
     var student = {first_name: 'bob', last_name: 'bobber', dob: '09-12-1333'}
     state.students = [student];
@@ -34,14 +40,53 @@ describe('students reducer', () => {
     expect(state.students).toEqual([student]);
   });
 
-  //new tests added for the sorted student list
+  it('should handle SEARCH_STUDENT_SUCCEEDED', () => {
+    var student = {first_name: 'bob', last_name: 'bobber', dob: '09-12-1333'}
+    state.students = [student];
+    var searchSuccess = studentsAction.searchStudentSuccess(state.students);
+    //console.log(fetchStudentsSuccessAction);
+    state = studentState(state, searchSuccess);
+    expect(state.students).toEqual([student]);
+  });
+
+  it('should handle STUDENT_FETCH_FAILED', () => {
+    const error = "fetch failed";
+    var fetchStudentsFailureAction = studentsAction.fetchStudentsFailure(error);
+    state = studentState(state, fetchStudentsFailureAction);
+    expect(state.message).toEqual(error);
+  });
+
+  it('should handle SEARCH_STUDENT_FAILED', () => {
+    const error = "search failed";
+    var searchFailure = studentsAction.searchStudentFailure(error);
+    state = studentState(state, searchFailure);
+    expect(state.message).toEqual(error);
+  });
+
+  it('should handle CREATE_STUDENT_REQUESTED', () => {
+    var student = {first_name: 'bob', last_name: 'bobber', dob: '09-12-1333'}
+    var createStudentRequested = studentsAction.createStudent(student);
+    state = studentState(state, createStudentRequested);
+    expect(state.isFetching).toEqual(true);
+  });
+
   it('should handle CREATE_STUDENT_SUCCEEDED', () => {
     var student = {program_id: '000', first_name: 'bob', last_name: 'bobber', dob: '09-12-1993'};
-    var addExistingStudentAction = studentsAction.createStudentSuccess(student);
-    state = studentState(state, addExistingStudentAction);
+    var createSuccess = studentsAction.createStudentSuccess(student);
+    state = studentState(state, createSuccess);
     //console.log(state.students);
     expect(state.students.length).toEqual(2);
   });
+
+
+    it('should handle CREATE_STUDENT_FAILED', () => {
+      const error = "failed to create a student";
+      var createFailed = studentsAction.createStudentFailure(error);
+      state = studentState(state, createFailed);
+      //console.log(state.students);
+      expect(state.message).toEqual(error);
+    });
+
 
   it('students sorted by first name after creating a student to empty list', () => {
     //clear the students list
