@@ -55,7 +55,9 @@ const Api = {
 
     createEvent(user, program_id) {
         const event_date = dates.getTodayDateString();
-        return request(createEndpoint(`/programs/${program_id}/events`), createRequestOptions(POST, {event_date}, user.idToken))
+        //hard code the flag for now
+        const pre_season = false;
+        return request(createEndpoint(`/programs/${program_id}/events`), createRequestOptions(POST, {event_date, pre_season}, user.idToken))
     },
 
     fetchStudents(user, program_id) {
