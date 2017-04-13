@@ -1,10 +1,5 @@
 import studentState from '../src/reducers/student';
-import * as MockStudents from '../config/mockStudents';
 import * as studentsAction from '../src/actions/student';
-
-
-// Tests are mocked in for now so they pass travis
-// Should replace the .toMatchSnapshot() calls with .toEqual() calls for real testing
 
 describe('students reducer', () => {
 
@@ -135,51 +130,5 @@ describe('students reducer', () => {
     expect(state.students[0]).toEqual({first_name: '10', last_name: 'P', dob: '02-02-1999'});
     expect(state.students[1]).toEqual(student);
   });
-  /*
-
-
-  it('should handle FETCH_STUDENT', () => {
-  const first = 'Bob';
-  const last = 'Bobber';
-  const dob = '09-12-1333';
-  expect(
-  reducer([], {
-  type: types.FETCH_STUDENT,
-  first,
-  last,
-  dob,
-})
-).toMatchSnapshot();
-});
-
-it('should handle FETCH_STUDENT_SUCCESS', () => {
-const students = MockStudents.students;
-expect(
-reducer([], {
-type: types.FETCH_STUDENT_SUCCESS,
-students,
-})
-).toMatchSnapshot();
-});
-
-it('should handle FETCH_STUDENTS', () => {
-expect(
-reducer([], {
-type: types.FETCH_STUDENTS,
-})
-).toMatchSnapshot();
-});
-
-it('should handle FETCH_STUDENTS_SUCCESS', () => {
-const students = MockStudents.students;
-expect(
-reducer([], {
-type: types.FETCH_STUDENTS_SUCCESS,
-students,
-})
-).toMatchSnapshot();
-});
-*/
-
 
 });
