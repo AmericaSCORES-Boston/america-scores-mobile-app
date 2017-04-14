@@ -55,7 +55,9 @@ const Api = {
 
     createEvent(user, program_id) {
         const event_date = dates.getTodayDateString();
-        return request(createEndpoint(`/programs/${program_id}/events`), createRequestOptions(POST, {event_date}, user.idToken))
+        //hard code the flag for now
+        const pre_season = false;
+        return request(createEndpoint(`/programs/${program_id}/events`), createRequestOptions(POST, {event_date, pre_season}, user.idToken))
     },
 
     fetchStudents(user, program_id) {
@@ -96,12 +98,19 @@ const Api = {
     },
 
     saveCollectedBmiData(user, event_id, stats) {
+        console.log("sending BMI info to the endpoint");
         return request(createEndpoint(`/events/${event_id}/stats/bmi`), createRequestOptions(PUT, {stats}, user.idToken));
     },
 
     createAccount(email, username, password, first_name, last_name) {
         return request(createEndpoint(`/accounts`), createRequestOptions(POST, {email, username, password, first_name, last_name}));
-    }
+    },
+    //saves the pacer result for each student
+    //TODO is the pacer page consistent with one event_id? how does it input each student's pacer?
+    savePacerData(user, event_id, stats) {
+        console.log("sending pacer result to the endpoint");
+        return request(createEndpoint(`/events/${event_id}/stats/pacer`), createRequestOptions(PUT, {stats}, user.idToken));
+    },
 };
 
 export default Api;

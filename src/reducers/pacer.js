@@ -3,7 +3,10 @@ import {
   PACER_ITEM_TAPPED,
   PACER_ITEM_LONGPRESS,
   TIME_INTERVAL_ELAPSED,
-  MAX_SHUTTLES_REACHED
+  MAX_SHUTTLES_REACHED,
+  SAVE_PACER_DATA_REQUESTED,
+  SAVE_PACER_DATA_SUCCEEDED,
+  SAVE_PACER_DATA_FAILED
 } from '../actions/pacer';
 
 //export for test purposes
@@ -53,6 +56,20 @@ export default function pacerState(state = {}, action) {
         ...state,
         currentLevel: state.currentLevel + 1,
         currentShuttle: 1
+      };
+      //save pacer data requested succeeded and failed
+    case SAVE_PACER_DATA_REQUESTED:
+      return {
+          ...state,
+          isFetching: true,
+          message: ""
+      };
+    case SAVE_PACER_DATA_SUCCEEDED:
+    case SAVE_PACER_DATA_FAILED:
+      return {
+        ...state,
+        isFetching: false,
+        message: action.message
       };
     default:
       return state;
