@@ -130,5 +130,4 @@ describe('students reducer', () => {
     expect(state.students[0]).toEqual({first_name: '10', last_name: 'P', dob: '02-02-1999'});
     expect(state.students[1]).toEqual(student);
   });
-
 });
