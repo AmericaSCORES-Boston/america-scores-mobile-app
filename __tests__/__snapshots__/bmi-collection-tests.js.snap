@@ -1,4 +1,4 @@
-exports[`test creates a "SAVE_STUDENT" action 1`] = `
+exports[`action creator tests creates a "SAVE_STUDENT" action 1`] = `
 Object {
   "student": Object {
     "dob": "03-29-2002",
@@ -11,7 +11,7 @@ Object {
 }
 `;
 
-exports[`test creates a "SAVE_STUDENT_FAILURE" action 1`] = `
+exports[`action creator tests creates a "SAVE_STUDENT_FAILURE" action 1`] = `
 Object {
   "student": Object {
     "dob": "01-01-1900",
@@ -25,7 +25,7 @@ Object {
 }
 `;
 
-exports[`test creates a "SAVE_STUDENT_SUCCESS" action 1`] = `
+exports[`action creator tests creates a "SAVE_STUDENT_SUCCESS" action 1`] = `
 Object {
   "student": Object {
     "dob": "03-29-2002",
@@ -38,7 +38,7 @@ Object {
 }
 `;
 
-exports[`test creates a "START_BMI_COLLECTION" action 1`] = `
+exports[`action creator tests creates a "START_BMI_COLLECTION" action 1`] = `
 Object {
   "students": Array [
     Object {
@@ -67,7 +67,7 @@ Object {
 }
 `;
 
-exports[`test creates an "END_BMI_COLLECTION" action 1`] = `
+exports[`action creator tests creates an "END_BMI_COLLECTION" action 1`] = `
 Object {
   "students": Array [
     Object {
@@ -96,73 +96,21 @@ Object {
 }
 `;
 
-exports[`test does not start BMI collection because height and weight data has already been collected for all students 1`] = `
-Object {
-  "currentStudent": "",
-  "students": Array [],
-}
-`;
-
-exports[`test does not start BMI collection because there are no students created for this program 1`] = `
-Object {
-  "currentStudent": "",
-  "students": Array [],
-}
-`;
-
-exports[`test fails to save the student data 1`] = `
-Array [
-  Object {
-    "dob": "03-29-2002",
-    "height": 15,
-    "id": 1,
-    "name": "John Doe",
-    "weight": null,
-  },
-  Object {
-    "dob": "02-05-1997",
-    "height": null,
-    "id": 3,
-    "name": "Sally Smith",
-    "weight": null,
-  },
-]
-`;
-
-exports[`test makes a request to save the data entered for a student 1`] = `
-Array [
-  Object {
-    "dob": "03-29-2002",
-    "height": 15,
-    "id": 1,
-    "name": "John Doe",
-    "weight": null,
-  },
-  Object {
-    "dob": "02-05-1997",
-    "height": null,
-    "id": 3,
-    "name": "Sally Smith",
-    "weight": null,
-  },
-]
-`;
-
-exports[`test renders "Save" button correctly 1`] = `
+exports[`component tests renders "Save" button correctly 1`] = `
 <button
   className="next-student">
   Save
 </button>
 `;
 
-exports[`test renders "Stop" button correctly 1`] = `
+exports[`component tests renders "Stop" button correctly 1`] = `
 <button
   className="stop-collection">
   Stop
 </button>
 `;
 
-exports[`test renders the student1 detail view correctly 1`] = `
+exports[`component tests renders the student1 detail view correctly 1`] = `
 <div
   className="bmi-collection-student-detail">
   <span>
@@ -181,14 +129,28 @@ exports[`test renders the student1 detail view correctly 1`] = `
 </div>
 `;
 
-exports[`test returns the same state on an unhandled action 1`] = `
+exports[`reducer tests does not start BMI collection because height and weight data has already been collected for all students 1`] = `
 Object {
   "currentStudent": "",
   "students": Array [],
 }
 `;
 
-exports[`test saves the student data successfully 1`] = `
+exports[`reducer tests does not start BMI collection because there are no students created for this program 1`] = `
+Object {
+  "currentStudent": "",
+  "students": Array [],
+}
+`;
+
+exports[`reducer tests ends BMI collection 1`] = `
+Object {
+  "currentStudent": "",
+  "students": Array [],
+}
+`;
+
+exports[`reducer tests fails to save the student data 1`] = `
 Array [
   Object {
     "dob": "03-29-2002",
@@ -207,14 +169,59 @@ Array [
 ]
 `;
 
-exports[`test starts BMI collection 1`] = `
+exports[`reducer tests makes a request to save the data entered for a student 1`] = `
+Array [
+  Object {
+    "dob": "03-29-2002",
+    "height": 15,
+    "id": 1,
+    "name": "John Doe",
+    "weight": null,
+  },
+  Object {
+    "dob": "02-05-1997",
+    "height": null,
+    "id": 3,
+    "name": "Sally Smith",
+    "weight": null,
+  },
+]
+`;
+
+exports[`reducer tests returns the same state on an unhandled action 1`] = `
 Object {
   "currentStudent": "",
   "students": Array [],
 }
 `;
 
-exports[`test starts BMI collection with a filtered list 1`] = `
+exports[`reducer tests saves the student data successfully 1`] = `
+Array [
+  Object {
+    "dob": "03-29-2002",
+    "height": 15,
+    "id": 1,
+    "name": "John Doe",
+    "weight": null,
+  },
+  Object {
+    "dob": "02-05-1997",
+    "height": null,
+    "id": 3,
+    "name": "Sally Smith",
+    "weight": null,
+  },
+]
+`;
+
+exports[`reducer tests starts BMI collection 1`] = `
+Object {
+  "currentStudent": "",
+  "students": Array [],
+}
+`;
+
+exports[`reducer tests starts BMI collection with a filtered list 1`] = `
 Object {
   "currentStudent": "",
   "students": Array [],

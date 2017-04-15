@@ -14,10 +14,13 @@ function PacerStudent(student, numFailed) {
     this.failTest = function() { this.numFailed++ }
 };
 
-const PacerPage = (props) => {
+/*changed the const PacerPage = () => to
+function pacerPage() for consistency*/
+function PacerPage(props) {
     const { students } = props;
 
     this.failStudent = function(studNum) { students[studNum].failTest()}
+    
 };
 
 PacerPage.proptypes = {
