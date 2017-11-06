@@ -90,21 +90,40 @@ const styles = StyleSheet.create({
   gridList: {
     justifyContent: 'center',
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+      overflow:'hidden',
+     // backgroundColor: 'skyblue',
+     // height:400
   },
+
+
   gridItem: {
     backgroundColor: '#FFF',
     margin: 5,
     width: 60,
-    height: 60,
+    height: 50,
     borderRadius: 5,
     borderWidth: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  //Added by Bhupendra
+  /*  containerPacer: {
+        marginTop: 65,
+    },
+    containerPacerPadding: {
+        paddingTop: 15,
+        paddingLeft: 30,
+        paddingRight: 30
+    },
+    mediumMarginTopPacer: {
+        marginTop: 20
+    },
+
   largeText: {
     fontSize: 48
-  }
+  }*/
 });
 
 export default styles;

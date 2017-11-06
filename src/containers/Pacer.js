@@ -14,6 +14,10 @@ import Sound from 'react-native-sound';
 class PacerContainer extends Component {
   constructor(props) {
     super(props);
+    console.log('----------------------')
+    console.log(this.props);
+    console.log(this.state);
+    console.log('----------------------')
     this.state = props.pacerState;
     //this.state = {...props.programsState, ...props.pacerState};
 
@@ -29,6 +33,8 @@ class PacerContainer extends Component {
     // adding a new array for logging all the actions, each element specifies
     // the student index that refers to the student that just got modified
     this.state.actionHistory = [];
+;
+    // earlier code.
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state.dataSource = ds.cloneWithRows(this.state.pacerArray);
 
@@ -48,13 +54,24 @@ class PacerContainer extends Component {
 
   // adding events
   componentWillMount() {
-    if (!this.props.event) {
-      this.props.createEvent(this.props.program_id);
+    console.log("componentWillMount");
+    console.log('props');
+    console.log(this.props);
+    console.log('state');
+    console.log(this.state);
+    if (this.props.event==null || this.props.event==undefined) {
+        console.log("event" + this.props.event);
+        console.log("programid" + this.props.program_id);
+        console.log('trying again once more');
+        console.log(this.props.program.program_id);
+      this.props.createEvent(this.props.program.program_id);
       console.log("event" + this.props.event);
     }
   }
 
   componentDidMount() {
+    console.log("componentDidMount")
+    console.log(this.props.students.length)
     this.props.loadPacer(this.props.students.length);
   }
 
@@ -63,10 +80,17 @@ class PacerContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("componentWillReceiveProps");
+    console.log("Printing pacerArray from this.state.pacerArray");
+    console.log(this.state.pacerArray);
     const newPacerState = nextProps.pacerState;
     if (newPacerState && newPacerState.pacerArray) {
       this.state.dataSource = this.state.dataSource.cloneWithRows( newPacerState.pacerArray );
       this.state.pacerArray = newPacerState.pacerArray;
+      console.log("Printing pacerArray from nextProps.pacerState");
+      console.log(this.state.pacerArray);
+      console.log("Printing state from nextProps");
+      console.log(this.state);
       this.state.totalShuttles = newPacerState.totalShuttles;
       this.state.currentShuttle = newPacerState.currentShuttle;
       this.state.currentLevel = newPacerState.currentLevel;
@@ -81,16 +105,25 @@ class PacerContainer extends Component {
 
   passPacerData() {
       var studentList = this.props.students;
-      console.log("student list " + studentList);
-      console.log("student list first " + studentList[0].pacer);
+      console.log("studentList");
+      console.log(studentList);
+      console.log("this.state");
+      console.log(this.state.event)
+      console.log("this.props")
+      console.log(this.props)
+      //console.log("student list first " + studentList[0].pacer);
       for (var i = 0; i < studentList.length; i++) {
         var dataArray = [];
+
         const event = this.state.event || this.props.event;
+        console.log("event is");
+        console.log(event);
         const student_id = studentList[parseInt(i, 10)].student_id,
             pacerLevel = studentList[parseInt(i, 10)].pacer,
             pacerData = {student_id, pacerLevel};
 
-        console.log("pacer data sent " + pacerData);
+        console.log("pacer data sent " );
+        console.log( pacerData);
         this.props.savePacerData(event.event_id, dataArray.concat([pacerData]));
       }
   }
@@ -125,7 +158,11 @@ class PacerContainer extends Component {
   }
 
   startPacerTest() {
-    // Start the audio
+    // Start the
+    //  let initialTime = new Date().getTime() / 1000;
+     // initialTime+=37;
+     // this.state.startTime=initialTime;
+
     this.state.pacerAudio = new Sound('pacer.mp3', Sound.MAIN_BUNDLE, (error) => {
       if (error) {
         console.log('failed to load the sound', error);
@@ -138,23 +175,56 @@ class PacerContainer extends Component {
         this.state.pacerAudio.play(() => this.state.pacerAudio.release); //release when done
       }
     });
+
+    /**added by Bhupendra**/
+    /*setTimeout(function() { this.setState({position: true}); }.bind(this), 37000);
+      if (this.state.position ){
+          console.log('timeout done');
+          this.incrementShuttle();
+      }*/
   }
+   // setTimeout(this.incrementShuttle(), 37000);
+
+  /* get the shuttle increment
+  1. timeout for 37 seconds
+  2. call increment shuttle -> increment to Shuttle 1
+  3. Within increment shuttle:
+      1. see else block below::::
+  */
 
   incrementShuttle() {
+    // assuming that currentLevel incremements when level changes
     const stage = pacerStages[this.state.currentLevel];
+    //const timeout = stage.time*1000;
+    //  const stage =1;
+    //console.log('stage:'+stage);
+    // const laps = pacerStages[this.state.currentLevel].laps;
+    // const timePerLap = pacerStages[this.state.currentLevel].time;
+    // const currentTime = new Date().getTime() / 1000;
     if (this.state.currentShuttle >= stage.laps) {
       this.props.timeIntervalElapsed();
       this.props.maxShuttlesReached();
     }
     else {
+      //if  ! max shuttle reached
+      //  setTimeout(this.incrementShuttle(), timeout);
+      /*
+      * check the array and call setTimeout after "timeout"seconds
+      * setTimeout(this.incrementShuttle(), timeout);
+      * */
       this.props.timeIntervalElapsed();
     }
   }
 
   handlePacerPress(rowData, rowId) {
+
+    console.log('handlePacerPress')
+      console.log(rowData)
+      console.log(rowId)
     // put the action in history whether it is the the second or the first miss
     this.state.actionHistory.push(rowId);
     // set the data when the item is tapped the second time
+      console.log(rowData < 2)
     if (rowData < 2) {
       this.props.incrementSquare(rowId);
     }
@@ -168,6 +238,9 @@ class PacerContainer extends Component {
   }
 
   handlePacerHold(rowData, rowId) {
+    console.log('handlePacerHold')
+      console.log(rowData)
+      console.log(rowId)
     if (rowData > 0) {
       // Unset the student's total shuttles here if it was set
       this.props.students[parseInt(rowId, 10)].pacer = null;
@@ -187,7 +260,12 @@ class PacerContainer extends Component {
   }
 
   renderSquares(rowData, rowId) {
+    console.log("row data is ");
+    console.log(rowData);
+    console.log("printing students in this.props.students");
+   // console.log(this.props.students);
     rowId = parseInt(rowId, 10);
+    console.log("rowId is ", rowId)
     // Light gray
     let rowColor = '#E4E4E4';
     if (rowData === 1) {
@@ -204,7 +282,10 @@ class PacerContainer extends Component {
       onPress={() => this.handlePacerPress(rowData, rowId)}
       onLongPress={() => this.handlePacerHold(rowData, rowId)} >
       <View>
-      <Text>{rowId + 1}</Text>
+      {/*<Text>{rowId + 1}</Text>*/}
+      <Text>{this.props.students[parseInt(rowId, 10)].last_name+ " " +
+      this.props.students[parseInt(rowId, 10)].first_name.substr(0,2)
+      }</Text>
       </View>
       </TouchableOpacity>
     );
@@ -212,27 +293,51 @@ class PacerContainer extends Component {
 
   render() {
     return (
-      <Container style={[styles.container, styles.containerPadding]}>
-      <Content theme={scoresTheme}>
-      <View style={[{flex: 1, flexDirection: 'row', justifyContent: 'center'}, styles.smallMarginTop]}>
-      <H2 style={{marginRight: 20}}>Level: {this.state.currentLevel}</H2>
-      <H2>Shuttle: {this.state.totalShuttles}</H2>
-      </View>
-      <Button large block disabled={this.state.pacerDone || !this.state.disabled} onPress={() => this.incrementShuttle()} style={styles.mediumMarginTop}>
-      <H1 style={styles.white}>Next Shuttle</H1>
-      </Button>
-      <ListView contentContainerStyle={[styles.gridList, styles.mediumMarginTop]}
-      dataSource={this.state.dataSource}
-      renderRow={(rowData, seciondId, rowId) => this.renderSquares(rowData, rowId)}
-      enableEmptySections={true}
-      />
-      <Button large block disabled={this.state.disabled} onPress={() => this.startPacerTest()} style={styles.mediumMarginTop}>
-      <H1 style={styles.white}>Start Test</H1>
-      </Button>
-      <Button large block disabled={this.state.pacerDone} onPress={() => this.handleUndo()} style={styles.mediumMarginTop}>
-      <H1 style={styles.white}>Undo</H1>
-      </Button>
-      </Content>
+
+        <Container style={[styles.container, styles.containerPadding]}>
+          <Content  theme={scoresTheme}>
+            <View style={[{flex: 0, flexDirection: 'row', justifyContent: 'center', height:30}, styles.smallMarginTop]}>
+              <H2 style={{marginRight: 20}}>Level: {this.state.currentLevel}</H2>
+              <H2>Shuttle: {this.state.totalShuttles}</H2>
+            </View>
+            <Button id='shuttleIncButton'  large block disabled={this.state.pacerDone || !this.state.disabled} onPress={() => this.incrementShuttle()} style={styles.mediumMarginTop}>
+              <H1 style={styles.white}>Next Shuttle</H1>
+            </Button>
+            <ListView contentContainerStyle={[styles.gridList, styles.mediumMarginTop]}
+                      dataSource={this.state.dataSource}
+                      // added by Bhupendra
+                      initialListSize={this.state.pacerArray.length}
+                      renderRow={(rowData, seciondId, rowId) => this.renderSquares(rowData, rowId)}
+                      enableEmptySections={true}
+            />
+            <Button large block disabled={this.state.disabled} onPress={() => this.startPacerTest()} style={styles.mediumMarginTop}>
+              <H1 style={styles.white}>Start Test</H1>
+            </Button>
+            <Button large block disabled={this.state.pacerDone} onPress={() => this.handleUndo()} style={styles.mediumMarginTop}>
+              <H1 style={styles.white}>Undo</H1>
+            </Button>
+          </Content>
+
+      {/*<Container style={[styles.containerPacer, styles.containerPacerPadding]}>*/}
+      {/*<Content theme={scoresTheme}>*/}
+      {/*<View style={[{flex: 1, flexDirection: 'row', justifyContent: 'center'}, styles.smallMarginTop]}>*/}
+      {/*<H2 style={{marginRight: 20}}>Level: {this.state.currentLevel}</H2>*/}
+      {/*<H2>Shuttle: {this.state.totalShuttles}</H2>*/}
+      {/*</View>*/}
+      {/*<Button large block disabled={this.state.pacerDone || !this.state.disabled} onPress={() => this.incrementShuttle()} style={styles.mediumMarginTop}>*/}
+      {/*<H1 style={styles.white}>Next Shuttle</H1>*/}
+      {/*</Button>*/}
+      {/*<ListView contentContainerStyle={[styles.gridList]}*/}
+      {/*dataSource={this.state.dataSource} renderRow={(rowData, seciondId, rowId) => this.renderSquares(rowData, rowId)}*/}
+      {/*enableEmptySections={true}*/}
+      {/*/>*/}
+      {/*<Button large block disabled={this.state.disabled} onPress={() => this.startPacerTest()} style={styles.mediumMarginTop}>*/}
+      {/*<H1 style={styles.white}>Start Test</H1>*/}
+      {/*</Button>*/}
+      {/*<Button large block disabled={this.state.pacerDone} onPress={() => this.handleUndo()} style={styles.mediumMarginTop}>*/}
+      {/*<H1 style={styles.white}>Undo</H1>*/}
+      {/*</Button>*/}
+      {/*</Content>*/}
 
       </Container>
     );

@@ -22,7 +22,7 @@ export default function pacerState(state = {}, action) {
     case LOAD_PACER_TEST:
       return {
         ...state,
-        currentLevel: 0,
+        currentLevel: 1,
         currentShuttle: 1,
         totalShuttles: 0,
         pacerArray: new Array(action.numStudents).fill(0)

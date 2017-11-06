@@ -24,11 +24,19 @@ class StudentsContainer extends Component {
   }
 
   componentWillMount() {
+    console.log('student props');
+    console.log(this.props)
+    console.log(this.props.program_id);
+    console.log('student fetch first');
+    //console.log(this.props.fetchStudents(this.props.program_id));
+    //console.log(this.props.fetchEvents(this.props.program_id));
     this.props.fetchStudents(this.props.program_id);
     this.props.fetchEvents(this.props.program_id);
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('next props');
+    console.log(nextProps);
     const newStudentsState = nextProps.studentsState,
         newEventsState = nextProps.eventsState;
 
@@ -40,11 +48,15 @@ class StudentsContainer extends Component {
       this.state.events = newEventsState.events;
 
       const filteredEvents = this.state.events.slice().filter(function(event) {
+ /*       console.log("filteredEvents")
+          console.log(event)*/
         return dates.getDateStringFromSql(event.event_date) === dates.getTodayDateString();
       });
 
       const event = (filteredEvents.length > 0) ? filteredEvents[0] : null;
-      this.setState({event});
+      console.log("current event");
+      console.log(event)
+;      this.setState({event});
     }
   }
 
@@ -107,9 +119,9 @@ class StudentsContainer extends Component {
               Pacer Test
             </Button>
 
-            <Button active onPress={()=>Actions.bmi({program, students: this.state.students, event: this.state.event})}>
+           {/* <Button active onPress={()=>Actions.bmi({program, students: this.state.students, event: this.state.event})}>
               BMI Collection
-            </Button>
+            </Button>*/}
 
           </FooterTab>
         </Footer>

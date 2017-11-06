@@ -33,6 +33,7 @@ class CreateAccountContainer extends Component {
   }
 
   createAccount() {
+    console.log("creating account");
     if (!this.state.email || !this.validateEmail(this.state.email)) {
       Alert.alert('Email address is required.');
       return;
@@ -61,7 +62,7 @@ class CreateAccountContainer extends Component {
     return (
       <Container style={styles.container}>
         <Content theme={scoresTheme}>
-          <Image style={styles.textCenter} source={require('../img/logo.jpg')} />
+          <Image style={styles.textCenter} source={require('../img/logo2.png')} />
           <InputGroup borderType='underline'>
             <Input autoFocus={true} autoCapitalize="none" keyboardType="email-address" placeholder='Email Address' onChangeText={(email) => this.setState({email})} />
           </InputGroup>

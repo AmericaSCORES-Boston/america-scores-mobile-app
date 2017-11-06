@@ -2,7 +2,7 @@
 
 import dates from './dates';
 
-const root = "http://52.54.56.68",
+const root = "http://127.0.0.1:8888",//"http://52.54.56.68",
     POST = "POST",
     PUT = "PUT";
 
@@ -54,10 +54,17 @@ const Api = {
     },
 
     createEvent(user, program_id) {
+        //debugger;
         const event_date = dates.getTodayDateString();
+        console.log("creating event in api.js")
+        console.log(event_date)
+        console.log("creating event in api.js, printing token")
+        console.log(pre_season)
+        console.log(user)
         //hard code the flag for now
         const pre_season = false;
         return request(createEndpoint(`/programs/${program_id}/events`), createRequestOptions(POST, {event_date, pre_season}, user.idToken))
+
     },
 
     fetchStudents(user, program_id) {
@@ -103,6 +110,7 @@ const Api = {
     },
 
     createAccount(email, username, password, first_name, last_name) {
+        console.log("calling api")
         return request(createEndpoint(`/accounts`), createRequestOptions(POST, {email, username, password, first_name, last_name}));
     },
     //saves the pacer result for each student

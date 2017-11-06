@@ -32,28 +32,30 @@ const App = () => {
     <Provider store={store}>
         <Router name="root">
           <Scene
-            key="login"
-            component={LoginContainer}
-            title="Login"
-            rightTitle="Sign Up"
-            onRight={() => Actions.createAccount()}
-            hideBackImage="true"
-            direction="vertical"
+              key="login"
+              component={LoginContainer}
+              title="Login"
+              rightTitle="Sign Up"
+              onRight={() => Actions.createAccount()}
+              hideBackImage="true"
+              direction="vertical"
           />
           <Scene
-            key="createAccount"
-            component={CreateAccountContainer}
-            title="Sign Up"
-            rightTitle="Login"
-            onRight={() => Actions.login()}
-            direction="vertical"
-            hideBackImage="true"
+              key="createAccount"
+              component={CreateAccountContainer}
+              title="Sign Up"
+              rightTitle="Login"
+              onRight={() => Actions.login()}
+              direction="vertical"
+              hideBackImage="true"
           />
           <Scene
             key="sites"
             component={SitesContainer}
             title="Sites"
+            onRight={() => fetch('https://asbadmin.auth0.com/v2/logout').then(Actions.login())}
             hideBackImage="true"
+            rightTitle="Logout"
             renderBackButton={() => null}
           />
           <Scene
@@ -92,14 +94,14 @@ const App = () => {
             hideBackImage="true"
             direction="vertical"
           />
-          <Scene
-            key="bmi"
-            component={BMIContainer}
-            title="BMI Collection"
-            backTitle="Stop"
-            hideBackImage="true"
-            direction="vertical"
-          />
+          {/*<Scene*/}
+            {/*key="bmi"*/}
+            {/*component={BMIContainer}*/}
+            {/*title="BMI Collection"*/}
+            {/*backTitle="Stop"*/}
+            {/*hideBackImage="true"*/}
+            {/*direction="vertical"*/}
+          {/*/>*/}
           <Scene
             key="individualStudent"
             component={IndividualStudentContainer}
@@ -114,5 +116,5 @@ const App = () => {
       </Provider>
     );
 };
-
+console.disableYellowBox = true;
 export default App;

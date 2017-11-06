@@ -28,7 +28,7 @@ class LoginContainer extends Component {
     return (
       <Container style={[styles.container, styles.containerPadding]}>
         <Content theme={scoresTheme}>
-          <Image style={styles.textCenter} source={require('../img/logo.jpg')} />
+          <Image style={styles.textCenter} source={require('../img/logo2.png')} />
           <View style={styles.mediumMarginTop}>
             <Button large block onPress={() => this.login()}>
               <H1 style={styles.white}>Login</H1>

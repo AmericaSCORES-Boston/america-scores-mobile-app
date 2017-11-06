@@ -12,9 +12,10 @@
     "url": "https://github.com/CS4500-AmericaSCORES/america-scores-mobile-app.git"
   },
   "dependencies": {
+    "color": "^2.0.0",
     "native-base": "^0.5.16",
-    "react": "^15.4.1",
-    "react-native": "^0.41.1",
+    "react": "16.0.0-alpha.6",
+    "react-native": "^0.44.0",
     "react-native-hr": "^1.0.0",
     "react-native-lock": "^0.4.0",
     "react-native-router-flux": "^3.37.0",
@@ -28,7 +29,9 @@
     "preset": "react-native",
     "collectCoverage": true,
     "coverageDirectory": "./coverage/",
-    "coverageReporters": ["lcov"]
+    "coverageReporters": [
+      "lcov"
+    ]
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
