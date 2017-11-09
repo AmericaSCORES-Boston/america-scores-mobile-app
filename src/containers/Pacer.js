@@ -33,6 +33,26 @@ class PacerContainer extends Component {
     // adding a new array for logging all the actions, each element specifies
     // the student index that refers to the student that just got modified
     this.state.actionHistory = [];
+
+    // My code 30th October 2017 -- Bhupendra
+    //  var stuList= this.props.students;
+    //   console.log("check stuList");
+    //   console.log(stuList);
+    //   this.state.studata=[];
+    //   //this.props.students;
+    //   for(var  i=0;i<stuList.length;i++){
+    //     this.state.studata.push(stuList[i].first_name+" "+stuList[i].last_name);
+    //     console.log("inside");
+    //     console.log(this.state.studata);
+    //   }
+    //   console.log("my created list");
+    //   console.log(this.state.studata);
+    //
+    //   //this.props.students;
+    //   const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    //   this.state.dataSource=ds.cloneWithRows(this.state.studata);
+    //   console.log("data source");
+    //   console.log(this.state.dataSource);
 ;
     // earlier code.
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -87,10 +107,10 @@ class PacerContainer extends Component {
     if (newPacerState && newPacerState.pacerArray) {
       this.state.dataSource = this.state.dataSource.cloneWithRows( newPacerState.pacerArray );
       this.state.pacerArray = newPacerState.pacerArray;
-      console.log("Printing pacerArray from nextProps.pacerState");
-      console.log(this.state.pacerArray);
-      console.log("Printing state from nextProps");
-      console.log(this.state);
+    //  console.log("Printing pacerArray from nextProps.pacerState");
+     // console.log(this.state.pacerArray);
+      //console.log("Printing state from nextProps");
+      //console.log(this.state);
       this.state.totalShuttles = newPacerState.totalShuttles;
       this.state.currentShuttle = newPacerState.currentShuttle;
       this.state.currentLevel = newPacerState.currentLevel;
@@ -158,6 +178,7 @@ class PacerContainer extends Component {
   }
 
   startPacerTest() {
+      //let that = this;
     // Start the
     //  let initialTime = new Date().getTime() / 1000;
      // initialTime+=37;
@@ -173,9 +194,13 @@ class PacerContainer extends Component {
         this.state.disabled = true;
         this.forceUpdate();
         this.state.pacerAudio.play(() => this.state.pacerAudio.release); //release when done
+          setTimeout(() => {
+              this.incrementShuttle()
+          }, 40000);
       }
     });
 
+      console.log("increment called");
     /**added by Bhupendra**/
     /*setTimeout(function() { this.setState({position: true}); }.bind(this), 37000);
       if (this.state.position ){
@@ -183,7 +208,7 @@ class PacerContainer extends Component {
           this.incrementShuttle();
       }*/
   }
-   // setTimeout(this.incrementShuttle(), 37000);
+
 
   /* get the shuttle increment
   1. timeout for 37 seconds
@@ -193,8 +218,9 @@ class PacerContainer extends Component {
   */
 
   incrementShuttle() {
+    console.log('inside increment-shuttle');
     // assuming that currentLevel incremements when level changes
-    const stage = pacerStages[this.state.currentLevel];
+    const stage = pacerStages[this.state.currentLevel-1];
     //const timeout = stage.time*1000;
     //  const stage =1;
     //console.log('stage:'+stage);
@@ -214,6 +240,14 @@ class PacerContainer extends Component {
       * */
       this.props.timeIntervalElapsed();
     }
+      if(this.state.totalShuttles!==236 && !this.state.pacerDone){
+          setTimeout(() => {
+              this.incrementShuttle()
+          }, stage.time);
+          console.log(this.state);
+      } else{
+        console.log("stop increment");
+      }
   }
 
   handlePacerPress(rowData, rowId) {
