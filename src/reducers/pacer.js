@@ -23,7 +23,7 @@ export default function pacerState(state = {}, action) {
       return {
         ...state,
         currentLevel: 1,
-        currentShuttle: 1,
+        currentShuttle: 0,
         totalShuttles: 0,
         pacerArray: new Array(action.numStudents).fill(0)
       };

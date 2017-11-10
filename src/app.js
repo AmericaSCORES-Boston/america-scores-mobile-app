@@ -31,24 +31,24 @@ const App = () => {
   return (
     <Provider store={store}>
         <Router name="root">
-          {/*<Scene*/}
-              {/*key="login"*/}
-              {/*component={LoginContainer}*/}
-              {/*title="Login"*/}
-              {/*rightTitle="Sign Up"*/}
-              {/*onRight={() => Actions.createAccount()}*/}
-              {/*hideBackImage="true"*/}
-              {/*direction="vertical"*/}
-          {/*/>*/}
-          {/*<Scene*/}
-              {/*key="createAccount"*/}
-              {/*component={CreateAccountContainer}*/}
-              {/*title="Sign Up"*/}
-              {/*rightTitle="Login"*/}
-              {/*onRight={() => Actions.login()}*/}
-              {/*direction="vertical"*/}
-              {/*hideBackImage="true"*/}
-          {/*/>*/}
+          <Scene
+              key="login"
+              component={LoginContainer}
+              title="Login"
+              rightTitle="Sign Up"
+              onRight={() => Actions.createAccount()}
+              hideBackImage="true"
+              direction="vertical"
+          />
+          <Scene
+              key="createAccount"
+              component={CreateAccountContainer}
+              title="Sign Up"
+              rightTitle="Login"
+              onRight={() => Actions.login()}
+              direction="vertical"
+              hideBackImage="true"
+          />
           <Scene
             key="sites"
             component={SitesContainer}
