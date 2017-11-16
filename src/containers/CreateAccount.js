@@ -46,9 +46,13 @@ class CreateAccountContainer extends Component {
       Alert.alert('First & last name are required.');
       return;
     }
-    if (!this.state.password || !this.state.confirmPassword || this.state.password !== this.state.confirmPassword) {
-      Alert.alert('Passwords don\'t match');
+    if (!this.state.password || !this.state.confirmPassword || !this.validatePassword(this.state.password)) {
+      Alert.alert('Password Required');
       return;
+    }
+    if(this.state.password !== this.state.confirmPassword){
+      Alert.alert('Passwords don\'t match');
+      return
     }
     this.props.createAccount(this.state.email, this.state.username, this.state.password, this.state.first_name, this.state.last_name);
   }
@@ -56,6 +60,12 @@ class CreateAccountContainer extends Component {
   validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
+  }
+
+  validatePassword(pass){
+      var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#\$%\^&\*])(?=.{8,})");
+      var result = strongRegex.test(pass);
+      return result;
   }
 
   render() {

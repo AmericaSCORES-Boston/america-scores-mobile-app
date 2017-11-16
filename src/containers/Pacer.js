@@ -7,6 +7,7 @@
   import * as actions from '../actions/pacer';
   import { Actions } from 'react-native-router-flux';
   import * as eventActions from '../actions/event';
+  import dates from '../util/dates';
 
   import styles from '../styles';
   import Sound from 'react-native-sound';
@@ -77,12 +78,31 @@
     }
 
     componentWillReceiveProps(nextProps) {
-      console.log("componentWillReceiveProps");
-      console.log("Printing pacerArray from this.state.pacerArray");
+      console.log("Pacer componentWillReceiveProps");
+      console.log(nextProps)
+      /*console.log("Printing pacerArray from this.state.pacerArray");
       console.log(this.state.pacerArray);
-        console.log("Printing from this.state");
-        console.log(this.state);
-      const newPacerState = nextProps.pacerState;
+      console.log("Printing from this.state");
+      console.log(this.state);*/
+
+        // handling events
+
+        const newEventsState = nextProps.eventsState;
+        if (newEventsState && newEventsState.events) {
+            this.state.events = newEventsState.events;
+
+            const filteredEvents = this.state.events.slice().filter(function (event) {
+                /*       console.log("filteredEvents")
+                         console.log(event)*/
+                return dates.getDateStringFromSql(event.event_date) === dates.getTodayDateString();
+            });
+
+            const event = (filteredEvents.length > 0) ? filteredEvents[0] : null;
+            this.state.event = event;
+        }
+
+      // handling pacerArray
+            const newPacerState = nextProps.pacerState;
       if (newPacerState && newPacerState.pacerArray) {
         this.state.dataSource = this.state.dataSource.cloneWithRows( newPacerState.pacerArray );
         this.state.pacerArray = newPacerState.pacerArray;
@@ -97,14 +117,10 @@
       }
     }
 
-    passPacerData() {
+    passPacerData(){
         var studentList = this.props.students;
-        console.log("studentList");
-        console.log(studentList);
-        console.log("this.state");
-        console.log(this.state)
-        console.log("this.props")
-        console.log(this.props)
+          console.log('passing pacer data');
+          console.log(this.tate.event);
         //console.log("student list first " + studentList[0].pacer);
         for (var i = 0; i < studentList.length; i++) {
           var dataArray = [];
