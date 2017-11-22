@@ -120,16 +120,16 @@
     passPacerData(){
         var studentList = this.props.students;
           console.log('passing pacer data');
-          console.log(this.tate.event);
+         // console.log(this.state.event);
         //console.log("student list first " + studentList[0].pacer);
         for (var i = 0; i < studentList.length; i++) {
           var dataArray = [];
-
           const event = this.state.event || this.props.event;
           console.log("event is");
           console.log(event);
           const student_id = studentList[parseInt(i, 10)].student_id,
-              pacerLevel = studentList[parseInt(i, 10)].pacer,
+              pacerLevel=studentList[parseInt(i,10)].pacer+pacerStages[this.state.currentLevel-1].laps,
+              //pacerLevel = studentList[parseInt(i, 10)].pacer,
               pacerData = {student_id, pacerLevel};
 
           console.log("pacer data sent " );
@@ -299,6 +299,10 @@
 
     render() {
       return (
+
+          //Modal to show the data before submit - bhupendra
+
+
 
           <Container style={[styles.container, styles.containerPadding]}>
             <Content  theme={scoresTheme}>
