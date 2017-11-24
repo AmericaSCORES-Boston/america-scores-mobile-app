@@ -8,6 +8,7 @@
   import { Actions } from 'react-native-router-flux';
   import * as eventActions from '../actions/event';
   import dates from '../util/dates';
+  // import {Modal,TouchableHighlight} from 'react-native';
 
   import styles from '../styles';
   import Sound from 'react-native-sound';
@@ -30,6 +31,9 @@
       this.state.pacerDone = false;
       // adding an event for passing the event_id
       this.state.event = props.event;
+
+      //modal visibility toggle
+      //this.state.modalVisible=false,
 
       // adding a new array for logging all the actions, each element specifies
       // the student index that refers to the student that just got modified
@@ -57,14 +61,15 @@
       console.log(this.props);
       console.log('state');
       console.log(this.state);
-      if (this.props.event==null || this.props.event==undefined) {
-          console.log("event" + this.props.event);
-          console.log("programid" + this.props.program_id);
-          console.log('trying again once more');
-          console.log(this.props.program.program_id);
+      //if (this.props.event==null || this.props.event==undefined) {
+        //  console.log('---------------event is nullllll-----------------------')
+          //console.log("event" + this.props.event);
+          //console.log("programid" + this.props.program_id);
+          ///console.log('trying again once more');
+          //console.log(this.props.program.program_id);
         this.props.createEvent(this.props.program.program_id);
-        console.log("event" + this.props.event);
-      }
+        //console.log("event" + this.props.event);
+     // }
     }
 
     componentDidMount() {
@@ -90,7 +95,8 @@
         const newEventsState = nextProps.eventsState;
         if (newEventsState && newEventsState.events) {
             this.state.events = newEventsState.events;
-
+            console.log("Pacer.js events in state are")
+            console.log(this.state.events);
             const filteredEvents = this.state.events.slice().filter(function (event) {
                 /*       console.log("filteredEvents")
                          console.log(event)*/
@@ -119,7 +125,7 @@
 
     passPacerData(){
         var studentList = this.props.students;
-          console.log('passing pacer data');
+        console.log('passing pacer data');
          // console.log(this.state.event);
         //console.log("student list first " + studentList[0].pacer);
         for (var i = 0; i < studentList.length; i++) {
@@ -128,8 +134,9 @@
           console.log("event is");
           console.log(event);
           const student_id = studentList[parseInt(i, 10)].student_id,
-              pacerLevel=studentList[parseInt(i,10)].pacer+pacerStages[this.state.currentLevel-1].laps,
-              //pacerLevel = studentList[parseInt(i, 10)].pacer,
+              // pacerLevel=studentList[parseInt(i,10)].pacer+pacerStages[this.state.currentLevel-1].laps,
+              pacerLevel = studentList[parseInt(i, 10)].pacer,
+             //pacerLevel=studentList.pacerData
               pacerData = {student_id, pacerLevel};
 
           console.log("pacer data sent " );
@@ -229,7 +236,7 @@
       }
       else {
         // Set the student's total shuttles here
-        this.props.students[parseInt(rowId, 10)].pacer = this.state.currentLevel;
+        this.props.students[parseInt(rowId, 10)].pacer = this.state.totalShuttles;
         console.log("current level " + this.props.students[parseInt(rowId, 10)].pacer);
         // Maybe modify the passed in students array with a new field?
       }
@@ -246,6 +253,14 @@
         this.props.decrementSquare(rowId);
       }
     }
+
+    //modal box
+    //
+    //   setModalVisible(visible) {
+    //   console.log("modal called");
+    //   console.log(visible);
+    //       this.state.modalVisible= visible;
+    //   }
 
     handleUndo() {
       if (this.state.actionHistory.length > 0 && this.state.actionHistory != null) {
@@ -300,10 +315,6 @@
     render() {
       return (
 
-          //Modal to show the data before submit - bhupendra
-
-
-
           <Container style={[styles.container, styles.containerPadding]}>
             <Content  theme={scoresTheme}>
               <View style={[{flex: 0, flexDirection: 'row', justifyContent: 'center', height:30}, styles.smallMarginTop]}>
@@ -326,8 +337,18 @@
               <Button large block disabled={this.state.pacerDone} onPress={() => this.handleUndo()} style={styles.mediumMarginTop}>
                 <H1 style={styles.white}>Undo</H1>
               </Button>
+
+
+              {/*<Button large block active*/}
+                      {/*onPress={()=>Actions.result({program:this.props.program, students: this.props.students, event: this.state.event})}*/}
+                      {/*style={styles.mediumMarginTop}>*/}
+                {/*<H1 style={styles.white}>See Results</H1>*/}
+              {/*</Button>*/}
+
             </Content>
+
         </Container>
+
       );
     }
   }

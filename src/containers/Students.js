@@ -46,7 +46,8 @@ class StudentsContainer extends Component {
 
     if (newEventsState && newEventsState.events) {
       this.state.events = newEventsState.events;
-
+    console.log("Students.js events in state are")
+        console.log(this.state.events);
       const filteredEvents = this.state.events.slice().filter(function(event) {
  /*       console.log("filteredEvents")
           console.log(event)*/
