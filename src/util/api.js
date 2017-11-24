@@ -53,16 +53,14 @@ const Api = {
         return request(createEndpoint(`/programs/${program_id}/events`), { headers: auth(user.idToken) });
     },
 
-    createEvent(user, program_id) {
+    createEvent(user, program_id, season) {
         //debugger;
         const event_date = dates.getTodayDateString();
         console.log("creating event in api.js")
         console.log(event_date)
         console.log("creating event in api.js, printing token")
-        console.log(pre_season)
         console.log(user)
-        //hard code the flag for now
-        const pre_season = false;
+        const pre_season = season;
         return request(createEndpoint(`/programs/${program_id}/events`), createRequestOptions(POST, {event_date, pre_season}, user.idToken))
 
     },

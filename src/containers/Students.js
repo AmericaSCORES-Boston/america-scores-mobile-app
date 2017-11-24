@@ -116,13 +116,13 @@ class StudentsContainer extends Component {
     const footer = (
         <Footer>
           <FooterTab>
-            <Button active onPress={()=>Actions.pacer({program, students: this.state.students, event: this.state.event})}>
-              Pacer Test
+            <Button active onPress={()=>Actions.pacer({program, students: this.state.students, event: this.state.event, season: false})}>
+              Pre Pacer Test
             </Button>
 
-           {/* <Button active onPress={()=>Actions.bmi({program, students: this.state.students, event: this.state.event})}>
-              BMI Collection
-            </Button>*/}
+            <Button active onPress={()=>Actions.pacer({program, students: this.state.students, event: this.state.event, season: true})}>
+              Post Pacer Test
+            </Button>
 
           </FooterTab>
         </Footer>

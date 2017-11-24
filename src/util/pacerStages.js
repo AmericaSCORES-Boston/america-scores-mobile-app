@@ -8,12 +8,12 @@ const pacerStages = [
   {
     level: 2,
     laps: 8,
-    time: 8000
+    time: 7700
   },
   {
     level: 3,
     laps: 8,
-    time: 7580
+    time: 7495
   },
   {
     level: 4,

@@ -61,7 +61,7 @@ export function * createEvent(action) {
     console.log("creating event");
     console.log(action.program_id)
     console.log(user);
-    const events = yield call(Api.createEvent, user, action.program_id);
+    const events = yield call(Api.createEvent, user, action.program_id, action.season);
     //console.log(events)
     yield put(actions.createEventSuccess(events[0]));
   } catch (e) {
