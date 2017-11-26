@@ -62,7 +62,7 @@ class PacerContainer extends Component {
 
     componentDidMount() {
         console.log("componentDidMount")
-        console.log(this.props.students.length)
+        console.log(this.props.students)
         this.props.loadPacer(this.props.students.length);
     }
 
@@ -103,6 +103,8 @@ class PacerContainer extends Component {
 
     passPacerData(){
         var studentList = this.props.students;
+        console.log('students passed are ')
+        console.log(studentList);
         console.log('passing pacer data');
         for (var i = 0; i < studentList.length; i++) {
             var dataArray = [];
@@ -269,9 +271,7 @@ class PacerContainer extends Component {
                 onLongPress={() => this.handlePacerHold(rowData, rowId)} >
               <View>
                   {/*<Text>{rowId + 1}</Text>*/}
-                <Text>{this.props.students[parseInt(rowId, 10)].last_name+ " " +
-                this.props.students[parseInt(rowId, 10)].first_name.substr(0,2)
-                }</Text>
+                <Text>{this.props.students[parseInt(rowId, 10)].last_name+ " " + this.props.students[parseInt(rowId, 10)].first_name.substr(0,2)}</Text>
               </View>
             </TouchableOpacity>
         );

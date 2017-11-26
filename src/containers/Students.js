@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { View, Text } from 'react-native';
-import { Container, Content, List, ListItem, Footer, FooterTab, Button, H2, H3 } from 'native-base';
+import { View, Text,TouchableOpacity } from 'react-native';
+import { Container, Content, List, ListItem, Footer, FooterTab, Button, H2, H3,CheckBox } from 'native-base';
 import scoresTheme from '../themes/scoresTheme';
 import { connect } from 'react-redux';
 import * as studentActions from '../actions/student';
@@ -15,11 +15,15 @@ class StudentsContainer extends Component {
     super(props);
     const student_ids = [], event = null;
     this.state = {...props.studentsState, ...props.eventsState, student_ids, event};
-
+    this.state.finalStudent=[];
+    this.state.selectedStudentId = [];
+    this.state.checked=false;
+    this.state.tmpID=0;
     this.props.component.onRight = () => {
       Actions.addStudent({program_id: this.props.program_id});
     };
 
+    // this.takeAttendance=this.takeAttendance.bind(this);
     this.props.component.rightTitle = 'Add';
   }
 
@@ -67,6 +71,54 @@ class StudentsContainer extends Component {
     return students.length > 0;
   }
 
+ /* takeAttendance(fname,lname,sId){
+    if(sId!==this.state.tmpID){
+        this.setState({
+            checked:!this.state.checked
+            });
+      // this.state.checked=true;
+    }
+    else{
+        this.setState({
+          checked:!this.state.checked
+        });
+       // this.state.checked=false;
+    }
+    // this.setState({
+    //   checked:!this.state.checked
+    // });
+    this.state.finalStudent.push(fname+lname);
+    console.log("hey i am working");
+    this.state.tmpID=sId;
+    console.log(this.state.finalStudent);
+  }*/
+
+  takeAttendance(sId){
+    let tmpSelectedId = this.state.selectedStudentId;
+    if(!tmpSelectedId.includes(sId)){
+        tmpSelectedId.push(sId);
+    } else{
+        tmpSelectedId.splice(tmpSelectedId.indexOf(sId),1);
+    }
+    this.setState({
+        selectedStudentId: tmpSelectedId
+    })
+  }
+
+    filterSelectedStudents(){
+    for(i=0;i<this.state.students.length;i++){
+        if(this.state.selectedStudentId.includes(this.state.students[i].student_id)){
+          this.state.students.splice(this.state.students[i],1);
+        }
+    }
+  }
+
+  callPacer(program, seasonFlag){
+      this.filterSelectedStudents();
+      console.log(this.state.students);
+      Actions.pacer({program, students: this.state.students, event: this.state.event, season: seasonFlag})
+  }
+
   render() {
     return (
         <Container style={styles.container} theme={scoresTheme}>
@@ -93,11 +145,15 @@ class StudentsContainer extends Component {
             dataArray={studentArray}
             renderRow={(rowData) =>
                 <ListItem button onPress={()=>Actions.individualStudent({title: rowData.first_name + ' ' + rowData.last_name, student: rowData})}>
+                  <TouchableOpacity>
+                  <CheckBox onPress={()=> this.takeAttendance(rowData.student_id)} checked={this.state.selectedStudentId.includes(rowData.student_id) ? true : false}/>
+                  </TouchableOpacity>
                   <Text>{rowData.first_name + ' ' + rowData.last_name}</Text>
                 </ListItem>
               }
         />
     );
+
 
     const noStudents = (
         <View>
@@ -116,7 +172,7 @@ class StudentsContainer extends Component {
     const footer = (
         <Footer>
           <FooterTab>
-            <Button active onPress={()=>Actions.pacer({program, students: this.state.students, event: this.state.event, season: false})}>
+            <Button active onPress={()=>this.callPacer(program,false)}>
               Pre Pacer Test
             </Button>
 
