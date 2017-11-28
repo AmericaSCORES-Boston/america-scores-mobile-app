@@ -71,27 +71,6 @@ class StudentsContainer extends Component {
     return students.length > 0;
   }
 
- /* takeAttendance(fname,lname,sId){
-    if(sId!==this.state.tmpID){
-        this.setState({
-            checked:!this.state.checked
-            });
-      // this.state.checked=true;
-    }
-    else{
-        this.setState({
-          checked:!this.state.checked
-        });
-       // this.state.checked=false;
-    }
-    // this.setState({
-    //   checked:!this.state.checked
-    // });
-    this.state.finalStudent.push(fname+lname);
-    console.log("hey i am working");
-    this.state.tmpID=sId;
-    console.log(this.state.finalStudent);
-  }*/
 
   takeAttendance(sId){
     let tmpSelectedId = this.state.selectedStudentId;
@@ -106,7 +85,7 @@ class StudentsContainer extends Component {
   }
 
     filterSelectedStudents(){
-    for(i=0;i<this.state.students.length;i++){
+    for(let i=0;i<this.state.students.length;i++){
         if(this.state.selectedStudentId.includes(this.state.students[i].student_id)){
           this.state.students.splice(this.state.students[i],1);
         }
