@@ -22,8 +22,8 @@ describe('Pacer Undo Feature', () => {
   it('should handle LOAD_PACER_TEST', () => {
     var loadPacerTestResult = pacerAction.loadPacerTest(undefined);
     state = pacerState(state, loadPacerTestResult);
-    expect(state.currentLevel).toEqual(0);
-    expect(state.currentShuttle).toEqual(1);
+    expect(state.currentLevel).toEqual(1);
+    expect(state.currentShuttle).toEqual(0);
     expect(state.totalShuttles).toEqual(0);
     console.log("pacerArray: " + state.pacerArray);
     expect(state.pacerArray.length).toEqual(1);
@@ -38,8 +38,8 @@ describe('Pacer Undo Feature', () => {
     state.pacerArray = sampleArray1;
     var tapped0 = pacerAction.pacerItemTapped(0);
     state = pacerState(state, tapped0);
-    expect(state.currentLevel).toEqual(0);
-    expect(state.currentShuttle).toEqual(1);
+    expect(state.currentLevel).toEqual(1);
+    expect(state.currentShuttle).toEqual(0);
     expect(state.totalShuttles).toEqual(0);
     expect(state.pacerArray[0]).toEqual(1);
     state = pacerState(state, tapped0);
@@ -78,7 +78,7 @@ describe('Pacer Undo Feature', () => {
   it('should handle TIME_INTERVAL_ELAPSED', () => {
     var incrementTime = pacerAction.timeIntervalElapsed();
     state = pacerState(state, incrementTime);
-    expect(state.currentShuttle).toEqual(2);
+    expect(state.currentShuttle).toEqual(1);
     expect(state.totalShuttles).toEqual(1);
   });
 
@@ -87,7 +87,7 @@ describe('Pacer Undo Feature', () => {
     state = pacerState(state, shuttleMaxed);
     state = pacerState(state, shuttleMaxed);
     //increment current level twice, resets current shuttle
-    expect(state.currentLevel).toEqual(2);
+    expect(state.currentLevel).toEqual(3);
     expect(state.currentShuttle).toEqual(1);
   });
 
