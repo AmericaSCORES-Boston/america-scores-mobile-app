@@ -18,7 +18,7 @@ import * as pacer from '../actions/pacer';
 export function * fetchSites() {
   try {
     const user = yield select(getUser);
-    const sites = yield call(Api.fetchSites, user);
+    const sites = yield call(Api.fetchSites, user.user);
     yield put(actions.fetchSitesSuccess(sites));
   } catch (e) {
     yield put(actions.fetchSitesFailure(e.message));
@@ -188,6 +188,7 @@ export function * savePacerData(action) {
 
 export function * loginUser() {
   var lock = new Auth0Lock({clientId: 'HvNKnxLle17wN23DJj1TFmpMBwG1Kb0U', domain: 'asbadmin.auth0.com'});
+  // var lock = new Auth0Lock({clientId: 'OrDYolH4wfo0VaiEKsFRM1X0OEtY5Q0W', domain: 'asbadmin.auth0.com'});
 
   const showLock = () =>
     new Promise((resolve, reject) => {
@@ -195,9 +196,10 @@ export function * loginUser() {
         closable: true,
         disableSignUp: true,
         connections: ["Username-Password-Authentication"],
-        authParams: { scope: 'openid email user_id user_metadata app_metadata' }
+        authParams: { scope: 'openid email user_id user_metadata app_metadata'}
       }, (err, profile, auth0Token) => {
         if (err) {
+          console.log(err);
           reject({ err });
         }
         resolve({ auth0Token });
@@ -214,7 +216,8 @@ export function * loginUser() {
 
 export function * createAccount(action) {
   try {
-    const user = yield call(Api.createAccount, action.email, action.username, action.password, action.first_name, action.last_name);
+    const acct_type = "Coach";
+    const user = yield call(Api.createAccount, action.email, action.username, action.password, action.first_name, action.last_name, acct_type);
     console.log('--------------------------------got user')
       console.log(user)
     yield put(actions.createAccountSuccess());

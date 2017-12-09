@@ -20,7 +20,7 @@ function request(path, options={}) {
 }
 
 function auth(idToken) {
-    return new Headers({ 'Authorization': 'Bearer' + idToken, 'Connection': 'mobile' });
+        return new Headers({ 'Authorization': 'Bearer '+idToken, 'Connection': 'mobile' });
 }
 
 function createRequestOptions(request_type, data, bearer_token = 0) {
@@ -38,7 +38,8 @@ function createRequestOptions(request_type, data, bearer_token = 0) {
 
 const Api = {
     fetchSites(user) {
-        return request(createEndpoint('/sites'), { headers: auth(user.idToken) });
+        console.log(user.accessToken)
+        return request(createEndpoint('/sites'), {headers: auth(user.accessToken)});
     },
 
     fetchPrograms(user, site_id) {
@@ -107,9 +108,10 @@ const Api = {
         return request(createEndpoint(`/events/${event_id}/stats/bmi`), createRequestOptions(PUT, {stats}, user.idToken));
     },
 
-    createAccount(email, username, password, first_name, last_name) {
+    createAccount(email, username, password, first_name, last_name,acct_type) {
         console.log("calling api")
-        return request(createEndpoint(`/accounts`), createRequestOptions(POST, {email, username, password, first_name, last_name}));
+        console.log(acct_type)
+        return request(createEndpoint(`/accounts`), createRequestOptions(POST, {email, username, password, first_name, last_name,acct_type}));
     },
     //saves the pacer result for each student
     //TODO is the pacer page consistent with one event_id? how does it input each student's pacer?

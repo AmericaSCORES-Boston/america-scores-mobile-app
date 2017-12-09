@@ -15,7 +15,7 @@ import ProgramsContainer from './containers/Programs';
 import AddProgramContainer from './containers/AddProgram';
 import StudentsContainer from './containers/Students';
 import AddStudentContainer from './containers/AddStudent';
-// import ResultContainer from './containers/Results';
+import ResultContainer from './containers/Results';
 import PacerContainer from './containers/Pacer';
 import BMIContainer from './containers/BMI';
 import IndividualStudentContainer from './containers/IndividualStudent';
@@ -36,7 +36,6 @@ const App = () => {
               key="login"
               component={LoginContainer}
               title="Login"
-              rightTitle="Sign Up"
               onRight={() => Actions.createAccount()}
               hideBackImage="true"
               direction="vertical"
@@ -96,14 +95,14 @@ const App = () => {
             direction="vertical"
           />
 
-          {/*<Scene*/}
-              {/*key="result"*/}
-              {/*component={ResultContainer}*/}
-              {/*title="Pacer Results"*/}
-              {/*backTitle="Back"*/}
-              {/*hideBackImage="true"*/}
-              {/*direction="vertical"*/}
-          {/*/>*/}
+          <Scene
+              key="result"
+              component={ResultContainer}
+              title="Pacer Results"
+              backTitle="Back"
+              hideBackImage="true"
+              direction="vertical"
+          />
           {/*<Scene*/}
             {/*key="bmi"*/}
             {/*component={BMIContainer}*/}

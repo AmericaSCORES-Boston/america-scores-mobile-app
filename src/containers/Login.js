@@ -16,6 +16,7 @@ class LoginContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.loginData.user) {
+      console.log(nextProps.loginData)
       Actions.sites();
     }
   }

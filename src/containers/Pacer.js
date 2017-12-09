@@ -31,6 +31,7 @@ class PacerContainer extends Component {
         this.state.pacerDone = false;
         // adding an event for passing the event_id
         this.state.event = props.event;
+        this.state.status=false;
 
         //modal visibility toggle
         //this.state.modalVisible=false,
@@ -127,7 +128,8 @@ class PacerContainer extends Component {
         if (this.state.currentLevel >= 21) {
             return true;
         }
-
+        console.log('checking is pacer over');
+        console.log(this.state.pacerArray)
         // Check pacerArray for full completion (all = 2)
         const array = this.state.pacerArray;
         if (this.state.pacerArray.length == 0) {
@@ -135,7 +137,7 @@ class PacerContainer extends Component {
         }
 
         for (const item of array) {
-            if (item != 2) {
+            if (item != 3) {
                 return false;
             }
         }
@@ -166,7 +168,7 @@ class PacerContainer extends Component {
                 this.state.pacerAudio.play(() => this.state.pacerAudio.release); //release when done
                 setTimeout(() => {
                     this.incrementShuttle()
-                }, 50200);
+                }, 50100);//50200
             }
         });
         console.log("startPacerTest calling increment");
@@ -206,17 +208,24 @@ class PacerContainer extends Component {
         // put the action in history whether it is the the second or the first miss
         this.state.actionHistory.push(rowId);
         // set the data when the item is tapped the second time
-        if (rowData < 2) {
+        if (rowData <2) {
             this.props.incrementSquare(rowId);
         }
+         else if(rowData===2){
+            this.props.incrementSquare(rowId);
+            this.props.students[parseInt(rowId, 10)].pacer = this.state.totalShuttles;
+            console.log("saving current level " + this.props.students[parseInt(rowId, 10)].pacer);
+         }
         else {
             // Set the student's total shuttles here
-            this.props.students[parseInt(rowId, 10)].pacer = this.state.totalShuttles;
-            console.log("current level " + this.props.students[parseInt(rowId, 10)].pacer);
+
             // Maybe modify the passed in students array with a new field?
         }
         console.log("number of times that it is pressed " + rowData);
+        console.log('------------------------------');
     }
+
+
 
     handlePacerHold(rowData, rowId) {
         console.log('handlePacerHold')
@@ -226,14 +235,6 @@ class PacerContainer extends Component {
             this.props.decrementSquare(rowId);
         }
     }
-
-    //modal box
-    //
-    //   setModalVisible(visible) {
-    //   console.log("modal called");
-    //   console.log(visible);
-    //       this.state.modalVisible= visible;
-    //   }
 
     handleUndo() {
         if (this.state.actionHistory.length > 0 && this.state.actionHistory != null) {
@@ -247,7 +248,7 @@ class PacerContainer extends Component {
     }
 
     renderSquares(rowData, rowId) {
-        console.log("row data is ");
+        console.log("renderSquares row data is ");
         console.log(rowData);
         rowId = parseInt(rowId, 10);
         // Light gray
@@ -261,8 +262,12 @@ class PacerContainer extends Component {
             // Light red
             console.log('red color')
             rowColor = '#FFA2AE';
-            this.state.rowColor = '#FFA2AE';
 
+            // this.state.rowColor = '#FFA2AE';
+        }
+       else if (rowData > 2){
+            rowColor = '#7FFF00';
+          //  this.state.status=true;
         }
         return (
             <TouchableOpacity
@@ -275,6 +280,7 @@ class PacerContainer extends Component {
               </View>
             </TouchableOpacity>
         );
+        console.log('------------------------------');
     }
 
     render() {
@@ -303,12 +309,12 @@ class PacerContainer extends Component {
                   <H1 style={styles.white}>Undo</H1>
                 </Button>
 
+                  <Button large block disabled={!this.state.pacerDone}
+                          onPress={()=>Actions.result({program:this.props.program, students: this.props.students, event: this.state.event})}
+                          style={styles.mediumMarginTop}>
+                      <H1 style={styles.white}>See Results</H1>
+                  </Button>
 
-                  {/*<Button large block active*/}
-                  {/*onPress={()=>Actions.result({program:this.props.program, students: this.props.students, event: this.state.event})}*/}
-                  {/*style={styles.mediumMarginTop}>*/}
-                  {/*<H1 style={styles.white}>See Results</H1>*/}
-                  {/*</Button>*/}
 
               </Content>
 

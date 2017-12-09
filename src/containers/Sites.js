@@ -21,6 +21,7 @@ class SitesContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     const newSitesState = nextProps.sitesState;
+    console.log(newSitesState)
     if (newSitesState && newSitesState.sites) {
       this.state = newSitesState;
     }

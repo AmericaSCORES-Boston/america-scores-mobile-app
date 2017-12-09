@@ -47,7 +47,7 @@ class CreateAccountContainer extends Component {
       return;
     }
     if (!this.state.password || !this.state.confirmPassword || !this.validatePassword(this.state.password)) {
-      Alert.alert('Password Required');
+      Alert.alert('Password Required,At least one Upper case, Lower case, Digit, Special Character(@#$%^&*) and Minimum Length 8');
       return;
     }
     if(this.state.password !== this.state.confirmPassword){
