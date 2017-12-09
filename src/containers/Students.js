@@ -27,19 +27,11 @@ class StudentsContainer extends Component {
     }
 
     componentWillMount() {
-        console.log('student props');
-        console.log(this.props)
-        console.log(this.props.program_id);
-        console.log('student fetch first');
-        //console.log(this.props.fetchStudents(this.props.program_id));
-        //console.log(this.props.fetchEvents(this.props.program_id));
         this.props.fetchStudents(this.props.program_id);
         this.props.fetchEvents(this.props.program_id);
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('next props');
-        console.log(nextProps);
         const newStudentsState = nextProps.studentsState,
             newEventsState = nextProps.eventsState;
 
@@ -49,18 +41,12 @@ class StudentsContainer extends Component {
 
         if (newEventsState && newEventsState.events) {
             this.state.events = newEventsState.events;
-            console.log("Students.js events in state are")
-            console.log(this.state.events);
             const filteredEvents = this.state.events.slice().filter(function(event) {
-                /*       console.log("filteredEvents")
-                         console.log(event)*/
                 return dates.getDateStringFromSql(event.event_date) === dates.getTodayDateString();
             });
 
             const event = (filteredEvents.length > 0) ? filteredEvents[0] : null;
-            console.log("current event");
-            console.log(event)
-            ;      this.setState({event});
+            this.setState({event});
         }
     }
 
@@ -94,10 +80,6 @@ class StudentsContainer extends Component {
 
     callPacer(program, seasonFlag){
         this.filterSelectedStudents();
-        console.log("test today");
-        console.log(this.state.selectedStudentId);
-        console.log(this.state.students);
-        console.log(this.state.finalStudent);
         if(this.state.finalStudent==null || this.state.finalStudent.length===0){
             alert('Please select students for pacer test');
         }

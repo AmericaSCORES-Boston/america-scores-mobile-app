@@ -58,11 +58,7 @@ export function * fetchEvents(action) {
 export function * createEvent(action) {
   try {
     const user = yield select(getUser);
-    console.log("creating event");
-    console.log(action.program_id)
-    console.log(user);
     const events = yield call(Api.createEvent, user, action.program_id, action.season);
-    //console.log(events)
     yield put(actions.createEventSuccess(events[0]));
   } catch (e) {
     yield put(actions.createEventFailure(e.message));
@@ -218,8 +214,6 @@ export function * createAccount(action) {
   try {
     const acct_type = "Coach";
     const user = yield call(Api.createAccount, action.email, action.username, action.password, action.first_name, action.last_name, acct_type);
-    console.log('--------------------------------got user')
-      console.log(user)
     yield put(actions.createAccountSuccess());
   } catch (e) {
     yield put(actions.createAccountFailure(e.message));

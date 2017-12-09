@@ -35,7 +35,6 @@ describe('students reducer', () => {
     var student = {first_name: 'bob', last_name: 'bobber', dob: '09-12-1333'}
     state.students = [student];
     var fetchStudentsSuccessAction = studentsAction.fetchStudentsSuccess(state.students);
-    //console.log(fetchStudentsSuccessAction);
     state = studentState(state, fetchStudentsSuccessAction);
     expect(state.students).toEqual([student]);
   });

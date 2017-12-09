@@ -20,9 +20,7 @@ class ProgramsContainer extends Component {
   }
 
   componentWillMount() {
-    console.log('program props');
-    console.log(this.props)
-    console.log(this.props.fetchPrograms(this.props.site_id));
+    this.props.fetchPrograms(this.props.site_id);
   }
 
   componentWillReceiveProps(nextProps) {

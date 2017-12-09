@@ -33,7 +33,6 @@ class CreateAccountContainer extends Component {
   }
 
   createAccount() {
-    console.log("creating account");
     if (!this.state.email || !this.validateEmail(this.state.email)) {
       Alert.alert('Email address is required.');
       return;

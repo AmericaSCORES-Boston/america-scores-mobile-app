@@ -16,10 +16,6 @@ import Sound from 'react-native-sound';
 class PacerContainer extends Component {
     constructor(props) {
         super(props);
-        console.log('----------------------')
-        console.log(this.props);
-        console.log(this.state);
-        console.log('----------------------')
         this.state = props.pacerState;
         //this.state = {...props.programsState, ...props.pacerState};
 
@@ -57,13 +53,10 @@ class PacerContainer extends Component {
 
     // adding events
     componentWillMount() {
-        console.log("componentWillMount");
         this.props.createEvent(this.props.program.program_id, this.props.season);
     }
 
     componentDidMount() {
-        console.log("componentDidMount")
-        console.log(this.props.students)
         this.props.loadPacer(this.props.students.length);
     }
 
@@ -72,7 +65,6 @@ class PacerContainer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("Pacer componentWillReceiveProps");
         // handling events
 
         const newEventsState = nextProps.eventsState;
@@ -104,22 +96,15 @@ class PacerContainer extends Component {
 
     passPacerData(){
         var studentList = this.props.students;
-        console.log('students passed are ')
-        console.log(studentList);
-        console.log('passing pacer data');
         for (var i = 0; i < studentList.length; i++) {
             var dataArray = [];
             const event = this.state.event || this.props.event;
-            console.log("pacer data is saved for event where event is as below");
-            console.log(event);
             const student_id = studentList[parseInt(i, 10)].student_id,
                 // pacerLevel=studentList[parseInt(i,10)].pacer+pacerStages[this.state.currentLevel-1].laps,
                 pacerLevel = studentList[parseInt(i, 10)].pacer,
                 //pacerLevel=studentList.pacerData
                 pacerData = {student_id, pacerLevel};
 
-            console.log("pacer data sent " );
-            console.log( pacerData);
 
             this.props.savePacerData(event.event_id, dataArray.concat([pacerData]));
         }
@@ -128,8 +113,6 @@ class PacerContainer extends Component {
         if (this.state.currentLevel >= 21) {
             return true;
         }
-        console.log('checking is pacer over');
-        console.log(this.state.pacerArray)
         // Check pacerArray for full completion (all = 2)
         const array = this.state.pacerArray;
         if (this.state.pacerArray.length == 0) {
@@ -137,7 +120,7 @@ class PacerContainer extends Component {
         }
 
         for (const item of array) {
-            if (item != 3) {
+            if (item != 2) {
                 return false;
             }
         }
@@ -152,7 +135,6 @@ class PacerContainer extends Component {
         }
         this.state.pacerDone = true;
         this.forceUpdate();
-        console.log(this.props.students);
     }
 
     startPacerTest() {
@@ -171,11 +153,9 @@ class PacerContainer extends Component {
                 }, 50100);//50200
             }
         });
-        console.log("startPacerTest calling increment");
     }
 
     incrementShuttle() {
-        console.log('inside increment-shuttle');
         // assuming that currentLevel incremements when level changes
         let stage = pacerStages[this.state.currentLevel-1];
         if(!this.state.pacerDone){
@@ -183,7 +163,6 @@ class PacerContainer extends Component {
                 this.props.timeIntervalElapsed();
                 this.props.maxShuttlesReached();
                 stage = pacerStages[this.state.currentLevel-1];
-                console.log("laps exceeded"+this.state.currentLevel);
             }
             else {
                 //if  ! max shuttle reached
@@ -211,18 +190,6 @@ class PacerContainer extends Component {
         if (rowData <2) {
             this.props.incrementSquare(rowId);
         }
-         else if(rowData===2){
-            this.props.incrementSquare(rowId);
-            this.props.students[parseInt(rowId, 10)].pacer = this.state.totalShuttles;
-            console.log("saving current level " + this.props.students[parseInt(rowId, 10)].pacer);
-         }
-        else {
-            // Set the student's total shuttles here
-
-            // Maybe modify the passed in students array with a new field?
-        }
-        console.log("number of times that it is pressed " + rowData);
-        console.log('------------------------------');
     }
 
 
@@ -248,26 +215,18 @@ class PacerContainer extends Component {
     }
 
     renderSquares(rowData, rowId) {
-        console.log("renderSquares row data is ");
-        console.log(rowData);
         rowId = parseInt(rowId, 10);
         // Light gray
         let rowColor = '#E4E4E4';
         if (rowData === 1) {
             // Light yellow
             rowColor = '#FFF248';
-            console.log('yellow')
         }
         else if(rowData === 2){
             // Light red
-            console.log('red color')
             rowColor = '#FFA2AE';
-
+            this.props.students[parseInt(rowId, 10)].pacer = this.state.totalShuttles;
             // this.state.rowColor = '#FFA2AE';
-        }
-       else if (rowData > 2){
-            rowColor = '#7FFF00';
-          //  this.state.status=true;
         }
         return (
             <TouchableOpacity
@@ -280,7 +239,6 @@ class PacerContainer extends Component {
               </View>
             </TouchableOpacity>
         );
-        console.log('------------------------------');
     }
 
     render() {
