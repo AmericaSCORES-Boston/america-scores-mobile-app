@@ -15,10 +15,6 @@ class ResultContainer extends Component {
         super(props);
         const student_ids = [], event = null;
         this.state = {...props.studentsState, ...props.eventsState, student_ids, event};
-        // this.props.component.onRight = () => {
-        //     Actions.addStudent({program_id: this.props.program_id});
-        // };
-        // this.props.component.rightTitle = 'Add';
     }
 
     componentWillMount() {
@@ -44,32 +40,12 @@ class ResultContainer extends Component {
                 <Content>
                     <View style={{flexDirection: 'row', flex: 1}}>
                         {this.showStudents()}
-                        {/*<View style={{flex: 1,height:100,backgroundColor: '#333'}}>*/}
-                            {/*{this.showShuttles()}*/}
-                        {/*</View>*/}
                     </View>
-
                 </Content>
                 {this.showFooter()}
             </Container>
         );
     }
-
-    // Show the pacer shuttle results
-
-    // showShuttles(){
-    //     const studentArray = this.state.students;
-    //     const students = (
-    //         <List dataArray={studentArray}
-    //               renderRow={(rowData) =>
-    //                   <ListItem>
-    //                       <Text>{rowData.pacer}</Text>
-    //                   </ListItem>
-    //
-    //               }
-    //         />
-    //     );
-    // }
 
     // Show a list of students for this program if it is not empty.
     // Otherwise, show a message about the program being empty.
@@ -97,17 +73,12 @@ class ResultContainer extends Component {
     }
 
 
-    // Show a footer with a pacer and bmi collection button if this program has students.
     // Otherwise, hide the footer.
     showFooter() {
         const program = {program_name: this.props.title, program_id: this.props.program_id};
         const footer = (
             <Footer>
                 <FooterTab>
-                    {/*<Button active onPress={()=>Actions.pacer({program, students: this.state.students, event: this.state.event})}>*/}
-                        {/*Pacer Test*/}
-                    {/*</Button>*/}
-
                 </FooterTab>
             </Footer>
         );
