@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.auth0.lock.react.LockReactPackage;
 import com.facebook.react.ReactApplication;
+import com.auth0.react.A0Auth0Package;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
 
               new MainReactPackage(),
+            new A0Auth0Package(),
             new RNSoundPackage(),
               new LockReactPackage(),
               new RNSoundPackage(),

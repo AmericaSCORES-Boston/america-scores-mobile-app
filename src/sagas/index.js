@@ -2,6 +2,7 @@ import { takeEvery } from 'redux-saga';
 import { call, put, select } from 'redux-saga/effects';
 import { getUser } from '../selectors';
 import Auth0Lock from 'react-native-lock';
+import Auth0 from 'react-native-auth0';
 import * as actions from '../actions/index';
 import Api from '../util/api';
 import * as site from '../actions/site';
@@ -183,12 +184,15 @@ export function * savePacerData(action) {
 }
 
 export function * loginUser() {
-  var lock = new Auth0Lock({clientId: 'HvNKnxLle17wN23DJj1TFmpMBwG1Kb0U', domain: 'asbadmin.auth0.com'});
+  //var lock = new Auth0Lock({clientId: 'HvNKnxLle17wN23DJj1TFmpMBwG1Kb0U', domain: 'asbadmin.auth0.com'});
   // var lock = new Auth0Lock({clientId: 'OrDYolH4wfo0VaiEKsFRM1X0OEtY5Q0W', domain: 'asbadmin.auth0.com'});
+
+    // new Auth
+    const auth0 = new Auth0({ domain: 'asbadmin.auth0.com', clientId: 'b1VwmZhpBZc22ZIGF7UnHHoMfuYdVLH0' });
 
   const showLock = () =>
     new Promise((resolve, reject) => {
-      lock.show({
+ /*     lock.show({
         closable: true,
         disableSignUp: true,
         connections: ["Username-Password-Authentication"],
@@ -199,7 +203,24 @@ export function * loginUser() {
           reject({ err });
         }
         resolve({ auth0Token });
-      });
+      });*/
+
+        auth0
+            .webAuth
+            .authorize({scope: 'openid profile email', audience: 'https://asbadmin.auth0.com/api/v2/'})
+            .then(credentials =>{
+                    console.log(credentials)
+                    console.log("hey this is token")
+                    // consolee.log()
+                    resolve({auth0Token:credentials.accessToken})
+            }
+                // Successfully authenticated
+                // Store the accessToken
+            )
+            .catch(error => {
+                console.log(error)
+                reject({error})
+            });
     });
 
   try {
