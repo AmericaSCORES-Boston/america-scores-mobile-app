@@ -35,7 +35,7 @@ const App = () => {
           <Scene
               key="login"
               component={LoginContainer}
-              title="Login"
+              title="Welcome"
               onRight={() => Actions.createAccount()}
               hideBackImage="true"
               direction="vertical"

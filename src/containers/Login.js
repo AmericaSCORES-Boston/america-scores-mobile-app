@@ -31,7 +31,7 @@ class LoginContainer extends Component {
           <Image style={styles.textCenter} source={require('../img/logo2.png')} />
           <View style={styles.mediumMarginTop}>
             <Button large block onPress={() => this.login()}>
-              <H1 style={styles.white}>Login</H1>
+              <H1 style={styles.white}>Continue</H1>
             </Button>
           </View>
         </Content>
