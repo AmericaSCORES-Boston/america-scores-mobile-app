@@ -209,9 +209,6 @@ export function * loginUser() {
             .webAuth
             .authorize({scope: 'openid profile email', audience: 'https://asbadmin.auth0.com/api/v2/'})
             .then(credentials =>{
-                    console.log(credentials)
-                    console.log("hey this is token")
-                    // consolee.log()
                     resolve({auth0Token:credentials.accessToken})
             }
                 // Successfully authenticated

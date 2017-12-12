@@ -144,7 +144,6 @@ class PacerContainer extends Component {
                 // App doesn't work?
             }
             else {
-                console.log('duration in seconds: ' + this.state.pacerAudio.getDuration());
                 this.state.disabled = true;
                 this.forceUpdate();
                 this.state.pacerAudio.play(() => this.state.pacerAudio.release); //release when done
@@ -174,16 +173,11 @@ class PacerContainer extends Component {
             setTimeout(() => {
                 this.incrementShuttle()
             }, stage.time);
-            console.log('last value of current shuttle is '+this.state.currentShuttle)
-            console.log('last value of current shuttle duration is '+stage.time);
         } else{
-            console.log("stop increment");
         }
     }
 
     handlePacerPress(rowData, rowId) {
-
-        console.log('handlePacerPress')
         // put the action in history whether it is the the second or the first miss
         this.state.actionHistory.push(rowId);
         // set the data when the item is tapped the second time
@@ -192,10 +186,7 @@ class PacerContainer extends Component {
         }
     }
 
-
-
     handlePacerHold(rowData, rowId) {
-        console.log('handlePacerHold')
         if (rowData > 0) {
             // Unset the student's total shuttles here if it was set
             this.props.students[parseInt(rowId, 10)].pacer = null;

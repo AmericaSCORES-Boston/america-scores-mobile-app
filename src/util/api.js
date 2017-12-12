@@ -43,7 +43,6 @@ const Api = {
     },
 
     fetchPrograms(user, site_id) {
-        console.log(user.user)
         return request(createEndpoint(`/sites/${site_id}/programs`), { headers: auth(user.user) });
     },
 
@@ -64,7 +63,6 @@ const Api = {
     },
 
     fetchStudents(user, program_id) {
-        console.log(user)
         return request(createEndpoint(`/programs/${program_id}/students`), { headers: auth(user.user) });
     },
 
