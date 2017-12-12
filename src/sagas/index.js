@@ -2,6 +2,7 @@ import { takeEvery } from 'redux-saga';
 import { call, put, select } from 'redux-saga/effects';
 import { getUser } from '../selectors';
 import Auth0Lock from 'react-native-lock';
+import Auth0 from 'react-native-auth0';
 import * as actions from '../actions/index';
 import Api from '../util/api';
 import * as site from '../actions/site';
@@ -13,11 +14,12 @@ import * as stat from '../actions/stat';
 import * as login from '../actions/login';
 import * as create from '../actions/createAccount';
 import * as bmi from '../actions/bmi';
+import * as pacer from '../actions/pacer';
 
 export function * fetchSites() {
   try {
     const user = yield select(getUser);
-    const sites = yield call(Api.fetchSites, user);
+    const sites = yield call(Api.fetchSites, user.user);
     yield put(actions.fetchSitesSuccess(sites));
   } catch (e) {
     yield put(actions.fetchSitesFailure(e.message));
@@ -46,7 +48,8 @@ export function * addProgram(action) {
 
 export function * fetchEvents(action) {
   try {
-    const events = yield call(Api.fetchEvents, action.program_id);
+    const user = yield select(getUser);
+    const events = yield call(Api.fetchEvents, user, action.program_id);
     yield put(actions.fetchEventsSuccess(events));
   } catch (e) {
     yield put(actions.fetchEventsFailure(e.message));
@@ -55,8 +58,9 @@ export function * fetchEvents(action) {
 
 export function * createEvent(action) {
   try {
-    const event = yield call(Api.createEvent, action.program_id);
-    yield put(actions.createEventSuccess(event));
+    const user = yield select(getUser);
+    const events = yield call(Api.createEvent, user, action.program_id, action.season);
+    yield put(actions.createEventSuccess(events[0]));
   } catch (e) {
     yield put(actions.createEventFailure(e.message));
   }
@@ -149,7 +153,8 @@ export function * fetchStats(action) {
 
 export function * saveCollectedBmiData(action) {
   try {
-    const result = yield call(Api.saveCollectedBmiData, action.event_id, action.stats);
+    const user = yield select(getUser);
+    const result = yield call(Api.saveCollectedBmiData, user, action.event_id, action.stats);
     if (!result.status || result.status < 400) {
       yield put(actions.saveCollectedBmiDataSuccess("Data was successfully saved!"));
     }
@@ -162,22 +167,57 @@ export function * saveCollectedBmiData(action) {
   }
 }
 
+export function * savePacerData(action) {
+  try {
+    const user = yield select(getUser);
+    const result = yield call(Api.savePacerData, user, action.event_id, action.stats);
+    if (!result.status || result.status < 400) {
+      yield put(actions.savePacerdataSucceeded("Data was successfully saved!"));
+    }
+    else {
+      yield put(actions.savePacerDataFailure("Unfortunately, the collected data could not be saved. " +
+          "\n\nPlease start collection again and re-enter the data."));
+    }
+  } catch (e) {
+    yield put(actions.savePacerDataFailure(e.message));
+  }
+}
+
 export function * loginUser() {
-  var lock = new Auth0Lock({clientId: 'HvNKnxLle17wN23DJj1TFmpMBwG1Kb0U', domain: 'asbadmin.auth0.com'});
+  //var lock = new Auth0Lock({clientId: 'HvNKnxLle17wN23DJj1TFmpMBwG1Kb0U', domain: 'asbadmin.auth0.com'});
+  // var lock = new Auth0Lock({clientId: 'OrDYolH4wfo0VaiEKsFRM1X0OEtY5Q0W', domain: 'asbadmin.auth0.com'});
+
+    // new Auth
+    const auth0 = new Auth0({ domain: 'asbadmin.auth0.com', clientId: 'b1VwmZhpBZc22ZIGF7UnHHoMfuYdVLH0' });
 
   const showLock = () =>
     new Promise((resolve, reject) => {
-      lock.show({
+ /*     lock.show({
         closable: true,
         disableSignUp: true,
         connections: ["Username-Password-Authentication"],
-        authParams: { scope: 'openid email user_id user_metadata app_metadata' }
+        authParams: { scope: 'openid email user_id user_metadata app_metadata'}
       }, (err, profile, auth0Token) => {
         if (err) {
+          console.log(err);
           reject({ err });
         }
         resolve({ auth0Token });
-      });
+      });*/
+
+        auth0
+            .webAuth
+            .authorize({scope: 'openid profile email', audience: 'https://asbadmin.auth0.com/api/v2/'})
+            .then(credentials =>{
+                    resolve({auth0Token:credentials.accessToken})
+            }
+                // Successfully authenticated
+                // Store the accessToken
+            )
+            .catch(error => {
+                console.log(error)
+                reject({error})
+            });
     });
 
   try {
@@ -190,10 +230,11 @@ export function * loginUser() {
 
 export function * createAccount(action) {
   try {
-    const user = yield call(Api.createAccount, action.email, action.username, action.password, action.first_name, action.last_name);
-    yield put(actions.createUserSuccess());
+    const acct_type = "Coach";
+    const user = yield call(Api.createAccount, action.email, action.username, action.password, action.first_name, action.last_name, acct_type);
+    yield put(actions.createAccountSuccess());
   } catch (e) {
-    yield put(actions.createUserFailure(e.message));
+    yield put(actions.createAccountFailure(e.message));
   }
 }
 
@@ -214,6 +255,7 @@ export function * sagas() {
     takeEvery(stat.STATS_FETCH_REQUESTED, fetchStats),
     takeEvery(create.CREATE_ACCOUNT_REQUESTED, createAccount),
     takeEvery(bmi.SAVE_COLLECTED_BMI_DATA_REQUESTED, saveCollectedBmiData),
+    takeEvery(pacer.SAVE_PACER_DATA_REQUESTED, savePacerData),
     takeEvery(login.LOGIN_REQUESTED, loginUser)
   ]
 }

@@ -45,9 +45,13 @@ class CreateAccountContainer extends Component {
       Alert.alert('First & last name are required.');
       return;
     }
-    if (!this.state.password || !this.state.confirmPassword || this.state.password !== this.state.confirmPassword) {
-      Alert.alert('Passwords don\'t match');
+    if (!this.state.password || !this.state.confirmPassword || !this.validatePassword(this.state.password)) {
+      Alert.alert('Password Required,At least one Upper case, Lower case, Digit, Special Character(@#$%^&*) and Minimum Length 8');
       return;
+    }
+    if(this.state.password !== this.state.confirmPassword){
+      Alert.alert('Passwords don\'t match');
+      return
     }
     this.props.createAccount(this.state.email, this.state.username, this.state.password, this.state.first_name, this.state.last_name);
   }
@@ -57,11 +61,17 @@ class CreateAccountContainer extends Component {
     return re.test(email);
   }
 
+  validatePassword(pass){
+      var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#\$%\^&\*])(?=.{8,})");
+      var result = strongRegex.test(pass);
+      return result;
+  }
+
   render() {
     return (
       <Container style={styles.container}>
         <Content theme={scoresTheme}>
-          <Image style={styles.textCenter} source={require('../img/logo.jpg')} />
+          <Image style={styles.textCenter} source={require('../img/logo2.png')} />
           <InputGroup borderType='underline'>
             <Input autoFocus={true} autoCapitalize="none" keyboardType="email-address" placeholder='Email Address' onChangeText={(email) => this.setState({email})} />
           </InputGroup>

@@ -18,7 +18,7 @@ export default function eventsState(state = {}, action) {
             return {
                 ...state,
                 isFetching: false,
-                event: action.event
+                events: [...state.events, action.event]
             };
         case event.EVENTS_FETCH_FAILED:
         case event.CREATE_EVENT_FAILED:

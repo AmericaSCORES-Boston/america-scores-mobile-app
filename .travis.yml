@@ -1,8 +1,21 @@
 language: node_js
+
 node_js:
     - '6'
-script:
-    - npm run eslint -- --failTaskOnError
-    #- npm run test -- --failTaskOnError
+
 before_script:
     - npm install
+
+script:
+    - npm run eslint -- --failTaskOnError
+   # - npm run test -- --failTaskOnError
+
+after_success:
+    - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+
+notifications:
+    slack:
+        on_pull_requests: false
+        rooms:
+            - secure: "e+qOSyRRlE0n24ePq+AL37CtK1CAELgtUDBbayyxlXXHTpIuPJ5QGgar8geGWIKjJqAJsesPmwKgrtO321Zyb9t6v/3ObMDsXEdeUqzhILIvFtyHn0sGMlDtEcyyvInZMB00iuFCDMievffpfpFAsQgwcZg2hWLUnppg4IY7oUzBuQxdjF4t59+MmbWSjBHofRNKOHkE+GqZV2UxlmnHWGBGxr7lSqb2LBbQCGFLqqjmtZM/M+7UFRC7o/Ah7jGvISK9s4fJMPMmFqemYbm0VIAcGT40IFJH7Y4tiSztYiv57x8GBOhdafYwgIuQ4DVVdhW7l1jG4dU4jNDmxGOpEGPoh64CVpfBcaMOM5/7MFXvp8hxJO46niF7Qat7VJcZEqiS+HS6NUt2yLSzDD0jOnK5cBqlc0FNMfNlCw/cZosxKwa9W++nWKYuwcHfhiLgjnHKGraontb6t/08lkz8TiANVHIY+nKVzEhrcmWCO8P4w4cODF/aYtPKyuN+DTQtBhbzf/rkOIpvUDsd+FCtDoW8g3Qz0wxuegYzbdERoGtWJfUXGdKD3B2PyR1jhWAG/y5C2kjJ/Ect1f+Sy9oNBb/WWGNedxn0g3itPZdcY6Bx0QB69xHUcte3yjoxMgqgry59hVqoASIZtuh/zKoOsm6CcLYgDKQ8LHpJ5nD3z50=" # dev-ops channel
+            - secure: "p3B4SPcEV6MyxT9oyiWcbNWMMV14xgxOibyTcpZp98OUqoeV9mOXBfJEEUMe9F49PioBqOEv211SUIQm2CZqb+7sUc1hdwDj5/PVX6OxYJDE8VyewDYFknQskZgiJWABU5ZhaYY5AVmoi/x8rzSiC9GZWLTyN/RvN/4ZoPQt4R+7lXItzd6EreuR+euQvjdjBRu7Rb3FzyhaOickFY52pCsOABrYnCPxhldJd2SssGYz3Yla+ZUD3rUX6swHDrfaWAT2u8IMpHvrlxmyLyUzNBhdv3H8forHbGrkw6ZPOrMlghX4ZGs2bpNnKUCZtHGV/o2kL7BFADnzpZ30xdWkrM3LGl+XDZgxTLIwzUgEhg/wmwf5PCAjkynifZ1VZRONa7GO6K4eM5zEdzuPmO2TF2l7EePN0xK5evIPrmkwQjNy/5bCnUyavRAwfnTUD1s02UOVvXI/u+tBRRgwpBssPW7S0ZLg9j/pLWPsLm/2MykUaYT45691IyohaAgwqdhdDpv5uEac5XhDnsqomFBAkMviepjooGlhWPY+VvvDLI5oVIzhTLW9eoZYacp0CoBMwOFyu8nKi6447Yld5Ys6H7SZcN7Wf90OoA8RA9pcqcWWioePJ27lATxE9F8rkEAJZlb6JWFXVcCH0yLrQdsJpkIgeL732Kslm19/1MRK4P4=" # mobile-app channel

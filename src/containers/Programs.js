@@ -13,10 +13,10 @@ class ProgramsContainer extends Component {
     super(props);
     this.state = props.programsState;
 
-    this.props.component.onRight = () => {
-      Actions.addProgram({site_id: this.props.site_id});
-    };
-    this.props.component.rightTitle = 'Add';
+    // this.props.component.onRight = () => {
+    //   Actions.addProgram({site_id: this.props.site_id});
+    // };
+    // this.props.component.rightTitle = 'Add';
   }
 
   componentWillMount() {

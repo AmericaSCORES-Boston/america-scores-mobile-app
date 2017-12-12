@@ -25,7 +25,7 @@ export const fetchStudentsSuccess = students => ({
 });
 
 export const fetchStudentsFailure = message => ({
-  type: STUDENT_FETCH_FAILED,
+    type: STUDENT_FETCH_FAILED,
   message
 });
 

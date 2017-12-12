@@ -21,9 +21,10 @@ export const fetchEventsFailure = message => ({
     message
 });
 
-export const createEvent = program_id => ({
+export const createEvent = (program_id, season) => ({
     type: CREATE_EVENT_REQUESTED,
-    program_id
+    program_id,
+    season
 });
 
 export const createEventSuccess = event => ({
